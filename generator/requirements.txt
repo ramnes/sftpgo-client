@@ -1,0 +1,2 @@
+# TODO: replace with openapi-python-client==0.8.1 when released
+https://github.com/triaxtec/openapi-python-client/archive/17daa73890246de3fa3b98ae8bbb8cec8778b7a5.zip
