@@ -8,7 +8,7 @@ def get_description():
 
 setup(
     name="sftpgo-client",
-    version="0.2.1",
+    version="0.2.2",
     url="https://github.com/ramnes/sftpgo-client",
     author="Guillaume Gelin",
     author_email="contact@ramnes.eu",
@@ -22,4 +22,5 @@ setup(
         "attrs >= 20.1.0",
         "python-dateutil >= 2.8.0, < 3",
     ],
+    package_data={"sftpgo_client": ["py.typed"]},
 )
