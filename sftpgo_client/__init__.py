@@ -45,11 +45,13 @@ class Client(AuthenticatedClient):
     @classmethod
     def _make_proxy_method(cls, function):
         @functools.wraps(function)
-        def proxy_method(self):
+        def proxy_method(self, *args, **kwargs):
             if not self.token or self.token_expired:
                 token = self.get_token()
                 self._set_token(token)
-            return function(client=self)
+
+            kwargs["client"] = self
+            return function(*args, **kwargs)
 
         return proxy_method
 
@@ -69,11 +71,13 @@ class AsyncClient(Client):
     @classmethod
     def _make_proxy_method(cls, function):
         @functools.wraps(function)
-        async def proxy_method(self):
+        async def proxy_method(self, *args, **kwargs):
             if not self.token or self.token_expired:
                 token = await self.get_token()
                 self._set_token(token)
-            return await function(client=self)
+
+            kwargs["client"] = self
+            return await function(*args, **kwargs)
 
         return proxy_method
 

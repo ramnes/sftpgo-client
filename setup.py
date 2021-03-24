@@ -8,7 +8,7 @@ def get_description():
 
 setup(
     name="sftpgo-client",
-    version="0.1.2",
+    version="0.1.3",
     url="https://github.com/ramnes/sftpgo-client",
     author="Guillaume Gelin",
     author_email="contact@ramnes.eu",
