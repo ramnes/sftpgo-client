@@ -8,6 +8,7 @@ import httpx
 from sftpgo_client.base import api
 from sftpgo_client.base.api.token.get_token import _build_response
 from sftpgo_client.base.client import AuthenticatedClient
+from sftpgo_client.base.models import *  # noqa
 
 
 class Client(AuthenticatedClient):
