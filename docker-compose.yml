@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  sftpgo:
+    image: ghcr.io/drakkan/sftpgo:v2.0.2
+    hostname: sftpgo
+    container_name: sftpgo
+    ports:
+      - "8080:8080"
+    environment:
+      SFTPGO_HTTPD__BINDINGS__0__PORT: 8080
+      SFTPGO_HTTPD__BINDINGS__0__ADDRESS: 0.0.0.0

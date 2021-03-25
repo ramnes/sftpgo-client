@@ -85,3 +85,10 @@ update `sftpgo_client.base` with:
 ```
 ./generator/run.sh
 ```
+
+You can run the tests with:
+
+```
+docker-compose up -d
+pytest
+```
