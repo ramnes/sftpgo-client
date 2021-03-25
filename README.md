@@ -23,35 +23,57 @@ pip install sftpgo-client
 Examples
 --------
 
+* Creating a client:
+
 ```python
 from sftpgo_client import Client
 
 client = Client(
     base_url="http://localhost:8080/api/v2", user="admin", password="password"
 )
+```
+
+In an asyncio environment, use the asynchronous client instead:
+
+```python
+from sftpgo_client import AsyncClient
+
+client = AsyncClient(
+    base_url="http://localhost:8080/api/v2", user="admin", password="password"
+)
+```
+
+* Listing users:
+
+```python
 users = client.get_users()
 for user in users:
     print(user.username)
 ```
 
-Using the asynchronous client:
+or with the asynchronous client:
 
 ```python
-import asyncio
+users = await client.get_users()
+for user in users:
+    print(user.username)
+```
 
-from sftpgo_client import AsyncClient
+All API endpoints are available in both the synchronous and asynchronous clients.
 
+* Adding a new user:
 
-async def print_usernames():
-    client = AsyncClient(
-        base_url="http://localhost:8080/api/v2", user="admin", password="password"
-    )
-    users = await client.get_users()
-    for user in users:
-        print(user.username)
+```python
+from sftpgo_client import User
 
-
-asyncio.run(print_usernames())
+user = User.from_dict(
+    {
+        "username": "user",
+        "password": "password",
+        "permissions": {"/": ["*"]},
+    }
+)
+client.add_user(json_body=user)
 ```
 
 Development
