@@ -20,7 +20,7 @@ class Client(AuthenticatedClient):
 
     @property
     def token_expired(self):
-        return self.token_expires_at >= datetime.utcnow()
+        return datetime.utcnow() >= self.token_expires_at
 
     def _get_token__get_kwargs(self):
         return {
