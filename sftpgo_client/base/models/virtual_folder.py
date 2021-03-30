@@ -1,6 +1,9 @@
-from typing import Any, Dict, List, Type, TypeVar
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
+
+from ..models.filesystem_config import FilesystemConfig
+from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="VirtualFolder")
 
@@ -9,20 +12,116 @@ T = TypeVar("T", bound="VirtualFolder")
 class VirtualFolder:
     """ A virtual folder is a mapping between a SFTPGo virtual path and a filesystem path outside the user home directory. The specified paths must be absolute and the virtual path cannot be "/", it must be a sub directory. The parent directory for the specified virtual path must exist. SFTPGo will try to automatically create any missing parent directory for the configured virtual folders at user login. """
 
+    virtual_path: str
+    id_: Union[Unset, int] = UNSET
+    name: Union[Unset, str] = UNSET
+    mapped_path: Union[Unset, str] = UNSET
+    description: Union[Unset, str] = UNSET
+    used_quota_size: Union[Unset, int] = UNSET
+    used_quota_files: Union[Unset, int] = UNSET
+    last_quota_update: Union[Unset, int] = UNSET
+    users: Union[Unset, List[str]] = UNSET
+    filesystem: Union[Unset, FilesystemConfig] = UNSET
+    quota_size: Union[Unset, int] = UNSET
+    quota_files: Union[Unset, int] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
+        virtual_path = self.virtual_path
+        id_ = self.id_
+        name = self.name
+        mapped_path = self.mapped_path
+        description = self.description
+        used_quota_size = self.used_quota_size
+        used_quota_files = self.used_quota_files
+        last_quota_update = self.last_quota_update
+        users: Union[Unset, List[str]] = UNSET
+        if not isinstance(self.users, Unset):
+            users = self.users
+
+        filesystem: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.filesystem, Unset):
+            filesystem = self.filesystem.to_dict()
+
+        quota_size = self.quota_size
+        quota_files = self.quota_files
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update({})
+        field_dict.update(
+            {
+                "virtual_path": virtual_path,
+            }
+        )
+        if id_ is not UNSET:
+            field_dict["id"] = id_
+        if name is not UNSET:
+            field_dict["name"] = name
+        if mapped_path is not UNSET:
+            field_dict["mapped_path"] = mapped_path
+        if description is not UNSET:
+            field_dict["description"] = description
+        if used_quota_size is not UNSET:
+            field_dict["used_quota_size"] = used_quota_size
+        if used_quota_files is not UNSET:
+            field_dict["used_quota_files"] = used_quota_files
+        if last_quota_update is not UNSET:
+            field_dict["last_quota_update"] = last_quota_update
+        if users is not UNSET:
+            field_dict["users"] = users
+        if filesystem is not UNSET:
+            field_dict["filesystem"] = filesystem
+        if quota_size is not UNSET:
+            field_dict["quota_size"] = quota_size
+        if quota_files is not UNSET:
+            field_dict["quota_files"] = quota_files
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        virtual_folder = cls()
+        virtual_path = d.pop("virtual_path")
+
+        id_ = d.pop("id", UNSET)
+
+        name = d.pop("name", UNSET)
+
+        mapped_path = d.pop("mapped_path", UNSET)
+
+        description = d.pop("description", UNSET)
+
+        used_quota_size = d.pop("used_quota_size", UNSET)
+
+        used_quota_files = d.pop("used_quota_files", UNSET)
+
+        last_quota_update = d.pop("last_quota_update", UNSET)
+
+        users = cast(List[str], d.pop("users", UNSET))
+
+        filesystem: Union[Unset, FilesystemConfig] = UNSET
+        _filesystem = d.pop("filesystem", UNSET)
+        if not isinstance(_filesystem, Unset):
+            filesystem = FilesystemConfig.from_dict(_filesystem)
+
+        quota_size = d.pop("quota_size", UNSET)
+
+        quota_files = d.pop("quota_files", UNSET)
+
+        virtual_folder = cls(
+            virtual_path=virtual_path,
+            id_=id_,
+            name=name,
+            mapped_path=mapped_path,
+            description=description,
+            used_quota_size=used_quota_size,
+            used_quota_files=used_quota_files,
+            last_quota_update=last_quota_update,
+            users=users,
+            filesystem=filesystem,
+            quota_size=quota_size,
+            quota_files=quota_files,
+        )
 
         virtual_folder.additional_properties = d
         return virtual_folder

@@ -14,7 +14,7 @@ T = TypeVar("T", bound="Admin")
 class Admin:
     """  """
 
-    id: Union[Unset, int] = UNSET
+    id_: Union[Unset, int] = UNSET
     status: Union[Unset, AdminStatus] = UNSET
     username: Union[Unset, str] = UNSET
     description: Union[Unset, str] = UNSET
@@ -26,7 +26,7 @@ class Admin:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        id = self.id
+        id_ = self.id_
         status: Union[Unset, int] = UNSET
         if not isinstance(self.status, Unset):
             status = self.status.value
@@ -52,8 +52,8 @@ class Admin:
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if id is not UNSET:
-            field_dict["id"] = id
+        if id_ is not UNSET:
+            field_dict["id"] = id_
         if status is not UNSET:
             field_dict["status"] = status
         if username is not UNSET:
@@ -76,7 +76,7 @@ class Admin:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        id = d.pop("id", UNSET)
+        id_ = d.pop("id", UNSET)
 
         status: Union[Unset, AdminStatus] = UNSET
         _status = d.pop("status", UNSET)
@@ -106,7 +106,7 @@ class Admin:
         additional_info = d.pop("additional_info", UNSET)
 
         admin = cls(
-            id=id,
+            id_=id_,
             status=status,
             username=username,
             description=description,
