@@ -10,8 +10,9 @@ from ...types import Response
 def _get_kwargs(
     *,
     client: Client,
+    username: str,
 ) -> Dict[str, Any]:
-    url = "{}/admins/{username}".format(client.base_url)
+    url = "{}/admins/{username}".format(client.base_url, username=username)
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
@@ -68,9 +69,11 @@ def _build_response(
 def sync_detailed(
     *,
     client: Client,
+    username: str,
 ) -> Response[Union[ApiResponse, None, None, None, None, None]]:
     kwargs = _get_kwargs(
         client=client,
+        username=username,
     )
 
     response = httpx.delete(
@@ -83,20 +86,24 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
+    username: str,
 ) -> Optional[Union[ApiResponse, None, None, None, None, None]]:
     """ Deletes an existing admin """
 
     return sync_detailed(
         client=client,
+        username=username,
     ).parsed
 
 
 async def asyncio_detailed(
     *,
     client: Client,
+    username: str,
 ) -> Response[Union[ApiResponse, None, None, None, None, None]]:
     kwargs = _get_kwargs(
         client=client,
+        username=username,
     )
 
     async with httpx.AsyncClient() as _client:
@@ -108,11 +115,13 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
+    username: str,
 ) -> Optional[Union[ApiResponse, None, None, None, None, None]]:
     """ Deletes an existing admin """
 
     return (
         await asyncio_detailed(
             client=client,
+            username=username,
         )
     ).parsed

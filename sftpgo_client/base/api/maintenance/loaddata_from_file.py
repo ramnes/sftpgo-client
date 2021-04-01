@@ -4,21 +4,35 @@ import httpx
 
 from ...client import Client
 from ...models.api_response import ApiResponse
-from ...types import UNSET, Response
+from ...models.loaddata_from_file_mode import LoaddataFromFileMode
+from ...models.loaddata_from_file_scan_quota import LoaddataFromFileScanQuota
+from ...types import UNSET, Response, Unset
 
 
 def _get_kwargs(
     *,
     client: Client,
     input_file: str,
+    scan_quota: Union[Unset, LoaddataFromFileScanQuota] = UNSET,
+    mode: Union[Unset, LoaddataFromFileMode] = UNSET,
 ) -> Dict[str, Any]:
     url = "{}/loaddata".format(client.base_url)
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
 
+    json_scan_quota: Union[Unset, int] = UNSET
+    if not isinstance(scan_quota, Unset):
+        json_scan_quota = scan_quota.value
+
+    json_mode: Union[Unset, int] = UNSET
+    if not isinstance(mode, Unset):
+        json_mode = mode.value
+
     params: Dict[str, Any] = {
         "input-file": input_file,
+        "scan-quota": json_scan_quota,
+        "mode": json_mode,
     }
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
@@ -72,10 +86,14 @@ def sync_detailed(
     *,
     client: Client,
     input_file: str,
+    scan_quota: Union[Unset, LoaddataFromFileScanQuota] = UNSET,
+    mode: Union[Unset, LoaddataFromFileMode] = UNSET,
 ) -> Response[Union[ApiResponse, None, None, None, None]]:
     kwargs = _get_kwargs(
         client=client,
         input_file=input_file,
+        scan_quota=scan_quota,
+        mode=mode,
     )
 
     response = httpx.get(
@@ -89,12 +107,16 @@ def sync(
     *,
     client: Client,
     input_file: str,
+    scan_quota: Union[Unset, LoaddataFromFileScanQuota] = UNSET,
+    mode: Union[Unset, LoaddataFromFileMode] = UNSET,
 ) -> Optional[Union[ApiResponse, None, None, None, None]]:
     """ Restores SFTPGo data from a JSON backup file on the server. Users, folders and admins will be restored one by one and the restore is stopped if a user/folder/admin cannot be added or updated, so it could happen a partial restore """
 
     return sync_detailed(
         client=client,
         input_file=input_file,
+        scan_quota=scan_quota,
+        mode=mode,
     ).parsed
 
 
@@ -102,10 +124,14 @@ async def asyncio_detailed(
     *,
     client: Client,
     input_file: str,
+    scan_quota: Union[Unset, LoaddataFromFileScanQuota] = UNSET,
+    mode: Union[Unset, LoaddataFromFileMode] = UNSET,
 ) -> Response[Union[ApiResponse, None, None, None, None]]:
     kwargs = _get_kwargs(
         client=client,
         input_file=input_file,
+        scan_quota=scan_quota,
+        mode=mode,
     )
 
     async with httpx.AsyncClient() as _client:
@@ -118,6 +144,8 @@ async def asyncio(
     *,
     client: Client,
     input_file: str,
+    scan_quota: Union[Unset, LoaddataFromFileScanQuota] = UNSET,
+    mode: Union[Unset, LoaddataFromFileMode] = UNSET,
 ) -> Optional[Union[ApiResponse, None, None, None, None]]:
     """ Restores SFTPGo data from a JSON backup file on the server. Users, folders and admins will be restored one by one and the restore is stopped if a user/folder/admin cannot be added or updated, so it could happen a partial restore """
 
@@ -125,5 +153,7 @@ async def asyncio(
         await asyncio_detailed(
             client=client,
             input_file=input_file,
+            scan_quota=scan_quota,
+            mode=mode,
         )
     ).parsed

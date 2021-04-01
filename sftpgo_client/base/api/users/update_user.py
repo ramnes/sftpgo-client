@@ -12,10 +12,11 @@ from ...types import UNSET, Response, Unset
 def _get_kwargs(
     *,
     client: Client,
+    username: str,
     json_body: User,
     disconnect: Union[Unset, UpdateUserDisconnect] = UNSET,
 ) -> Dict[str, Any]:
-    url = "{}/users/{username}".format(client.base_url)
+    url = "{}/users/{username}".format(client.base_url, username=username)
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
@@ -85,11 +86,13 @@ def _build_response(
 def sync_detailed(
     *,
     client: Client,
+    username: str,
     json_body: User,
     disconnect: Union[Unset, UpdateUserDisconnect] = UNSET,
 ) -> Response[Union[ApiResponse, None, None, None, None, None]]:
     kwargs = _get_kwargs(
         client=client,
+        username=username,
         json_body=json_body,
         disconnect=disconnect,
     )
@@ -104,6 +107,7 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
+    username: str,
     json_body: User,
     disconnect: Union[Unset, UpdateUserDisconnect] = UNSET,
 ) -> Optional[Union[ApiResponse, None, None, None, None, None]]:
@@ -111,6 +115,7 @@ def sync(
 
     return sync_detailed(
         client=client,
+        username=username,
         json_body=json_body,
         disconnect=disconnect,
     ).parsed
@@ -119,11 +124,13 @@ def sync(
 async def asyncio_detailed(
     *,
     client: Client,
+    username: str,
     json_body: User,
     disconnect: Union[Unset, UpdateUserDisconnect] = UNSET,
 ) -> Response[Union[ApiResponse, None, None, None, None, None]]:
     kwargs = _get_kwargs(
         client=client,
+        username=username,
         json_body=json_body,
         disconnect=disconnect,
     )
@@ -137,6 +144,7 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
+    username: str,
     json_body: User,
     disconnect: Union[Unset, UpdateUserDisconnect] = UNSET,
 ) -> Optional[Union[ApiResponse, None, None, None, None, None]]:
@@ -145,6 +153,7 @@ async def asyncio(
     return (
         await asyncio_detailed(
             client=client,
+            username=username,
             json_body=json_body,
             disconnect=disconnect,
         )

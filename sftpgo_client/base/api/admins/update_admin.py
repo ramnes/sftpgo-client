@@ -11,9 +11,10 @@ from ...types import Response
 def _get_kwargs(
     *,
     client: Client,
+    username: str,
     json_body: Admin,
 ) -> Dict[str, Any]:
-    url = "{}/admins/{username}".format(client.base_url)
+    url = "{}/admins/{username}".format(client.base_url, username=username)
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
@@ -73,10 +74,12 @@ def _build_response(
 def sync_detailed(
     *,
     client: Client,
+    username: str,
     json_body: Admin,
 ) -> Response[Union[ApiResponse, None, None, None, None, None]]:
     kwargs = _get_kwargs(
         client=client,
+        username=username,
         json_body=json_body,
     )
 
@@ -90,12 +93,14 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
+    username: str,
     json_body: Admin,
 ) -> Optional[Union[ApiResponse, None, None, None, None, None]]:
     """ Updates an existing admin """
 
     return sync_detailed(
         client=client,
+        username=username,
         json_body=json_body,
     ).parsed
 
@@ -103,10 +108,12 @@ def sync(
 async def asyncio_detailed(
     *,
     client: Client,
+    username: str,
     json_body: Admin,
 ) -> Response[Union[ApiResponse, None, None, None, None, None]]:
     kwargs = _get_kwargs(
         client=client,
+        username=username,
         json_body=json_body,
     )
 
@@ -119,6 +126,7 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
+    username: str,
     json_body: Admin,
 ) -> Optional[Union[ApiResponse, None, None, None, None, None]]:
     """ Updates an existing admin """
@@ -126,6 +134,7 @@ async def asyncio(
     return (
         await asyncio_detailed(
             client=client,
+            username=username,
             json_body=json_body,
         )
     ).parsed

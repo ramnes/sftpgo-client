@@ -10,8 +10,9 @@ from ...types import Response
 def _get_kwargs(
     *,
     client: Client,
+    name: str,
 ) -> Dict[str, Any]:
-    url = "{}/folders/{name}".format(client.base_url)
+    url = "{}/folders/{name}".format(client.base_url, name=name)
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
@@ -68,9 +69,11 @@ def _build_response(
 def sync_detailed(
     *,
     client: Client,
+    name: str,
 ) -> Response[Union[ApiResponse, None, None, None, None, None]]:
     kwargs = _get_kwargs(
         client=client,
+        name=name,
     )
 
     response = httpx.delete(
@@ -83,20 +86,24 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
+    name: str,
 ) -> Optional[Union[ApiResponse, None, None, None, None, None]]:
     """ Deletes an existing folder """
 
     return sync_detailed(
         client=client,
+        name=name,
     ).parsed
 
 
 async def asyncio_detailed(
     *,
     client: Client,
+    name: str,
 ) -> Response[Union[ApiResponse, None, None, None, None, None]]:
     kwargs = _get_kwargs(
         client=client,
+        name=name,
     )
 
     async with httpx.AsyncClient() as _client:
@@ -108,11 +115,13 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
+    name: str,
 ) -> Optional[Union[ApiResponse, None, None, None, None, None]]:
     """ Deletes an existing folder """
 
     return (
         await asyncio_detailed(
             client=client,
+            name=name,
         )
     ).parsed

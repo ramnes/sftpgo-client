@@ -1,2 +1,2 @@
-# TODO: replace with upstream openapi-python-client when PR #375 is merged and released
-https://github.com/ramnes/openapi-python-client/archive/797b76fd98d3546510ac52946056eaa745d7c685.zip
+# TODO: replace with upstream openapi-python-client when PR #375 and #376 are merged and released
+https://github.com/ramnes/openapi-python-client/archive/0b448149a440254cebe9561073972bc1c97cd85f.zip
