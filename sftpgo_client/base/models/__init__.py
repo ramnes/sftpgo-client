@@ -16,7 +16,7 @@ from .crypt_fs_config import CryptFsConfig
 from .data_provider_status import DataProviderStatus
 from .dir_permissions import DirPermissions
 from .dumpdata_indent import DumpdataIndent
-from .dumpdata_outpuata import DumpdataOutpuata
+from .dumpdata_output_data import DumpdataOutputData
 from .extensions_filter import ExtensionsFilter
 from .filesystem_config import FilesystemConfig
 from .filesystem_config_provider import FilesystemConfigProvider
