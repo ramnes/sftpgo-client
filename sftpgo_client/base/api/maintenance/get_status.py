@@ -26,7 +26,7 @@ def _get_kwargs(
 
 def _parse_response(
     *, response: httpx.Response
-) -> Optional[Union[ServicesStatus, None, None, None, None]]:
+) -> Optional[Union[None, ServicesStatus]]:
     if response.status_code == 200:
         response_200 = ServicesStatus.from_dict(response.json())
 
@@ -52,7 +52,7 @@ def _parse_response(
 
 def _build_response(
     *, response: httpx.Response
-) -> Response[Union[ServicesStatus, None, None, None, None]]:
+) -> Response[Union[None, ServicesStatus]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -64,7 +64,7 @@ def _build_response(
 def sync_detailed(
     *,
     client: Client,
-) -> Response[Union[ServicesStatus, None, None, None, None]]:
+) -> Response[Union[None, ServicesStatus]]:
     kwargs = _get_kwargs(
         client=client,
     )
@@ -79,7 +79,7 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
-) -> Optional[Union[ServicesStatus, None, None, None, None]]:
+) -> Optional[Union[None, ServicesStatus]]:
     """Retrieves the status of the active services"""
 
     return sync_detailed(
@@ -90,7 +90,7 @@ def sync(
 async def asyncio_detailed(
     *,
     client: Client,
-) -> Response[Union[ServicesStatus, None, None, None, None]]:
+) -> Response[Union[None, ServicesStatus]]:
     kwargs = _get_kwargs(
         client=client,
     )
@@ -104,7 +104,7 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
-) -> Optional[Union[ServicesStatus, None, None, None, None]]:
+) -> Optional[Union[None, ServicesStatus]]:
     """Retrieves the status of the active services"""
 
     return (

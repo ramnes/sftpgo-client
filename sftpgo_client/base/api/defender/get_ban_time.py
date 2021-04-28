@@ -31,9 +31,7 @@ def _get_kwargs(
     }
 
 
-def _parse_response(
-    *, response: httpx.Response
-) -> Optional[Union[BanStatus, None, None, None, None]]:
+def _parse_response(*, response: httpx.Response) -> Optional[Union[BanStatus, None]]:
     if response.status_code == 200:
         response_200 = BanStatus.from_dict(response.json())
 
@@ -57,9 +55,7 @@ def _parse_response(
     return None
 
 
-def _build_response(
-    *, response: httpx.Response
-) -> Response[Union[BanStatus, None, None, None, None]]:
+def _build_response(*, response: httpx.Response) -> Response[Union[BanStatus, None]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -72,7 +68,7 @@ def sync_detailed(
     *,
     client: Client,
     ip: str,
-) -> Response[Union[BanStatus, None, None, None, None]]:
+) -> Response[Union[BanStatus, None]]:
     kwargs = _get_kwargs(
         client=client,
         ip=ip,
@@ -89,7 +85,7 @@ def sync(
     *,
     client: Client,
     ip: str,
-) -> Optional[Union[BanStatus, None, None, None, None]]:
+) -> Optional[Union[BanStatus, None]]:
     """Returns the ban time for the specified IPv4/IPv6 address"""
 
     return sync_detailed(
@@ -102,7 +98,7 @@ async def asyncio_detailed(
     *,
     client: Client,
     ip: str,
-) -> Response[Union[BanStatus, None, None, None, None]]:
+) -> Response[Union[BanStatus, None]]:
     kwargs = _get_kwargs(
         client=client,
         ip=ip,
@@ -118,7 +114,7 @@ async def asyncio(
     *,
     client: Client,
     ip: str,
-) -> Optional[Union[BanStatus, None, None, None, None]]:
+) -> Optional[Union[BanStatus, None]]:
     """Returns the ban time for the specified IPv4/IPv6 address"""
 
     return (

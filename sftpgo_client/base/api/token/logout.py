@@ -24,9 +24,7 @@ def _get_kwargs(
     }
 
 
-def _parse_response(
-    *, response: httpx.Response
-) -> Optional[Union[ApiResponse, None, None, None]]:
+def _parse_response(*, response: httpx.Response) -> Optional[Union[ApiResponse, None]]:
     if response.status_code == 200:
         response_200 = ApiResponse.from_dict(response.json())
 
@@ -46,9 +44,7 @@ def _parse_response(
     return None
 
 
-def _build_response(
-    *, response: httpx.Response
-) -> Response[Union[ApiResponse, None, None, None]]:
+def _build_response(*, response: httpx.Response) -> Response[Union[ApiResponse, None]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -60,7 +56,7 @@ def _build_response(
 def sync_detailed(
     *,
     client: Client,
-) -> Response[Union[ApiResponse, None, None, None]]:
+) -> Response[Union[ApiResponse, None]]:
     kwargs = _get_kwargs(
         client=client,
     )
@@ -75,7 +71,7 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
-) -> Optional[Union[ApiResponse, None, None, None]]:
+) -> Optional[Union[ApiResponse, None]]:
     """Allows to invalidate a token before its expiration"""
 
     return sync_detailed(
@@ -86,7 +82,7 @@ def sync(
 async def asyncio_detailed(
     *,
     client: Client,
-) -> Response[Union[ApiResponse, None, None, None]]:
+) -> Response[Union[ApiResponse, None]]:
     kwargs = _get_kwargs(
         client=client,
     )
@@ -100,7 +96,7 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
-) -> Optional[Union[ApiResponse, None, None, None]]:
+) -> Optional[Union[ApiResponse, None]]:
     """Allows to invalidate a token before its expiration"""
 
     return (

@@ -26,7 +26,7 @@ def _get_kwargs(
 
 def _parse_response(
     *, response: httpx.Response
-) -> Optional[Union[List[FolderQuotaScan], None, None, None]]:
+) -> Optional[Union[List[FolderQuotaScan], None]]:
     if response.status_code == 200:
         response_200 = []
         _response_200 = response.json()
@@ -53,7 +53,7 @@ def _parse_response(
 
 def _build_response(
     *, response: httpx.Response
-) -> Response[Union[List[FolderQuotaScan], None, None, None]]:
+) -> Response[Union[List[FolderQuotaScan], None]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -65,7 +65,7 @@ def _build_response(
 def sync_detailed(
     *,
     client: Client,
-) -> Response[Union[List[FolderQuotaScan], None, None, None]]:
+) -> Response[Union[List[FolderQuotaScan], None]]:
     kwargs = _get_kwargs(
         client=client,
     )
@@ -80,7 +80,7 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
-) -> Optional[Union[List[FolderQuotaScan], None, None, None]]:
+) -> Optional[Union[List[FolderQuotaScan], None]]:
     """Returns the active quota scans for folders"""
 
     return sync_detailed(
@@ -91,7 +91,7 @@ def sync(
 async def asyncio_detailed(
     *,
     client: Client,
-) -> Response[Union[List[FolderQuotaScan], None, None, None]]:
+) -> Response[Union[List[FolderQuotaScan], None]]:
     kwargs = _get_kwargs(
         client=client,
     )
@@ -105,7 +105,7 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
-) -> Optional[Union[List[FolderQuotaScan], None, None, None]]:
+) -> Optional[Union[List[FolderQuotaScan], None]]:
     """Returns the active quota scans for folders"""
 
     return (

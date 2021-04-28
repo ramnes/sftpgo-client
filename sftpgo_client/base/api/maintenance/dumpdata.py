@@ -48,7 +48,7 @@ def _get_kwargs(
 
 def _parse_response(
     *, response: httpx.Response
-) -> Optional[Union[Union[ApiResponse, BackupData], None, None, None, None]]:
+) -> Optional[Union[None, Union[ApiResponse, BackupData]]]:
     if response.status_code == 200:
 
         def _parse_response_200(data: object) -> Union[ApiResponse, BackupData]:
@@ -92,7 +92,7 @@ def _parse_response(
 
 def _build_response(
     *, response: httpx.Response
-) -> Response[Union[Union[ApiResponse, BackupData], None, None, None, None]]:
+) -> Response[Union[None, Union[ApiResponse, BackupData]]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -107,7 +107,7 @@ def sync_detailed(
     output_file: Union[Unset, str] = UNSET,
     output_data: Union[Unset, DumpdataOutputData] = UNSET,
     indent: Union[Unset, DumpdataIndent] = UNSET,
-) -> Response[Union[Union[ApiResponse, BackupData], None, None, None, None]]:
+) -> Response[Union[None, Union[ApiResponse, BackupData]]]:
     kwargs = _get_kwargs(
         client=client,
         output_file=output_file,
@@ -128,7 +128,7 @@ def sync(
     output_file: Union[Unset, str] = UNSET,
     output_data: Union[Unset, DumpdataOutputData] = UNSET,
     indent: Union[Unset, DumpdataIndent] = UNSET,
-) -> Optional[Union[Union[ApiResponse, BackupData], None, None, None, None]]:
+) -> Optional[Union[None, Union[ApiResponse, BackupData]]]:
     """Backups data as data provider independent JSON. The backup can be saved in a local file on the server, to avoid exposing sensitive data over the network, or returned as response body. The output of dumpdata can be used as input for loaddata"""
 
     return sync_detailed(
@@ -145,7 +145,7 @@ async def asyncio_detailed(
     output_file: Union[Unset, str] = UNSET,
     output_data: Union[Unset, DumpdataOutputData] = UNSET,
     indent: Union[Unset, DumpdataIndent] = UNSET,
-) -> Response[Union[Union[ApiResponse, BackupData], None, None, None, None]]:
+) -> Response[Union[None, Union[ApiResponse, BackupData]]]:
     kwargs = _get_kwargs(
         client=client,
         output_file=output_file,
@@ -165,7 +165,7 @@ async def asyncio(
     output_file: Union[Unset, str] = UNSET,
     output_data: Union[Unset, DumpdataOutputData] = UNSET,
     indent: Union[Unset, DumpdataIndent] = UNSET,
-) -> Optional[Union[Union[ApiResponse, BackupData], None, None, None, None]]:
+) -> Optional[Union[None, Union[ApiResponse, BackupData]]]:
     """Backups data as data provider independent JSON. The backup can be saved in a local file on the server, to avoid exposing sensitive data over the network, or returned as response body. The output of dumpdata can be used as input for loaddata"""
 
     return (

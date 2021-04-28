@@ -24,9 +24,7 @@ def _get_kwargs(
     }
 
 
-def _parse_response(
-    *, response: httpx.Response
-) -> Optional[Union[Token, None, None, None]]:
+def _parse_response(*, response: httpx.Response) -> Optional[Union[None, Token]]:
     if response.status_code == 200:
         response_200 = Token.from_dict(response.json())
 
@@ -46,9 +44,7 @@ def _parse_response(
     return None
 
 
-def _build_response(
-    *, response: httpx.Response
-) -> Response[Union[Token, None, None, None]]:
+def _build_response(*, response: httpx.Response) -> Response[Union[None, Token]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -60,7 +56,7 @@ def _build_response(
 def sync_detailed(
     *,
     client: AuthenticatedClient,
-) -> Response[Union[Token, None, None, None]]:
+) -> Response[Union[None, Token]]:
     kwargs = _get_kwargs(
         client=client,
     )
@@ -75,7 +71,7 @@ def sync_detailed(
 def sync(
     *,
     client: AuthenticatedClient,
-) -> Optional[Union[Token, None, None, None]]:
+) -> Optional[Union[None, Token]]:
     """Returns an access token and its expiration"""
 
     return sync_detailed(
@@ -86,7 +82,7 @@ def sync(
 async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
-) -> Response[Union[Token, None, None, None]]:
+) -> Response[Union[None, Token]]:
     kwargs = _get_kwargs(
         client=client,
     )
@@ -100,7 +96,7 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: AuthenticatedClient,
-) -> Optional[Union[Token, None, None, None]]:
+) -> Optional[Union[None, Token]]:
     """Returns an access token and its expiration"""
 
     return (

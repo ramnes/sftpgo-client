@@ -27,9 +27,7 @@ def _get_kwargs(
     }
 
 
-def _parse_response(
-    *, response: httpx.Response
-) -> Optional[Union[ApiResponse, None, None, None, None]]:
+def _parse_response(*, response: httpx.Response) -> Optional[Union[ApiResponse, None]]:
     if response.status_code == 200:
         response_200 = ApiResponse.from_dict(response.json())
 
@@ -53,9 +51,7 @@ def _parse_response(
     return None
 
 
-def _build_response(
-    *, response: httpx.Response
-) -> Response[Union[ApiResponse, None, None, None, None]]:
+def _build_response(*, response: httpx.Response) -> Response[Union[ApiResponse, None]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -68,7 +64,7 @@ def sync_detailed(
     *,
     client: Client,
     connection_id: str,
-) -> Response[Union[ApiResponse, None, None, None, None]]:
+) -> Response[Union[ApiResponse, None]]:
     kwargs = _get_kwargs(
         client=client,
         connection_id=connection_id,
@@ -85,7 +81,7 @@ def sync(
     *,
     client: Client,
     connection_id: str,
-) -> Optional[Union[ApiResponse, None, None, None, None]]:
+) -> Optional[Union[ApiResponse, None]]:
     """Terminates an active connection"""
 
     return sync_detailed(
@@ -98,7 +94,7 @@ async def asyncio_detailed(
     *,
     client: Client,
     connection_id: str,
-) -> Response[Union[ApiResponse, None, None, None, None]]:
+) -> Response[Union[ApiResponse, None]]:
     kwargs = _get_kwargs(
         client=client,
         connection_id=connection_id,
@@ -114,7 +110,7 @@ async def asyncio(
     *,
     client: Client,
     connection_id: str,
-) -> Optional[Union[ApiResponse, None, None, None, None]]:
+) -> Optional[Union[ApiResponse, None]]:
     """Terminates an active connection"""
 
     return (

@@ -45,9 +45,7 @@ def _get_kwargs(
     }
 
 
-def _parse_response(
-    *, response: httpx.Response
-) -> Optional[Union[ApiResponse, None, None, None, None]]:
+def _parse_response(*, response: httpx.Response) -> Optional[Union[ApiResponse, None]]:
     if response.status_code == 200:
         response_200 = ApiResponse.from_dict(response.json())
 
@@ -71,9 +69,7 @@ def _parse_response(
     return None
 
 
-def _build_response(
-    *, response: httpx.Response
-) -> Response[Union[ApiResponse, None, None, None, None]]:
+def _build_response(*, response: httpx.Response) -> Response[Union[ApiResponse, None]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -88,7 +84,7 @@ def sync_detailed(
     input_file: str,
     scan_quota: Union[Unset, LoaddataFromFileScanQuota] = UNSET,
     mode: Union[Unset, LoaddataFromFileMode] = UNSET,
-) -> Response[Union[ApiResponse, None, None, None, None]]:
+) -> Response[Union[ApiResponse, None]]:
     kwargs = _get_kwargs(
         client=client,
         input_file=input_file,
@@ -109,7 +105,7 @@ def sync(
     input_file: str,
     scan_quota: Union[Unset, LoaddataFromFileScanQuota] = UNSET,
     mode: Union[Unset, LoaddataFromFileMode] = UNSET,
-) -> Optional[Union[ApiResponse, None, None, None, None]]:
+) -> Optional[Union[ApiResponse, None]]:
     """Restores SFTPGo data from a JSON backup file on the server. Users, folders and admins will be restored one by one and the restore is stopped if a user/folder/admin cannot be added or updated, so it could happen a partial restore"""
 
     return sync_detailed(
@@ -126,7 +122,7 @@ async def asyncio_detailed(
     input_file: str,
     scan_quota: Union[Unset, LoaddataFromFileScanQuota] = UNSET,
     mode: Union[Unset, LoaddataFromFileMode] = UNSET,
-) -> Response[Union[ApiResponse, None, None, None, None]]:
+) -> Response[Union[ApiResponse, None]]:
     kwargs = _get_kwargs(
         client=client,
         input_file=input_file,
@@ -146,7 +142,7 @@ async def asyncio(
     input_file: str,
     scan_quota: Union[Unset, LoaddataFromFileScanQuota] = UNSET,
     mode: Union[Unset, LoaddataFromFileMode] = UNSET,
-) -> Optional[Union[ApiResponse, None, None, None, None]]:
+) -> Optional[Union[ApiResponse, None]]:
     """Restores SFTPGo data from a JSON backup file on the server. Users, folders and admins will be restored one by one and the restore is stopped if a user/folder/admin cannot be added or updated, so it could happen a partial restore"""
 
     return (

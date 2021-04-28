@@ -28,9 +28,7 @@ def _get_kwargs(
     }
 
 
-def _parse_response(
-    *, response: httpx.Response
-) -> Optional[Union[Admin, None, None, None, None]]:
+def _parse_response(*, response: httpx.Response) -> Optional[Union[Admin, None]]:
     if response.status_code == 201:
         response_201 = Admin.from_dict(response.json())
 
@@ -54,9 +52,7 @@ def _parse_response(
     return None
 
 
-def _build_response(
-    *, response: httpx.Response
-) -> Response[Union[Admin, None, None, None, None]]:
+def _build_response(*, response: httpx.Response) -> Response[Union[Admin, None]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -69,7 +65,7 @@ def sync_detailed(
     *,
     client: Client,
     json_body: Admin,
-) -> Response[Union[Admin, None, None, None, None]]:
+) -> Response[Union[Admin, None]]:
     kwargs = _get_kwargs(
         client=client,
         json_body=json_body,
@@ -86,7 +82,7 @@ def sync(
     *,
     client: Client,
     json_body: Admin,
-) -> Optional[Union[Admin, None, None, None, None]]:
+) -> Optional[Union[Admin, None]]:
     """Adds a new admin"""
 
     return sync_detailed(
@@ -99,7 +95,7 @@ async def asyncio_detailed(
     *,
     client: Client,
     json_body: Admin,
-) -> Response[Union[Admin, None, None, None, None]]:
+) -> Response[Union[Admin, None]]:
     kwargs = _get_kwargs(
         client=client,
         json_body=json_body,
@@ -115,7 +111,7 @@ async def asyncio(
     *,
     client: Client,
     json_body: Admin,
-) -> Optional[Union[Admin, None, None, None, None]]:
+) -> Optional[Union[Admin, None]]:
     """Adds a new admin"""
 
     return (

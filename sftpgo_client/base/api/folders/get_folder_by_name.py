@@ -27,7 +27,7 @@ def _get_kwargs(
 
 def _parse_response(
     *, response: httpx.Response
-) -> Optional[Union[BaseVirtualFolder, None, None, None, None, None]]:
+) -> Optional[Union[BaseVirtualFolder, None]]:
     if response.status_code == 200:
         response_200 = BaseVirtualFolder.from_dict(response.json())
 
@@ -57,7 +57,7 @@ def _parse_response(
 
 def _build_response(
     *, response: httpx.Response
-) -> Response[Union[BaseVirtualFolder, None, None, None, None, None]]:
+) -> Response[Union[BaseVirtualFolder, None]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -70,7 +70,7 @@ def sync_detailed(
     *,
     client: Client,
     name: str,
-) -> Response[Union[BaseVirtualFolder, None, None, None, None, None]]:
+) -> Response[Union[BaseVirtualFolder, None]]:
     kwargs = _get_kwargs(
         client=client,
         name=name,
@@ -87,7 +87,7 @@ def sync(
     *,
     client: Client,
     name: str,
-) -> Optional[Union[BaseVirtualFolder, None, None, None, None, None]]:
+) -> Optional[Union[BaseVirtualFolder, None]]:
     """Returns the folder with the given name if it exists."""
 
     return sync_detailed(
@@ -100,7 +100,7 @@ async def asyncio_detailed(
     *,
     client: Client,
     name: str,
-) -> Response[Union[BaseVirtualFolder, None, None, None, None, None]]:
+) -> Response[Union[BaseVirtualFolder, None]]:
     kwargs = _get_kwargs(
         client=client,
         name=name,
@@ -116,7 +116,7 @@ async def asyncio(
     *,
     client: Client,
     name: str,
-) -> Optional[Union[BaseVirtualFolder, None, None, None, None, None]]:
+) -> Optional[Union[BaseVirtualFolder, None]]:
     """Returns the folder with the given name if it exists."""
 
     return (
