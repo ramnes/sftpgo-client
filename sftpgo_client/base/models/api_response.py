@@ -9,7 +9,7 @@ T = TypeVar("T", bound="ApiResponse")
 
 @attr.s(auto_attribs=True)
 class ApiResponse:
-    """  """
+    """ """
 
     message: Union[Unset, str] = UNSET
     error: Union[Unset, str] = UNSET

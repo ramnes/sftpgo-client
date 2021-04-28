@@ -87,7 +87,7 @@ def sync(
     client: Client,
     json_body: Admin,
 ) -> Optional[Union[Admin, None, None, None, None]]:
-    """ Adds a new admin """
+    """Adds a new admin"""
 
     return sync_detailed(
         client=client,
@@ -116,7 +116,7 @@ async def asyncio(
     client: Client,
     json_body: Admin,
 ) -> Optional[Union[Admin, None, None, None, None]]:
-    """ Adds a new admin """
+    """Adds a new admin"""
 
     return (
         await asyncio_detailed(

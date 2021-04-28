@@ -9,7 +9,7 @@ T = TypeVar("T", bound="DataProviderStatus")
 
 @attr.s(auto_attribs=True)
 class DataProviderStatus:
-    """  """
+    """ """
 
     is_active: Union[Unset, bool] = UNSET
     driver: Union[Unset, str] = UNSET

@@ -9,7 +9,7 @@ T = TypeVar("T", bound="ExtensionsFilter")
 
 @attr.s(auto_attribs=True)
 class ExtensionsFilter:
-    """  """
+    """ """
 
     path: Union[Unset, str] = UNSET
     allowed_extensions: Union[Unset, List[str]] = UNSET

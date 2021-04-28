@@ -11,7 +11,7 @@ T = TypeVar("T", bound="AzureBlobFsConfig")
 
 @attr.s(auto_attribs=True)
 class AzureBlobFsConfig:
-    """ Azure Blob Storage configuration details """
+    """Azure Blob Storage configuration details"""
 
     container: Union[Unset, str] = UNSET
     account_name: Union[Unset, str] = UNSET

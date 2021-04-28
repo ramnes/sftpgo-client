@@ -9,7 +9,7 @@ T = TypeVar("T", bound="PatternsFilter")
 
 @attr.s(auto_attribs=True)
 class PatternsFilter:
-    """  """
+    """ """
 
     path: Union[Unset, str] = UNSET
     allowed_patterns: Union[Unset, List[str]] = UNSET

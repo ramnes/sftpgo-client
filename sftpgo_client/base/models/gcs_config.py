@@ -11,7 +11,7 @@ T = TypeVar("T", bound="GCSConfig")
 
 @attr.s(auto_attribs=True)
 class GCSConfig:
-    """ Google Cloud Storage configuration details. The "credentials" field must be populated only when adding/updating a user. It will be always omitted, since there are sensitive data, when you search/get users """
+    """Google Cloud Storage configuration details. The "credentials" field must be populated only when adding/updating a user. It will be always omitted, since there are sensitive data, when you search/get users"""
 
     bucket: Union[Unset, str] = UNSET
     credentials: Union[Unset, Secret] = UNSET

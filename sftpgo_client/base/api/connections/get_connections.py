@@ -81,7 +81,7 @@ def sync(
     *,
     client: Client,
 ) -> Optional[Union[List[ConnectionStatus], None, None, None]]:
-    """ Returns the active users and info about their current uploads/downloads """
+    """Returns the active users and info about their current uploads/downloads"""
 
     return sync_detailed(
         client=client,
@@ -106,7 +106,7 @@ async def asyncio(
     *,
     client: Client,
 ) -> Optional[Union[List[ConnectionStatus], None, None, None]]:
-    """ Returns the active users and info about their current uploads/downloads """
+    """Returns the active users and info about their current uploads/downloads"""
 
     return (
         await asyncio_detailed(

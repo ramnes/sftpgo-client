@@ -9,7 +9,7 @@ T = TypeVar("T", bound="AdminFilters")
 
 @attr.s(auto_attribs=True)
 class AdminFilters:
-    """  """
+    """ """
 
     allow_list: Union[Unset, List[str]] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)

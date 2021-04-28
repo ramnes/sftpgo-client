@@ -96,7 +96,7 @@ def sync(
     name: str,
     json_body: BaseVirtualFolder,
 ) -> Optional[Union[ApiResponse, None, None, None, None, None]]:
-    """ Updates an existing folder """
+    """Updates an existing folder"""
 
     return sync_detailed(
         client=client,
@@ -129,7 +129,7 @@ async def asyncio(
     name: str,
     json_body: BaseVirtualFolder,
 ) -> Optional[Union[ApiResponse, None, None, None, None, None]]:
-    """ Updates an existing folder """
+    """Updates an existing folder"""
 
     return (
         await asyncio_detailed(

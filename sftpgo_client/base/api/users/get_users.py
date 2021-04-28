@@ -110,7 +110,7 @@ def sync(
     limit: Union[Unset, int] = 100,
     order: Union[Unset, GetUsersOrder] = UNSET,
 ) -> Optional[Union[List[User], None, None, None, None]]:
-    """ Returns an array with one or more users. For security reasons hashed passwords are omitted in the response """
+    """Returns an array with one or more users. For security reasons hashed passwords are omitted in the response"""
 
     return sync_detailed(
         client=client,
@@ -147,7 +147,7 @@ async def asyncio(
     limit: Union[Unset, int] = 100,
     order: Union[Unset, GetUsersOrder] = UNSET,
 ) -> Optional[Union[List[User], None, None, None, None]]:
-    """ Returns an array with one or more users. For security reasons hashed passwords are omitted in the response """
+    """Returns an array with one or more users. For security reasons hashed passwords are omitted in the response"""
 
     return (
         await asyncio_detailed(

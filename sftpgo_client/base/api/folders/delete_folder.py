@@ -88,7 +88,7 @@ def sync(
     client: Client,
     name: str,
 ) -> Optional[Union[ApiResponse, None, None, None, None, None]]:
-    """ Deletes an existing folder """
+    """Deletes an existing folder"""
 
     return sync_detailed(
         client=client,
@@ -117,7 +117,7 @@ async def asyncio(
     client: Client,
     name: str,
 ) -> Optional[Union[ApiResponse, None, None, None, None, None]]:
-    """ Deletes an existing folder """
+    """Deletes an existing folder"""
 
     return (
         await asyncio_detailed(

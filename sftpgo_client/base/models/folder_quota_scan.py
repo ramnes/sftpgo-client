@@ -9,7 +9,7 @@ T = TypeVar("T", bound="FolderQuotaScan")
 
 @attr.s(auto_attribs=True)
 class FolderQuotaScan:
-    """  """
+    """ """
 
     name: Union[Unset, str] = UNSET
     start_time: Union[Unset, int] = UNSET

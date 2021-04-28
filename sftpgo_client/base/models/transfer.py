@@ -10,7 +10,7 @@ T = TypeVar("T", bound="Transfer")
 
 @attr.s(auto_attribs=True)
 class Transfer:
-    """  """
+    """ """
 
     operation_type: Union[Unset, TransferOperationType] = UNSET
     path: Union[Unset, str] = UNSET

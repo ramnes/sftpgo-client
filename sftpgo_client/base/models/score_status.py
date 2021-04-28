@@ -9,7 +9,7 @@ T = TypeVar("T", bound="ScoreStatus")
 
 @attr.s(auto_attribs=True)
 class ScoreStatus:
-    """  """
+    """ """
 
     score: Union[Unset, int] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)

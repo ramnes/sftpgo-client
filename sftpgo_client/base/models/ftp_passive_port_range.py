@@ -9,7 +9,7 @@ T = TypeVar("T", bound="FTPPassivePortRange")
 
 @attr.s(auto_attribs=True)
 class FTPPassivePortRange:
-    """  """
+    """ """
 
     start: Union[Unset, int] = UNSET
     end: Union[Unset, int] = UNSET

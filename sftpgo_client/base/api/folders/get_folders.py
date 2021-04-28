@@ -110,7 +110,7 @@ def sync(
     limit: Union[Unset, int] = 100,
     order: Union[Unset, GetFoldersOrder] = UNSET,
 ) -> Optional[Union[List[BaseVirtualFolder], None, None, None, None]]:
-    """ Returns an array with one or more folders """
+    """Returns an array with one or more folders"""
 
     return sync_detailed(
         client=client,
@@ -147,7 +147,7 @@ async def asyncio(
     limit: Union[Unset, int] = 100,
     order: Union[Unset, GetFoldersOrder] = UNSET,
 ) -> Optional[Union[List[BaseVirtualFolder], None, None, None, None]]:
-    """ Returns an array with one or more folders """
+    """Returns an array with one or more folders"""
 
     return (
         await asyncio_detailed(

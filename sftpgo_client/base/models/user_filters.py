@@ -14,7 +14,7 @@ T = TypeVar("T", bound="UserFilters")
 
 @attr.s(auto_attribs=True)
 class UserFilters:
-    """ Additional user restrictions """
+    """Additional user restrictions"""
 
     allowed_ip: Union[Unset, List[str]] = UNSET
     denied_ip: Union[Unset, List[str]] = UNSET

@@ -90,7 +90,7 @@ def sync(
     client: Client,
     ip: str,
 ) -> Optional[Union[BanStatus, None, None, None, None]]:
-    """ Returns the ban time for the specified IPv4/IPv6 address """
+    """Returns the ban time for the specified IPv4/IPv6 address"""
 
     return sync_detailed(
         client=client,
@@ -119,7 +119,7 @@ async def asyncio(
     client: Client,
     ip: str,
 ) -> Optional[Union[BanStatus, None, None, None, None]]:
-    """ Returns the ban time for the specified IPv4/IPv6 address """
+    """Returns the ban time for the specified IPv4/IPv6 address"""
 
     return (
         await asyncio_detailed(

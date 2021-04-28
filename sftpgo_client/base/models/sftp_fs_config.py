@@ -10,7 +10,7 @@ T = TypeVar("T", bound="SFTPFsConfig")
 
 @attr.s(auto_attribs=True)
 class SFTPFsConfig:
-    """  """
+    """ """
 
     endpoint: Union[Unset, str] = UNSET
     username: Union[Unset, str] = UNSET

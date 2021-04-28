@@ -7,7 +7,7 @@ T = TypeVar("T", bound="UserPermissions")
 
 @attr.s(auto_attribs=True)
 class UserPermissions:
-    """  """
+    """ """
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 

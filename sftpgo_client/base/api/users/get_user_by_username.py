@@ -88,7 +88,7 @@ def sync(
     client: Client,
     username: str,
 ) -> Optional[Union[User, None, None, None, None, None]]:
-    """ Returns the user with the given username if it exists. For security reasons the hashed password is omitted in the response """
+    """Returns the user with the given username if it exists. For security reasons the hashed password is omitted in the response"""
 
     return sync_detailed(
         client=client,
@@ -117,7 +117,7 @@ async def asyncio(
     client: Client,
     username: str,
 ) -> Optional[Union[User, None, None, None, None, None]]:
-    """ Returns the user with the given username if it exists. For security reasons the hashed password is omitted in the response """
+    """Returns the user with the given username if it exists. For security reasons the hashed password is omitted in the response"""
 
     return (
         await asyncio_detailed(

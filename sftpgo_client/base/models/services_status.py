@@ -14,7 +14,7 @@ T = TypeVar("T", bound="ServicesStatus")
 
 @attr.s(auto_attribs=True)
 class ServicesStatus:
-    """  """
+    """ """
 
     ssh: Union[Unset, SSHServiceStatus] = UNSET
     ftp: Union[Unset, FTPServiceStatus] = UNSET

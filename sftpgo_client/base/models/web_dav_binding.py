@@ -9,7 +9,7 @@ T = TypeVar("T", bound="WebDAVBinding")
 
 @attr.s(auto_attribs=True)
 class WebDAVBinding:
-    """  """
+    """ """
 
     address: Union[Unset, str] = UNSET
     port: Union[Unset, int] = UNSET

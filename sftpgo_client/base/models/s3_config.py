@@ -10,7 +10,7 @@ T = TypeVar("T", bound="S3Config")
 
 @attr.s(auto_attribs=True)
 class S3Config:
-    """ S3 Compatible Object Storage configuration details """
+    """S3 Compatible Object Storage configuration details"""
 
     bucket: Union[Unset, str] = UNSET
     region: Union[Unset, str] = UNSET

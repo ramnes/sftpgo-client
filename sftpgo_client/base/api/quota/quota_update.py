@@ -111,7 +111,7 @@ def sync(
     json_body: User,
     mode: Union[Unset, QuotaUpdateMode] = UNSET,
 ) -> Optional[Union[ApiResponse, None, None, None, None, None, None]]:
-    """ Sets the current used quota limits for the given user """
+    """Sets the current used quota limits for the given user"""
 
     return sync_detailed(
         client=client,
@@ -144,7 +144,7 @@ async def asyncio(
     json_body: User,
     mode: Union[Unset, QuotaUpdateMode] = UNSET,
 ) -> Optional[Union[ApiResponse, None, None, None, None, None, None]]:
-    """ Sets the current used quota limits for the given user """
+    """Sets the current used quota limits for the given user"""
 
     return (
         await asyncio_detailed(

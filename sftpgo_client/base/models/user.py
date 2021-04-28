@@ -14,7 +14,7 @@ T = TypeVar("T", bound="User")
 
 @attr.s(auto_attribs=True)
 class User:
-    """  """
+    """ """
 
     id_: Union[Unset, int] = UNSET
     status: Union[Unset, UserStatus] = UNSET

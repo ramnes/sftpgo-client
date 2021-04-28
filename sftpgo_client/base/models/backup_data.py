@@ -12,7 +12,7 @@ T = TypeVar("T", bound="BackupData")
 
 @attr.s(auto_attribs=True)
 class BackupData:
-    """  """
+    """ """
 
     users: Union[Unset, List[User]] = UNSET
     folders: Union[Unset, List[BaseVirtualFolder]] = UNSET

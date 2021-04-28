@@ -87,7 +87,7 @@ def sync(
     client: Client,
     json_body: BaseVirtualFolder,
 ) -> Optional[Union[BaseVirtualFolder, None, None, None, None]]:
-    """ Adds a new folder. A quota scan is required to update the used files/size """
+    """Adds a new folder. A quota scan is required to update the used files/size"""
 
     return sync_detailed(
         client=client,
@@ -116,7 +116,7 @@ async def asyncio(
     client: Client,
     json_body: BaseVirtualFolder,
 ) -> Optional[Union[BaseVirtualFolder, None, None, None, None]]:
-    """ Adds a new folder. A quota scan is required to update the used files/size """
+    """Adds a new folder. A quota scan is required to update the used files/size"""
 
     return (
         await asyncio_detailed(

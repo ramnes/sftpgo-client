@@ -88,7 +88,7 @@ def sync(
     client: Client,
     name: str,
 ) -> Optional[Union[BaseVirtualFolder, None, None, None, None, None]]:
-    """ Returns the folder with the given name if it exists. """
+    """Returns the folder with the given name if it exists."""
 
     return sync_detailed(
         client=client,
@@ -117,7 +117,7 @@ async def asyncio(
     client: Client,
     name: str,
 ) -> Optional[Union[BaseVirtualFolder, None, None, None, None, None]]:
-    """ Returns the folder with the given name if it exists. """
+    """Returns the folder with the given name if it exists."""
 
     return (
         await asyncio_detailed(

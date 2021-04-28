@@ -10,7 +10,7 @@ T = TypeVar("T", bound="VirtualFolder")
 
 @attr.s(auto_attribs=True)
 class VirtualFolder:
-    """ A virtual folder is a mapping between a SFTPGo virtual path and a filesystem path outside the user home directory. The specified paths must be absolute and the virtual path cannot be "/", it must be a sub directory. The parent directory for the specified virtual path must exist. SFTPGo will try to automatically create any missing parent directory for the configured virtual folders at user login. """
+    """A virtual folder is a mapping between a SFTPGo virtual path and a filesystem path outside the user home directory. The specified paths must be absolute and the virtual path cannot be "/", it must be a sub directory. The parent directory for the specified virtual path must exist. SFTPGo will try to automatically create any missing parent directory for the configured virtual folders at user login."""
 
     virtual_path: str
     id_: Union[Unset, int] = UNSET

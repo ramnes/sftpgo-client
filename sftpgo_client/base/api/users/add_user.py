@@ -87,7 +87,7 @@ def sync(
     client: Client,
     json_body: User,
 ) -> Optional[Union[User, None, None, None, None]]:
-    """ Adds a new user """
+    """Adds a new user"""
 
     return sync_detailed(
         client=client,
@@ -116,7 +116,7 @@ async def asyncio(
     client: Client,
     json_body: User,
 ) -> Optional[Union[User, None, None, None, None]]:
-    """ Adds a new user """
+    """Adds a new user"""
 
     return (
         await asyncio_detailed(

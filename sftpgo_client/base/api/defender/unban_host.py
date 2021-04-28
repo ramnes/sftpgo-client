@@ -92,7 +92,7 @@ def sync(
     client: Client,
     json_body: UnbanHostJsonBody,
 ) -> Optional[Union[ApiResponse, None, None, None, None, None]]:
-    """ Removes the specified IPv4/IPv6 from the banned ones """
+    """Removes the specified IPv4/IPv6 from the banned ones"""
 
     return sync_detailed(
         client=client,
@@ -121,7 +121,7 @@ async def asyncio(
     client: Client,
     json_body: UnbanHostJsonBody,
 ) -> Optional[Union[ApiResponse, None, None, None, None, None]]:
-    """ Removes the specified IPv4/IPv6 from the banned ones """
+    """Removes the specified IPv4/IPv6 from the banned ones"""
 
     return (
         await asyncio_detailed(

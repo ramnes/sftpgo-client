@@ -90,7 +90,7 @@ def sync(
     client: Client,
     ip: str,
 ) -> Optional[Union[ScoreStatus, None, None, None, None]]:
-    """ Returns the score for the specified IPv4/IPv6 address """
+    """Returns the score for the specified IPv4/IPv6 address"""
 
     return sync_detailed(
         client=client,
@@ -119,7 +119,7 @@ async def asyncio(
     client: Client,
     ip: str,
 ) -> Optional[Union[ScoreStatus, None, None, None, None]]:
-    """ Returns the score for the specified IPv4/IPv6 address """
+    """Returns the score for the specified IPv4/IPv6 address"""
 
     return (
         await asyncio_detailed(

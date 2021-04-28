@@ -86,7 +86,7 @@ def sync(
     client: Client,
     connection_id: str,
 ) -> Optional[Union[ApiResponse, None, None, None, None]]:
-    """ Terminates an active connection """
+    """Terminates an active connection"""
 
     return sync_detailed(
         client=client,
@@ -115,7 +115,7 @@ async def asyncio(
     client: Client,
     connection_id: str,
 ) -> Optional[Union[ApiResponse, None, None, None, None]]:
-    """ Terminates an active connection """
+    """Terminates an active connection"""
 
     return (
         await asyncio_detailed(

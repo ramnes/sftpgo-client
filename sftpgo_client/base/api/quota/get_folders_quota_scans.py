@@ -81,7 +81,7 @@ def sync(
     *,
     client: Client,
 ) -> Optional[Union[List[FolderQuotaScan], None, None, None]]:
-    """ Returns the active quota scans for folders """
+    """Returns the active quota scans for folders"""
 
     return sync_detailed(
         client=client,
@@ -106,7 +106,7 @@ async def asyncio(
     *,
     client: Client,
 ) -> Optional[Union[List[FolderQuotaScan], None, None, None]]:
-    """ Returns the active quota scans for folders """
+    """Returns the active quota scans for folders"""
 
     return (
         await asyncio_detailed(

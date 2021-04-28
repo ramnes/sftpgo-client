@@ -84,7 +84,7 @@ def sync(
     client: Client,
     json_body: PwdChange,
 ) -> Optional[Union[ApiResponse, None, None, None]]:
-    """ Changes the password for the logged in admin """
+    """Changes the password for the logged in admin"""
 
     return sync_detailed(
         client=client,
@@ -113,7 +113,7 @@ async def asyncio(
     client: Client,
     json_body: PwdChange,
 ) -> Optional[Union[ApiResponse, None, None, None]]:
-    """ Changes the password for the logged in admin """
+    """Changes the password for the logged in admin"""
 
     return (
         await asyncio_detailed(

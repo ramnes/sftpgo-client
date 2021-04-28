@@ -10,7 +10,7 @@ T = TypeVar("T", bound="CryptFsConfig")
 
 @attr.s(auto_attribs=True)
 class CryptFsConfig:
-    """ Crypt filesystem configuration details """
+    """Crypt filesystem configuration details"""
 
     passphrase: Union[Unset, Secret] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)

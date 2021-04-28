@@ -9,7 +9,7 @@ T = TypeVar("T", bound="DirPermissions")
 
 @attr.s(auto_attribs=True)
 class DirPermissions:
-    """ hash map with directory as key and an array of permissions as value. Directories must be absolute paths, permissions for root directory ("/") are required """
+    """hash map with directory as key and an array of permissions as value. Directories must be absolute paths, permissions for root directory ("/") are required"""
 
     additional_properties: Dict[str, List[Permission]] = attr.ib(
         init=False, factory=dict

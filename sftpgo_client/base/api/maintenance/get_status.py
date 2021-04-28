@@ -80,7 +80,7 @@ def sync(
     *,
     client: Client,
 ) -> Optional[Union[ServicesStatus, None, None, None, None]]:
-    """ Retrieves the status of the active services """
+    """Retrieves the status of the active services"""
 
     return sync_detailed(
         client=client,
@@ -105,7 +105,7 @@ async def asyncio(
     *,
     client: Client,
 ) -> Optional[Union[ServicesStatus, None, None, None, None]]:
-    """ Retrieves the status of the active services """
+    """Retrieves the status of the active services"""
 
     return (
         await asyncio_detailed(

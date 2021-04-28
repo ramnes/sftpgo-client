@@ -111,7 +111,7 @@ def sync(
     json_body: User,
     disconnect: Union[Unset, UpdateUserDisconnect] = UNSET,
 ) -> Optional[Union[ApiResponse, None, None, None, None, None]]:
-    """ Updates an existing user and optionally disconnects it, if connected, to apply the new settings """
+    """Updates an existing user and optionally disconnects it, if connected, to apply the new settings"""
 
     return sync_detailed(
         client=client,
@@ -148,7 +148,7 @@ async def asyncio(
     json_body: User,
     disconnect: Union[Unset, UpdateUserDisconnect] = UNSET,
 ) -> Optional[Union[ApiResponse, None, None, None, None, None]]:
-    """ Updates an existing user and optionally disconnects it, if connected, to apply the new settings """
+    """Updates an existing user and optionally disconnects it, if connected, to apply the new settings"""
 
     return (
         await asyncio_detailed(

@@ -76,7 +76,7 @@ def sync(
     *,
     client: Client,
 ) -> Optional[Union[ApiResponse, None, None, None]]:
-    """ Allows to invalidate a token before its expiration """
+    """Allows to invalidate a token before its expiration"""
 
     return sync_detailed(
         client=client,
@@ -101,7 +101,7 @@ async def asyncio(
     *,
     client: Client,
 ) -> Optional[Union[ApiResponse, None, None, None]]:
-    """ Allows to invalidate a token before its expiration """
+    """Allows to invalidate a token before its expiration"""
 
     return (
         await asyncio_detailed(

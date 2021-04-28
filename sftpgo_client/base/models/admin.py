@@ -12,7 +12,7 @@ T = TypeVar("T", bound="Admin")
 
 @attr.s(auto_attribs=True)
 class Admin:
-    """  """
+    """ """
 
     id_: Union[Unset, int] = UNSET
     status: Union[Unset, AdminStatus] = UNSET

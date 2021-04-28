@@ -9,7 +9,7 @@ T = TypeVar("T", bound="SSHBinding")
 
 @attr.s(auto_attribs=True)
 class SSHBinding:
-    """  """
+    """ """
 
     address: Union[Unset, str] = UNSET
     port: Union[Unset, int] = UNSET

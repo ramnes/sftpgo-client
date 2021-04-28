@@ -15,7 +15,7 @@ T = TypeVar("T", bound="FilesystemConfig")
 
 @attr.s(auto_attribs=True)
 class FilesystemConfig:
-    """ Storage filesystem details """
+    """Storage filesystem details"""
 
     provider: Union[Unset, FilesystemConfigProvider] = UNSET
     s3config: Union[Unset, S3Config] = UNSET

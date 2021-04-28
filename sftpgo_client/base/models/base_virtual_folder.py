@@ -10,7 +10,7 @@ T = TypeVar("T", bound="BaseVirtualFolder")
 
 @attr.s(auto_attribs=True)
 class BaseVirtualFolder:
-    """ Defines the filesystem for the virtual folder and the used quota limits. The same folder can be shared among multiple users and each user can have different quota limits or a different virtual path. """
+    """Defines the filesystem for the virtual folder and the used quota limits. The same folder can be shared among multiple users and each user can have different quota limits or a different virtual path."""
 
     id_: Union[Unset, int] = UNSET
     name: Union[Unset, str] = UNSET

@@ -129,7 +129,7 @@ def sync(
     output_data: Union[Unset, DumpdataOutputData] = UNSET,
     indent: Union[Unset, DumpdataIndent] = UNSET,
 ) -> Optional[Union[Union[ApiResponse, BackupData], None, None, None, None]]:
-    """ Backups data as data provider independent JSON. The backup can be saved in a local file on the server, to avoid exposing sensitive data over the network, or returned as response body. The output of dumpdata can be used as input for loaddata """
+    """Backups data as data provider independent JSON. The backup can be saved in a local file on the server, to avoid exposing sensitive data over the network, or returned as response body. The output of dumpdata can be used as input for loaddata"""
 
     return sync_detailed(
         client=client,
@@ -166,7 +166,7 @@ async def asyncio(
     output_data: Union[Unset, DumpdataOutputData] = UNSET,
     indent: Union[Unset, DumpdataIndent] = UNSET,
 ) -> Optional[Union[Union[ApiResponse, BackupData], None, None, None, None]]:
-    """ Backups data as data provider independent JSON. The backup can be saved in a local file on the server, to avoid exposing sensitive data over the network, or returned as response body. The output of dumpdata can be used as input for loaddata """
+    """Backups data as data provider independent JSON. The backup can be saved in a local file on the server, to avoid exposing sensitive data over the network, or returned as response body. The output of dumpdata can be used as input for loaddata"""
 
     return (
         await asyncio_detailed(

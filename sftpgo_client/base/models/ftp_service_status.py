@@ -11,7 +11,7 @@ T = TypeVar("T", bound="FTPServiceStatus")
 
 @attr.s(auto_attribs=True)
 class FTPServiceStatus:
-    """  """
+    """ """
 
     is_active: Union[Unset, bool] = UNSET
     bindings: Union[Unset, None, List[FTPDBinding]] = UNSET

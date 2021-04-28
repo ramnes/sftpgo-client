@@ -111,7 +111,7 @@ def sync(
     json_body: BaseVirtualFolder,
     mode: Union[Unset, FolderQuotaUpdateMode] = UNSET,
 ) -> Optional[Union[ApiResponse, None, None, None, None, None, None]]:
-    """ Sets the current used quota limits for the given folder """
+    """Sets the current used quota limits for the given folder"""
 
     return sync_detailed(
         client=client,
@@ -144,7 +144,7 @@ async def asyncio(
     json_body: BaseVirtualFolder,
     mode: Union[Unset, FolderQuotaUpdateMode] = UNSET,
 ) -> Optional[Union[ApiResponse, None, None, None, None, None, None]]:
-    """ Sets the current used quota limits for the given folder """
+    """Sets the current used quota limits for the given folder"""
 
     return (
         await asyncio_detailed(

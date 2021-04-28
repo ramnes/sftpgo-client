@@ -11,7 +11,7 @@ T = TypeVar("T", bound="ConnectionStatus")
 
 @attr.s(auto_attribs=True)
 class ConnectionStatus:
-    """  """
+    """ """
 
     username: Union[Unset, str] = UNSET
     connection_id: Union[Unset, str] = UNSET

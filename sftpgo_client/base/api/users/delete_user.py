@@ -88,7 +88,7 @@ def sync(
     client: Client,
     username: str,
 ) -> Optional[Union[ApiResponse, None, None, None, None, None]]:
-    """ Deletes an existing user """
+    """Deletes an existing user"""
 
     return sync_detailed(
         client=client,
@@ -117,7 +117,7 @@ async def asyncio(
     client: Client,
     username: str,
 ) -> Optional[Union[ApiResponse, None, None, None, None, None]]:
-    """ Deletes an existing user """
+    """Deletes an existing user"""
 
     return (
         await asyncio_detailed(

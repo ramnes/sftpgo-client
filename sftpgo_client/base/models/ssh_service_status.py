@@ -11,7 +11,7 @@ T = TypeVar("T", bound="SSHServiceStatus")
 
 @attr.s(auto_attribs=True)
 class SSHServiceStatus:
-    """  """
+    """ """
 
     is_active: Union[Unset, bool] = UNSET
     bindings: Union[Unset, None, List[SSHBinding]] = UNSET

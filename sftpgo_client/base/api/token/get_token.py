@@ -76,7 +76,7 @@ def sync(
     *,
     client: AuthenticatedClient,
 ) -> Optional[Union[Token, None, None, None]]:
-    """ Returns an access token and its expiration """
+    """Returns an access token and its expiration"""
 
     return sync_detailed(
         client=client,
@@ -101,7 +101,7 @@ async def asyncio(
     *,
     client: AuthenticatedClient,
 ) -> Optional[Union[Token, None, None, None]]:
-    """ Returns an access token and its expiration """
+    """Returns an access token and its expiration"""
 
     return (
         await asyncio_detailed(

@@ -115,7 +115,7 @@ def sync(
     scan_quota: Union[Unset, LoaddataFromRequestBodyScanQuota] = UNSET,
     mode: Union[Unset, LoaddataFromRequestBodyMode] = UNSET,
 ) -> Optional[Union[ApiResponse, None, None, None, None]]:
-    """ Restores SFTPGo data from a JSON backup. Users, folders and admins will be restored one by one and the restore is stopped if a user/folder/admin cannot be added or updated, so it could happen a partial restore """
+    """Restores SFTPGo data from a JSON backup. Users, folders and admins will be restored one by one and the restore is stopped if a user/folder/admin cannot be added or updated, so it could happen a partial restore"""
 
     return sync_detailed(
         client=client,
@@ -152,7 +152,7 @@ async def asyncio(
     scan_quota: Union[Unset, LoaddataFromRequestBodyScanQuota] = UNSET,
     mode: Union[Unset, LoaddataFromRequestBodyMode] = UNSET,
 ) -> Optional[Union[ApiResponse, None, None, None, None]]:
-    """ Restores SFTPGo data from a JSON backup. Users, folders and admins will be restored one by one and the restore is stopped if a user/folder/admin cannot be added or updated, so it could happen a partial restore """
+    """Restores SFTPGo data from a JSON backup. Users, folders and admins will be restored one by one and the restore is stopped if a user/folder/admin cannot be added or updated, so it could happen a partial restore"""
 
     return (
         await asyncio_detailed(

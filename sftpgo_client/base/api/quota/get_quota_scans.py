@@ -81,7 +81,7 @@ def sync(
     *,
     client: Client,
 ) -> Optional[Union[List[QuotaScan], None, None, None]]:
-    """ Returns active user quota scans """
+    """Returns active user quota scans"""
 
     return sync_detailed(
         client=client,
@@ -106,7 +106,7 @@ async def asyncio(
     *,
     client: Client,
 ) -> Optional[Union[List[QuotaScan], None, None, None]]:
-    """ Returns active user quota scans """
+    """Returns active user quota scans"""
 
     return (
         await asyncio_detailed(

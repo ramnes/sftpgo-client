@@ -76,7 +76,7 @@ def sync(
     *,
     client: Client,
 ) -> Optional[Union[VersionInfo, None, None, None]]:
-    """ Returns version details such as the version number, build date, commit hash and enabled features """
+    """Returns version details such as the version number, build date, commit hash and enabled features"""
 
     return sync_detailed(
         client=client,
@@ -101,7 +101,7 @@ async def asyncio(
     *,
     client: Client,
 ) -> Optional[Union[VersionInfo, None, None, None]]:
-    """ Returns version details such as the version number, build date, commit hash and enabled features """
+    """Returns version details such as the version number, build date, commit hash and enabled features"""
 
     return (
         await asyncio_detailed(

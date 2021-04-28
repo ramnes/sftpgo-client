@@ -10,7 +10,7 @@ T = TypeVar("T", bound="FTPDBinding")
 
 @attr.s(auto_attribs=True)
 class FTPDBinding:
-    """  """
+    """ """
 
     address: Union[Unset, str] = UNSET
     port: Union[Unset, int] = UNSET

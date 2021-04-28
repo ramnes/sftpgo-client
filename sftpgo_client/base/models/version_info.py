@@ -9,7 +9,7 @@ T = TypeVar("T", bound="VersionInfo")
 
 @attr.s(auto_attribs=True)
 class VersionInfo:
-    """  """
+    """ """
 
     version: Union[Unset, str] = UNSET
     build_date: Union[Unset, str] = UNSET

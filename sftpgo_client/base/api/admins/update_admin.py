@@ -96,7 +96,7 @@ def sync(
     username: str,
     json_body: Admin,
 ) -> Optional[Union[ApiResponse, None, None, None, None, None]]:
-    """ Updates an existing admin """
+    """Updates an existing admin"""
 
     return sync_detailed(
         client=client,
@@ -129,7 +129,7 @@ async def asyncio(
     username: str,
     json_body: Admin,
 ) -> Optional[Union[ApiResponse, None, None, None, None, None]]:
-    """ Updates an existing admin """
+    """Updates an existing admin"""
 
     return (
         await asyncio_detailed(
