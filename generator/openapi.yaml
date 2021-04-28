@@ -12,7 +12,7 @@ tags:
 info:
   title: SFTPGo
   description: SFTPGo REST API
-  version: 2.0.4
+  version: 2.0.5
   contact:
     url: 'https://github.com/drakkan/sftpgo'
   license:
@@ -320,7 +320,7 @@ paths:
       tags:
         - quota
       summary: Start user quota scan
-      description: Starts a new quota scan for the given user. A quota scan update the number of files and their total size for the specified user
+      description: Starts a new quota scan for the given user. A quota scan updates the number of files and their total size for the specified user and the virtual folders, if any, included in his quota
       operationId: start_quota_scan
       requestBody:
         required: true
@@ -1421,6 +1421,22 @@ components:
           description: 'list of, case insensitive, denied files extension. Denied file extensions are evaluated before the allowed ones'
           example:
             - .zip
+    HooksFilter:
+      type: object
+      properties:
+        external_auth_disabled:
+          type: boolean
+          example: false
+          description: If true, the external auth hook, if defined, will not be executed
+        pre_login_disabled:
+          type: boolean
+          example: false
+          description: If true, the pre-login hook, if defined, will not be executed
+        check_password_disabled:
+          type: boolean
+          example: false
+          description: If true, the check password hook, if defined, will not be executed
+      description: User specific hook overrides
     UserFilters:
       type: object
       properties:
@@ -1469,6 +1485,12 @@ components:
             - None
             - CommonName
           description: 'defines the TLS certificate field to use as username. For FTP clients it must match the name provided using the "USER" command. For WebDAV, if no username is provided, the CN will be used as username. For WebDAV clients it must match the implicit or provided username. Ignored if mutual TLS is disabled'
+        hooks:
+          $ref: '#/components/schemas/HooksFilter'
+        disable_fs_checks:
+          type: boolean
+          example: false
+          description: Disable checks for existence and automatic creation of home directory and virtual folders. SFTPGo requires that the user's home directory, virtual folder root, and intermediate paths to virtual folders exist to work properly. If you already know that the required directories exist, disabling these checks will speed up login. You could, for example, disable these checks after the first login
       description: Additional user restrictions
     Secret:
       type: object
@@ -1613,6 +1635,12 @@ components:
         disable_concurrent_reads:
           type: boolean
           description: Concurrent reads are safe to use and disabling them will degrade performance. Some servers automatically delete files once they are downloaded. Using concurrent reads is problematic with such servers.
+        buffer_size:
+          type: integer
+          minimum: 0
+          maximum: 16
+          example: 2
+          description: The size of the buffer (in MB) to use for transfers. By enabling buffering, the reads and writes, from/to the remote SFTP server, are split in multiple concurrent requests and this allows data to be transferred at a faster rate, over high latency networks, by overlapping round-trip times. With buffering enabled, resuming uploads is not supported and a file cannot be opened for both reading and writing at the same time. 0 means disabled.
     FilesystemConfig:
       type: object
       properties:
@@ -1725,7 +1753,7 @@ components:
         password:
           type: string
           format: password
-          description: password or public key/SSH user certificate are mandatory. If the password has no known hashing algo prefix it will be stored using argon2id. You can send a password hashed as bcrypt or pbkdf2 and it will be stored as is. For security reasons this field is omitted when you search/get users
+          description: password or public key/SSH user certificate are mandatory. If the password has no known hashing algo prefix it will be stored, by default, using bcrypt, argon2id is supported too. You can send a password hashed as bcrypt ($2a$ prefix), argon2id, pbkdf2 or unix crypt and it will be stored as is. For security reasons this field is omitted when you search/get users
         public_keys:
           type: array
           items:

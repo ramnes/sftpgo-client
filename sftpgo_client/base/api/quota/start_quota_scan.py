@@ -96,7 +96,7 @@ def sync(
     client: Client,
     json_body: User,
 ) -> Optional[Union[ApiResponse, None, None, None, None, None, None]]:
-    """Starts a new quota scan for the given user. A quota scan update the number of files and their total size for the specified user"""
+    """Starts a new quota scan for the given user. A quota scan updates the number of files and their total size for the specified user and the virtual folders, if any, included in his quota"""
 
     return sync_detailed(
         client=client,
@@ -125,7 +125,7 @@ async def asyncio(
     client: Client,
     json_body: User,
 ) -> Optional[Union[ApiResponse, None, None, None, None, None, None]]:
-    """Starts a new quota scan for the given user. A quota scan update the number of files and their total size for the specified user"""
+    """Starts a new quota scan for the given user. A quota scan updates the number of files and their total size for the specified user and the virtual folders, if any, included in his quota"""
 
     return (
         await asyncio_detailed(

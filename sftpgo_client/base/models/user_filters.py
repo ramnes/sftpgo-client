@@ -3,6 +3,7 @@ from typing import Any, Dict, List, Type, TypeVar, Union, cast
 import attr
 
 from ..models.extensions_filter import ExtensionsFilter
+from ..models.hooks_filter import HooksFilter
 from ..models.login_methods import LoginMethods
 from ..models.patterns_filter import PatternsFilter
 from ..models.supported_protocols import SupportedProtocols
@@ -24,6 +25,8 @@ class UserFilters:
     file_extensions: Union[Unset, List[ExtensionsFilter]] = UNSET
     max_upload_file_size: Union[Unset, int] = UNSET
     tls_username: Union[Unset, UserFiltersTlsUsername] = UNSET
+    hooks: Union[Unset, HooksFilter] = UNSET
+    disable_fs_checks: Union[Unset, bool] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -72,6 +75,12 @@ class UserFilters:
         if not isinstance(self.tls_username, Unset):
             tls_username = self.tls_username.value
 
+        hooks: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.hooks, Unset):
+            hooks = self.hooks.to_dict()
+
+        disable_fs_checks = self.disable_fs_checks
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
@@ -91,6 +100,10 @@ class UserFilters:
             field_dict["max_upload_file_size"] = max_upload_file_size
         if tls_username is not UNSET:
             field_dict["tls_username"] = tls_username
+        if hooks is not UNSET:
+            field_dict["hooks"] = hooks
+        if disable_fs_checks is not UNSET:
+            field_dict["disable_fs_checks"] = disable_fs_checks
 
         return field_dict
 
@@ -136,6 +149,13 @@ class UserFilters:
         if not isinstance(_tls_username, Unset):
             tls_username = UserFiltersTlsUsername(_tls_username)
 
+        hooks: Union[Unset, HooksFilter] = UNSET
+        _hooks = d.pop("hooks", UNSET)
+        if not isinstance(_hooks, Unset):
+            hooks = HooksFilter.from_dict(_hooks)
+
+        disable_fs_checks = d.pop("disable_fs_checks", UNSET)
+
         user_filters = cls(
             allowed_ip=allowed_ip,
             denied_ip=denied_ip,
@@ -145,6 +165,8 @@ class UserFilters:
             file_extensions=file_extensions,
             max_upload_file_size=max_upload_file_size,
             tls_username=tls_username,
+            hooks=hooks,
+            disable_fs_checks=disable_fs_checks,
         )
 
         user_filters.additional_properties = d

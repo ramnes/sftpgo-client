@@ -19,6 +19,7 @@ class SFTPFsConfig:
     fingerprints: Union[Unset, List[str]] = UNSET
     prefix: Union[Unset, str] = UNSET
     disable_concurrent_reads: Union[Unset, bool] = UNSET
+    buffer_size: Union[Unset, int] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -38,6 +39,7 @@ class SFTPFsConfig:
 
         prefix = self.prefix
         disable_concurrent_reads = self.disable_concurrent_reads
+        buffer_size = self.buffer_size
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -56,6 +58,8 @@ class SFTPFsConfig:
             field_dict["prefix"] = prefix
         if disable_concurrent_reads is not UNSET:
             field_dict["disable_concurrent_reads"] = disable_concurrent_reads
+        if buffer_size is not UNSET:
+            field_dict["buffer_size"] = buffer_size
 
         return field_dict
 
@@ -82,6 +86,8 @@ class SFTPFsConfig:
 
         disable_concurrent_reads = d.pop("disable_concurrent_reads", UNSET)
 
+        buffer_size = d.pop("buffer_size", UNSET)
+
         sftp_fs_config = cls(
             endpoint=endpoint,
             username=username,
@@ -90,6 +96,7 @@ class SFTPFsConfig:
             fingerprints=fingerprints,
             prefix=prefix,
             disable_concurrent_reads=disable_concurrent_reads,
+            buffer_size=buffer_size,
         )
 
         sftp_fs_config.additional_properties = d
