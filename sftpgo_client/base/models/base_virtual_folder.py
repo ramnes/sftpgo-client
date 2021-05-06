@@ -12,7 +12,7 @@ T = TypeVar("T", bound="BaseVirtualFolder")
 class BaseVirtualFolder:
     """Defines the filesystem for the virtual folder and the used quota limits. The same folder can be shared among multiple users and each user can have different quota limits or a different virtual path."""
 
-    id_: Union[Unset, int] = UNSET
+    id: Union[Unset, int] = UNSET
     name: Union[Unset, str] = UNSET
     mapped_path: Union[Unset, str] = UNSET
     description: Union[Unset, str] = UNSET
@@ -24,7 +24,7 @@ class BaseVirtualFolder:
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        id_ = self.id_
+        id = self.id
         name = self.name
         mapped_path = self.mapped_path
         description = self.description
@@ -42,8 +42,8 @@ class BaseVirtualFolder:
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if id_ is not UNSET:
-            field_dict["id"] = id_
+        if id is not UNSET:
+            field_dict["id"] = id
         if name is not UNSET:
             field_dict["name"] = name
         if mapped_path is not UNSET:
@@ -66,7 +66,7 @@ class BaseVirtualFolder:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        id_ = d.pop("id", UNSET)
+        id = d.pop("id", UNSET)
 
         name = d.pop("name", UNSET)
 
@@ -88,7 +88,7 @@ class BaseVirtualFolder:
             filesystem = FilesystemConfig.from_dict(_filesystem)
 
         base_virtual_folder = cls(
-            id_=id_,
+            id=id,
             name=name,
             mapped_path=mapped_path,
             description=description,

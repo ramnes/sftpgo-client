@@ -13,7 +13,7 @@ class VirtualFolder:
     """A virtual folder is a mapping between a SFTPGo virtual path and a filesystem path outside the user home directory. The specified paths must be absolute and the virtual path cannot be "/", it must be a sub directory. The parent directory for the specified virtual path must exist. SFTPGo will try to automatically create any missing parent directory for the configured virtual folders at user login."""
 
     virtual_path: str
-    id_: Union[Unset, int] = UNSET
+    id: Union[Unset, int] = UNSET
     name: Union[Unset, str] = UNSET
     mapped_path: Union[Unset, str] = UNSET
     description: Union[Unset, str] = UNSET
@@ -28,7 +28,7 @@ class VirtualFolder:
 
     def to_dict(self) -> Dict[str, Any]:
         virtual_path = self.virtual_path
-        id_ = self.id_
+        id = self.id
         name = self.name
         mapped_path = self.mapped_path
         description = self.description
@@ -53,8 +53,8 @@ class VirtualFolder:
                 "virtual_path": virtual_path,
             }
         )
-        if id_ is not UNSET:
-            field_dict["id"] = id_
+        if id is not UNSET:
+            field_dict["id"] = id
         if name is not UNSET:
             field_dict["name"] = name
         if mapped_path is not UNSET:
@@ -83,7 +83,7 @@ class VirtualFolder:
         d = src_dict.copy()
         virtual_path = d.pop("virtual_path")
 
-        id_ = d.pop("id", UNSET)
+        id = d.pop("id", UNSET)
 
         name = d.pop("name", UNSET)
 
@@ -110,7 +110,7 @@ class VirtualFolder:
 
         virtual_folder = cls(
             virtual_path=virtual_path,
-            id_=id_,
+            id=id,
             name=name,
             mapped_path=mapped_path,
             description=description,
