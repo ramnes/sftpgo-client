@@ -10,9 +10,9 @@ from ...types import Response
 def _get_kwargs(
     *,
     client: Client,
-    name: str,
+    username: str,
 ) -> Dict[str, Any]:
-    url = "{}/quotas/folders/{name}/scan".format(client.base_url, name=name)
+    url = "{}/quotas/users/{username}/scan".format(client.base_url, username=username)
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
@@ -69,11 +69,11 @@ def _build_response(*, response: httpx.Response) -> Response[Union[Any, ApiRespo
 def sync_detailed(
     *,
     client: Client,
-    name: str,
+    username: str,
 ) -> Response[Union[Any, ApiResponse]]:
     kwargs = _get_kwargs(
         client=client,
-        name=name,
+        username=username,
     )
 
     response = httpx.post(
@@ -86,24 +86,24 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
-    name: str,
+    username: str,
 ) -> Optional[Union[Any, ApiResponse]]:
-    """Starts a new quota scan for the given folder. A quota scan update the number of files and their total size for the specified folder"""
+    """Starts a new quota scan for the given user. A quota scan updates the number of files and their total size for the specified user and the virtual folders, if any, included in his quota"""
 
     return sync_detailed(
         client=client,
-        name=name,
+        username=username,
     ).parsed
 
 
 async def asyncio_detailed(
     *,
     client: Client,
-    name: str,
+    username: str,
 ) -> Response[Union[Any, ApiResponse]]:
     kwargs = _get_kwargs(
         client=client,
-        name=name,
+        username=username,
     )
 
     async with httpx.AsyncClient() as _client:
@@ -115,13 +115,13 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
-    name: str,
+    username: str,
 ) -> Optional[Union[Any, ApiResponse]]:
-    """Starts a new quota scan for the given folder. A quota scan update the number of files and their total size for the specified folder"""
+    """Starts a new quota scan for the given user. A quota scan updates the number of files and their total size for the specified user and the virtual folders, if any, included in his quota"""
 
     return (
         await asyncio_detailed(
             client=client,
-            name=name,
+            username=username,
         )
     ).parsed

@@ -11,7 +11,7 @@ def _get_kwargs(
     *,
     client: Client,
 ) -> Dict[str, Any]:
-    url = "{}/folder-quota-scans".format(client.base_url)
+    url = "{}/quotas/folders/scans".format(client.base_url)
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
@@ -81,7 +81,7 @@ def sync(
     *,
     client: Client,
 ) -> Optional[Union[Any, List[FolderQuotaScan]]]:
-    """Returns the active quota scans for folders"""
+    """Returns the active folder quota scans"""
 
     return sync_detailed(
         client=client,
@@ -106,7 +106,7 @@ async def asyncio(
     *,
     client: Client,
 ) -> Optional[Union[Any, List[FolderQuotaScan]]]:
-    """Returns the active quota scans for folders"""
+    """Returns the active folder quota scans"""
 
     return (
         await asyncio_detailed(

@@ -16,7 +16,7 @@ class AzureBlobFsConfig:
     container: Union[Unset, str] = UNSET
     account_name: Union[Unset, str] = UNSET
     account_key: Union[Unset, Secret] = UNSET
-    sas_url: Union[Unset, str] = UNSET
+    sas_url: Union[Unset, Secret] = UNSET
     endpoint: Union[Unset, str] = UNSET
     upload_part_size: Union[Unset, int] = UNSET
     upload_concurrency: Union[Unset, int] = UNSET
@@ -32,7 +32,10 @@ class AzureBlobFsConfig:
         if not isinstance(self.account_key, Unset):
             account_key = self.account_key.to_dict()
 
-        sas_url = self.sas_url
+        sas_url: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.sas_url, Unset):
+            sas_url = self.sas_url.to_dict()
+
         endpoint = self.endpoint
         upload_part_size = self.upload_part_size
         upload_concurrency = self.upload_concurrency
@@ -83,7 +86,12 @@ class AzureBlobFsConfig:
         else:
             account_key = Secret.from_dict(_account_key)
 
-        sas_url = d.pop("sas_url", UNSET)
+        _sas_url = d.pop("sas_url", UNSET)
+        sas_url: Union[Unset, Secret]
+        if isinstance(_sas_url, Unset):
+            sas_url = UNSET
+        else:
+            sas_url = Secret.from_dict(_sas_url)
 
         endpoint = d.pop("endpoint", UNSET)
 

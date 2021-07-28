@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class FolderQuotaUpdateMode(str, Enum):
+class UserQuotaUpdateUsageDeprecatedMode(str, Enum):
     ADD = "add"
     RESET = "reset"
 

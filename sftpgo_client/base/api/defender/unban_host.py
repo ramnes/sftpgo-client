@@ -88,7 +88,7 @@ def sync(
     client: Client,
     json_body: UnbanHostJsonBody,
 ) -> Optional[Union[Any, ApiResponse]]:
-    """Removes the specified IPv4/IPv6 from the banned ones"""
+    """Deprecated, please use '/defender/hosts/{id}' instead"""
 
     return sync_detailed(
         client=client,
@@ -117,7 +117,7 @@ async def asyncio(
     client: Client,
     json_body: UnbanHostJsonBody,
 ) -> Optional[Union[Any, ApiResponse]]:
-    """Removes the specified IPv4/IPv6 from the banned ones"""
+    """Deprecated, please use '/defender/hosts/{id}' instead"""
 
     return (
         await asyncio_detailed(

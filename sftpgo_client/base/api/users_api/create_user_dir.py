@@ -1,35 +1,48 @@
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, List, Optional, Union
 
 import httpx
 
 from ...client import Client
 from ...models.api_response import ApiResponse
-from ...types import Response
+from ...types import UNSET, Response
 
 
 def _get_kwargs(
     *,
     client: Client,
-    name: str,
+    path: str,
 ) -> Dict[str, Any]:
-    url = "{}/quotas/folders/{name}/scan".format(client.base_url, name=name)
+    url = "{}/user/dirs".format(client.base_url)
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
+
+    params: Dict[str, Any] = {
+        "path": path,
+    }
+    params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
     return {
         "url": url,
         "headers": headers,
         "cookies": cookies,
         "timeout": client.get_timeout(),
+        "params": params,
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, ApiResponse]]:
-    if response.status_code == 202:
-        response_202 = ApiResponse.from_dict(response.json())
+def _parse_response(
+    *, response: httpx.Response
+) -> Optional[Union[Any, List[ApiResponse]]]:
+    if response.status_code == 201:
+        response_201 = []
+        _response_201 = response.json()
+        for response_201_item_data in _response_201:
+            response_201_item = ApiResponse.from_dict(response_201_item_data)
 
-        return response_202
+            response_201.append(response_201_item)
+
+        return response_201
     if response.status_code == 400:
         response_400 = None
 
@@ -42,14 +55,6 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, ApiRespo
         response_403 = None
 
         return response_403
-    if response.status_code == 404:
-        response_404 = None
-
-        return response_404
-    if response.status_code == 409:
-        response_409 = None
-
-        return response_409
     if response.status_code == 500:
         response_500 = None
 
@@ -57,7 +62,9 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, ApiRespo
     return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[Union[Any, ApiResponse]]:
+def _build_response(
+    *, response: httpx.Response
+) -> Response[Union[Any, List[ApiResponse]]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -69,11 +76,11 @@ def _build_response(*, response: httpx.Response) -> Response[Union[Any, ApiRespo
 def sync_detailed(
     *,
     client: Client,
-    name: str,
-) -> Response[Union[Any, ApiResponse]]:
+    path: str,
+) -> Response[Union[Any, List[ApiResponse]]]:
     kwargs = _get_kwargs(
         client=client,
-        name=name,
+        path=path,
     )
 
     response = httpx.post(
@@ -86,24 +93,24 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
-    name: str,
-) -> Optional[Union[Any, ApiResponse]]:
-    """Starts a new quota scan for the given folder. A quota scan update the number of files and their total size for the specified folder"""
+    path: str,
+) -> Optional[Union[Any, List[ApiResponse]]]:
+    """Create a directory for the logged in user"""
 
     return sync_detailed(
         client=client,
-        name=name,
+        path=path,
     ).parsed
 
 
 async def asyncio_detailed(
     *,
     client: Client,
-    name: str,
-) -> Response[Union[Any, ApiResponse]]:
+    path: str,
+) -> Response[Union[Any, List[ApiResponse]]]:
     kwargs = _get_kwargs(
         client=client,
-        name=name,
+        path=path,
     )
 
     async with httpx.AsyncClient() as _client:
@@ -115,13 +122,13 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
-    name: str,
-) -> Optional[Union[Any, ApiResponse]]:
-    """Starts a new quota scan for the given folder. A quota scan update the number of files and their total size for the specified folder"""
+    path: str,
+) -> Optional[Union[Any, List[ApiResponse]]]:
+    """Create a directory for the logged in user"""
 
     return (
         await asyncio_detailed(
             client=client,
-            name=name,
+            path=path,
         )
     ).parsed

@@ -2,38 +2,31 @@ from typing import Any, Dict, Optional, Union
 
 import httpx
 
-from ...client import Client
-from ...models.score_status import ScoreStatus
-from ...types import UNSET, Response
+from ...client import AuthenticatedClient
+from ...models.token import Token
+from ...types import Response
 
 
 def _get_kwargs(
     *,
-    client: Client,
-    ip: str,
+    client: AuthenticatedClient,
 ) -> Dict[str, Any]:
-    url = "{}/defender/score".format(client.base_url)
+    url = "{}/user/token".format(client.base_url)
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
-
-    params: Dict[str, Any] = {
-        "ip": ip,
-    }
-    params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
     return {
         "url": url,
         "headers": headers,
         "cookies": cookies,
         "timeout": client.get_timeout(),
-        "params": params,
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, ScoreStatus]]:
+def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, Token]]:
     if response.status_code == 200:
-        response_200 = ScoreStatus.from_dict(response.json())
+        response_200 = Token.from_dict(response.json())
 
         return response_200
     if response.status_code == 401:
@@ -44,10 +37,6 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, ScoreSta
         response_403 = None
 
         return response_403
-    if response.status_code == 404:
-        response_404 = None
-
-        return response_404
     if response.status_code == 500:
         response_500 = None
 
@@ -55,7 +44,7 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, ScoreSta
     return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[Union[Any, ScoreStatus]]:
+def _build_response(*, response: httpx.Response) -> Response[Union[Any, Token]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -66,12 +55,10 @@ def _build_response(*, response: httpx.Response) -> Response[Union[Any, ScoreSta
 
 def sync_detailed(
     *,
-    client: Client,
-    ip: str,
-) -> Response[Union[Any, ScoreStatus]]:
+    client: AuthenticatedClient,
+) -> Response[Union[Any, Token]]:
     kwargs = _get_kwargs(
         client=client,
-        ip=ip,
     )
 
     response = httpx.get(
@@ -83,25 +70,21 @@ def sync_detailed(
 
 def sync(
     *,
-    client: Client,
-    ip: str,
-) -> Optional[Union[Any, ScoreStatus]]:
-    """Deprecated, please use '/defender/hosts', '/defender/hosts/{id}' instead"""
+    client: AuthenticatedClient,
+) -> Optional[Union[Any, Token]]:
+    """Returns an access token and its expiration"""
 
     return sync_detailed(
         client=client,
-        ip=ip,
     ).parsed
 
 
 async def asyncio_detailed(
     *,
-    client: Client,
-    ip: str,
-) -> Response[Union[Any, ScoreStatus]]:
+    client: AuthenticatedClient,
+) -> Response[Union[Any, Token]]:
     kwargs = _get_kwargs(
         client=client,
-        ip=ip,
     )
 
     async with httpx.AsyncClient() as _client:
@@ -112,14 +95,12 @@ async def asyncio_detailed(
 
 async def asyncio(
     *,
-    client: Client,
-    ip: str,
-) -> Optional[Union[Any, ScoreStatus]]:
-    """Deprecated, please use '/defender/hosts', '/defender/hosts/{id}' instead"""
+    client: AuthenticatedClient,
+) -> Optional[Union[Any, Token]]:
+    """Returns an access token and its expiration"""
 
     return (
         await asyncio_detailed(
             client=client,
-            ip=ip,
         )
     ).parsed

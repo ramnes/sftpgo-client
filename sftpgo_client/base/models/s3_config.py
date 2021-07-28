@@ -20,6 +20,10 @@ class S3Config:
     storage_class: Union[Unset, str] = UNSET
     upload_part_size: Union[Unset, int] = UNSET
     upload_concurrency: Union[Unset, int] = UNSET
+    download_part_size: Union[Unset, int] = UNSET
+    download_concurrency: Union[Unset, int] = UNSET
+    download_part_max_time: Union[Unset, int] = UNSET
+    force_path_style: Union[Unset, bool] = UNSET
     key_prefix: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -35,6 +39,10 @@ class S3Config:
         storage_class = self.storage_class
         upload_part_size = self.upload_part_size
         upload_concurrency = self.upload_concurrency
+        download_part_size = self.download_part_size
+        download_concurrency = self.download_concurrency
+        download_part_max_time = self.download_part_max_time
+        force_path_style = self.force_path_style
         key_prefix = self.key_prefix
 
         field_dict: Dict[str, Any] = {}
@@ -56,6 +64,14 @@ class S3Config:
             field_dict["upload_part_size"] = upload_part_size
         if upload_concurrency is not UNSET:
             field_dict["upload_concurrency"] = upload_concurrency
+        if download_part_size is not UNSET:
+            field_dict["download_part_size"] = download_part_size
+        if download_concurrency is not UNSET:
+            field_dict["download_concurrency"] = download_concurrency
+        if download_part_max_time is not UNSET:
+            field_dict["download_part_max_time"] = download_part_max_time
+        if force_path_style is not UNSET:
+            field_dict["force_path_style"] = force_path_style
         if key_prefix is not UNSET:
             field_dict["key_prefix"] = key_prefix
 
@@ -85,6 +101,14 @@ class S3Config:
 
         upload_concurrency = d.pop("upload_concurrency", UNSET)
 
+        download_part_size = d.pop("download_part_size", UNSET)
+
+        download_concurrency = d.pop("download_concurrency", UNSET)
+
+        download_part_max_time = d.pop("download_part_max_time", UNSET)
+
+        force_path_style = d.pop("force_path_style", UNSET)
+
         key_prefix = d.pop("key_prefix", UNSET)
 
         s3_config = cls(
@@ -96,6 +120,10 @@ class S3Config:
             storage_class=storage_class,
             upload_part_size=upload_part_size,
             upload_concurrency=upload_concurrency,
+            download_part_size=download_part_size,
+            download_concurrency=download_concurrency,
+            download_part_max_time=download_part_max_time,
+            force_path_style=force_path_style,
             key_prefix=key_prefix,
         )
 

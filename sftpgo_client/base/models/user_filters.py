@@ -2,12 +2,12 @@ from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
-from ..models.extensions_filter import ExtensionsFilter
 from ..models.hooks_filter import HooksFilter
 from ..models.login_methods import LoginMethods
 from ..models.patterns_filter import PatternsFilter
 from ..models.supported_protocols import SupportedProtocols
 from ..models.user_filters_tls_username import UserFiltersTlsUsername
+from ..models.web_client_options import WebClientOptions
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="UserFilters")
@@ -15,18 +15,18 @@ T = TypeVar("T", bound="UserFilters")
 
 @attr.s(auto_attribs=True)
 class UserFilters:
-    """Additional user restrictions"""
+    """Additional user options"""
 
     allowed_ip: Union[Unset, List[str]] = UNSET
     denied_ip: Union[Unset, List[str]] = UNSET
     denied_login_methods: Union[Unset, List[LoginMethods]] = UNSET
     denied_protocols: Union[Unset, List[SupportedProtocols]] = UNSET
     file_patterns: Union[Unset, List[PatternsFilter]] = UNSET
-    file_extensions: Union[Unset, List[ExtensionsFilter]] = UNSET
     max_upload_file_size: Union[Unset, int] = UNSET
     tls_username: Union[Unset, UserFiltersTlsUsername] = UNSET
     hooks: Union[Unset, HooksFilter] = UNSET
     disable_fs_checks: Union[Unset, bool] = UNSET
+    web_client: Union[Unset, List[WebClientOptions]] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -62,14 +62,6 @@ class UserFilters:
 
                 file_patterns.append(file_patterns_item)
 
-        file_extensions: Union[Unset, List[Dict[str, Any]]] = UNSET
-        if not isinstance(self.file_extensions, Unset):
-            file_extensions = []
-            for file_extensions_item_data in self.file_extensions:
-                file_extensions_item = file_extensions_item_data.to_dict()
-
-                file_extensions.append(file_extensions_item)
-
         max_upload_file_size = self.max_upload_file_size
         tls_username: Union[Unset, str] = UNSET
         if not isinstance(self.tls_username, Unset):
@@ -80,6 +72,13 @@ class UserFilters:
             hooks = self.hooks.to_dict()
 
         disable_fs_checks = self.disable_fs_checks
+        web_client: Union[Unset, List[str]] = UNSET
+        if not isinstance(self.web_client, Unset):
+            web_client = []
+            for web_client_item_data in self.web_client:
+                web_client_item = web_client_item_data.value
+
+                web_client.append(web_client_item)
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -94,8 +93,6 @@ class UserFilters:
             field_dict["denied_protocols"] = denied_protocols
         if file_patterns is not UNSET:
             field_dict["file_patterns"] = file_patterns
-        if file_extensions is not UNSET:
-            field_dict["file_extensions"] = file_extensions
         if max_upload_file_size is not UNSET:
             field_dict["max_upload_file_size"] = max_upload_file_size
         if tls_username is not UNSET:
@@ -104,6 +101,8 @@ class UserFilters:
             field_dict["hooks"] = hooks
         if disable_fs_checks is not UNSET:
             field_dict["disable_fs_checks"] = disable_fs_checks
+        if web_client is not UNSET:
+            field_dict["web_client"] = web_client
 
         return field_dict
 
@@ -135,13 +134,6 @@ class UserFilters:
 
             file_patterns.append(file_patterns_item)
 
-        file_extensions = []
-        _file_extensions = d.pop("file_extensions", UNSET)
-        for file_extensions_item_data in _file_extensions or []:
-            file_extensions_item = ExtensionsFilter.from_dict(file_extensions_item_data)
-
-            file_extensions.append(file_extensions_item)
-
         max_upload_file_size = d.pop("max_upload_file_size", UNSET)
 
         _tls_username = d.pop("tls_username", UNSET)
@@ -160,17 +152,24 @@ class UserFilters:
 
         disable_fs_checks = d.pop("disable_fs_checks", UNSET)
 
+        web_client = []
+        _web_client = d.pop("web_client", UNSET)
+        for web_client_item_data in _web_client or []:
+            web_client_item = WebClientOptions(web_client_item_data)
+
+            web_client.append(web_client_item)
+
         user_filters = cls(
             allowed_ip=allowed_ip,
             denied_ip=denied_ip,
             denied_login_methods=denied_login_methods,
             denied_protocols=denied_protocols,
             file_patterns=file_patterns,
-            file_extensions=file_extensions,
             max_upload_file_size=max_upload_file_size,
             tls_username=tls_username,
             hooks=hooks,
             disable_fs_checks=disable_fs_checks,
+            web_client=web_client,
         )
 
         user_filters.additional_properties = d

@@ -86,7 +86,7 @@ def sync(
     client: Client,
     ip: str,
 ) -> Optional[Union[Any, BanStatus]]:
-    """Returns the ban time for the specified IPv4/IPv6 address"""
+    """Deprecated, please use '/defender/hosts', '/defender/hosts/{id}' instead"""
 
     return sync_detailed(
         client=client,
@@ -115,7 +115,7 @@ async def asyncio(
     client: Client,
     ip: str,
 ) -> Optional[Union[Any, BanStatus]]:
-    """Returns the ban time for the specified IPv4/IPv6 address"""
+    """Deprecated, please use '/defender/hosts', '/defender/hosts/{id}' instead"""
 
     return (
         await asyncio_detailed(

@@ -1,24 +1,26 @@
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, List, Optional, Union
 
 import httpx
 
 from ...client import Client
-from ...models.score_status import ScoreStatus
+from ...models.api_response import ApiResponse
 from ...types import UNSET, Response
 
 
 def _get_kwargs(
     *,
     client: Client,
-    ip: str,
+    path: str,
+    target: str,
 ) -> Dict[str, Any]:
-    url = "{}/defender/score".format(client.base_url)
+    url = "{}/user/dirs".format(client.base_url)
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
 
     params: Dict[str, Any] = {
-        "ip": ip,
+        "path": path,
+        "target": target,
     }
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
@@ -31,11 +33,22 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, ScoreStatus]]:
+def _parse_response(
+    *, response: httpx.Response
+) -> Optional[Union[Any, List[ApiResponse]]]:
     if response.status_code == 200:
-        response_200 = ScoreStatus.from_dict(response.json())
+        response_200 = []
+        _response_200 = response.json()
+        for response_200_item_data in _response_200:
+            response_200_item = ApiResponse.from_dict(response_200_item_data)
+
+            response_200.append(response_200_item)
 
         return response_200
+    if response.status_code == 400:
+        response_400 = None
+
+        return response_400
     if response.status_code == 401:
         response_401 = None
 
@@ -44,10 +57,6 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, ScoreSta
         response_403 = None
 
         return response_403
-    if response.status_code == 404:
-        response_404 = None
-
-        return response_404
     if response.status_code == 500:
         response_500 = None
 
@@ -55,7 +64,9 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, ScoreSta
     return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[Union[Any, ScoreStatus]]:
+def _build_response(
+    *, response: httpx.Response
+) -> Response[Union[Any, List[ApiResponse]]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -67,14 +78,16 @@ def _build_response(*, response: httpx.Response) -> Response[Union[Any, ScoreSta
 def sync_detailed(
     *,
     client: Client,
-    ip: str,
-) -> Response[Union[Any, ScoreStatus]]:
+    path: str,
+    target: str,
+) -> Response[Union[Any, List[ApiResponse]]]:
     kwargs = _get_kwargs(
         client=client,
-        ip=ip,
+        path=path,
+        target=target,
     )
 
-    response = httpx.get(
+    response = httpx.patch(
         **kwargs,
     )
 
@@ -84,28 +97,32 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
-    ip: str,
-) -> Optional[Union[Any, ScoreStatus]]:
-    """Deprecated, please use '/defender/hosts', '/defender/hosts/{id}' instead"""
+    path: str,
+    target: str,
+) -> Optional[Union[Any, List[ApiResponse]]]:
+    """Rename a directory for the logged in user. The rename is allowed for empty directory or for non empty, local directories, with no virtual folders inside"""
 
     return sync_detailed(
         client=client,
-        ip=ip,
+        path=path,
+        target=target,
     ).parsed
 
 
 async def asyncio_detailed(
     *,
     client: Client,
-    ip: str,
-) -> Response[Union[Any, ScoreStatus]]:
+    path: str,
+    target: str,
+) -> Response[Union[Any, List[ApiResponse]]]:
     kwargs = _get_kwargs(
         client=client,
-        ip=ip,
+        path=path,
+        target=target,
     )
 
     async with httpx.AsyncClient() as _client:
-        response = await _client.get(**kwargs)
+        response = await _client.patch(**kwargs)
 
     return _build_response(response=response)
 
@@ -113,13 +130,15 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
-    ip: str,
-) -> Optional[Union[Any, ScoreStatus]]:
-    """Deprecated, please use '/defender/hosts', '/defender/hosts/{id}' instead"""
+    path: str,
+    target: str,
+) -> Optional[Union[Any, List[ApiResponse]]]:
+    """Rename a directory for the logged in user. The rename is allowed for empty directory or for non empty, local directories, with no virtual folders inside"""
 
     return (
         await asyncio_detailed(
             client=client,
-            ip=ip,
+            path=path,
+            target=target,
         )
     ).parsed

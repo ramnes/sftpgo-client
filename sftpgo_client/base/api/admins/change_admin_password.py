@@ -13,7 +13,7 @@ def _get_kwargs(
     client: Client,
     json_body: PwdChange,
 ) -> Dict[str, Any]:
-    url = "{}/changepwd/admin".format(client.base_url)
+    url = "{}/admin/changepwd".format(client.base_url)
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()

@@ -3,16 +3,16 @@ from typing import Any, Dict, Optional, Union
 import httpx
 
 from ...client import Client
-from ...models.api_response import ApiResponse
+from ...models.defender_entry import DefenderEntry
 from ...types import Response
 
 
 def _get_kwargs(
     *,
     client: Client,
-    name: str,
+    id: str,
 ) -> Dict[str, Any]:
-    url = "{}/quotas/folders/{name}/scan".format(client.base_url, name=name)
+    url = "{}/defender/hosts/{id}".format(client.base_url, id=id)
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
@@ -25,15 +25,11 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, ApiResponse]]:
-    if response.status_code == 202:
-        response_202 = ApiResponse.from_dict(response.json())
+def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, DefenderEntry]]:
+    if response.status_code == 200:
+        response_200 = DefenderEntry.from_dict(response.json())
 
-        return response_202
-    if response.status_code == 400:
-        response_400 = None
-
-        return response_400
+        return response_200
     if response.status_code == 401:
         response_401 = None
 
@@ -46,10 +42,6 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, ApiRespo
         response_404 = None
 
         return response_404
-    if response.status_code == 409:
-        response_409 = None
-
-        return response_409
     if response.status_code == 500:
         response_500 = None
 
@@ -57,7 +49,7 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, ApiRespo
     return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[Union[Any, ApiResponse]]:
+def _build_response(*, response: httpx.Response) -> Response[Union[Any, DefenderEntry]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -69,14 +61,14 @@ def _build_response(*, response: httpx.Response) -> Response[Union[Any, ApiRespo
 def sync_detailed(
     *,
     client: Client,
-    name: str,
-) -> Response[Union[Any, ApiResponse]]:
+    id: str,
+) -> Response[Union[Any, DefenderEntry]]:
     kwargs = _get_kwargs(
         client=client,
-        name=name,
+        id=id,
     )
 
-    response = httpx.post(
+    response = httpx.get(
         **kwargs,
     )
 
@@ -86,28 +78,28 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
-    name: str,
-) -> Optional[Union[Any, ApiResponse]]:
-    """Starts a new quota scan for the given folder. A quota scan update the number of files and their total size for the specified folder"""
+    id: str,
+) -> Optional[Union[Any, DefenderEntry]]:
+    """Returns the host with the given id, if it exists"""
 
     return sync_detailed(
         client=client,
-        name=name,
+        id=id,
     ).parsed
 
 
 async def asyncio_detailed(
     *,
     client: Client,
-    name: str,
-) -> Response[Union[Any, ApiResponse]]:
+    id: str,
+) -> Response[Union[Any, DefenderEntry]]:
     kwargs = _get_kwargs(
         client=client,
-        name=name,
+        id=id,
     )
 
     async with httpx.AsyncClient() as _client:
-        response = await _client.post(**kwargs)
+        response = await _client.get(**kwargs)
 
     return _build_response(response=response)
 
@@ -115,13 +107,13 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
-    name: str,
-) -> Optional[Union[Any, ApiResponse]]:
-    """Starts a new quota scan for the given folder. A quota scan update the number of files and their total size for the specified folder"""
+    id: str,
+) -> Optional[Union[Any, DefenderEntry]]:
+    """Returns the host with the given id, if it exists"""
 
     return (
         await asyncio_detailed(
             client=client,
-            name=name,
+            id=id,
         )
     ).parsed

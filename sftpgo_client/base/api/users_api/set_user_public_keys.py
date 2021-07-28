@@ -1,4 +1,4 @@
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, List, Optional, Union
 
 import httpx
 
@@ -10,26 +10,29 @@ from ...types import Response
 def _get_kwargs(
     *,
     client: Client,
-    name: str,
+    json_body: List[str],
 ) -> Dict[str, Any]:
-    url = "{}/quotas/folders/{name}/scan".format(client.base_url, name=name)
+    url = "{}/user/publickeys".format(client.base_url)
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
+
+    json_json_body = json_body
 
     return {
         "url": url,
         "headers": headers,
         "cookies": cookies,
         "timeout": client.get_timeout(),
+        "json": json_json_body,
     }
 
 
 def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, ApiResponse]]:
-    if response.status_code == 202:
-        response_202 = ApiResponse.from_dict(response.json())
+    if response.status_code == 200:
+        response_200 = ApiResponse.from_dict(response.json())
 
-        return response_202
+        return response_200
     if response.status_code == 400:
         response_400 = None
 
@@ -42,14 +45,6 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, ApiRespo
         response_403 = None
 
         return response_403
-    if response.status_code == 404:
-        response_404 = None
-
-        return response_404
-    if response.status_code == 409:
-        response_409 = None
-
-        return response_409
     if response.status_code == 500:
         response_500 = None
 
@@ -69,14 +64,14 @@ def _build_response(*, response: httpx.Response) -> Response[Union[Any, ApiRespo
 def sync_detailed(
     *,
     client: Client,
-    name: str,
+    json_body: List[str],
 ) -> Response[Union[Any, ApiResponse]]:
     kwargs = _get_kwargs(
         client=client,
-        name=name,
+        json_body=json_body,
     )
 
-    response = httpx.post(
+    response = httpx.put(
         **kwargs,
     )
 
@@ -86,28 +81,28 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
-    name: str,
+    json_body: List[str],
 ) -> Optional[Union[Any, ApiResponse]]:
-    """Starts a new quota scan for the given folder. A quota scan update the number of files and their total size for the specified folder"""
+    """Sets the public keys for the logged in user. Public keys must be in OpenSSH format"""
 
     return sync_detailed(
         client=client,
-        name=name,
+        json_body=json_body,
     ).parsed
 
 
 async def asyncio_detailed(
     *,
     client: Client,
-    name: str,
+    json_body: List[str],
 ) -> Response[Union[Any, ApiResponse]]:
     kwargs = _get_kwargs(
         client=client,
-        name=name,
+        json_body=json_body,
     )
 
     async with httpx.AsyncClient() as _client:
-        response = await _client.post(**kwargs)
+        response = await _client.put(**kwargs)
 
     return _build_response(response=response)
 
@@ -115,13 +110,13 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
-    name: str,
+    json_body: List[str],
 ) -> Optional[Union[Any, ApiResponse]]:
-    """Starts a new quota scan for the given folder. A quota scan update the number of files and their total size for the specified folder"""
+    """Sets the public keys for the logged in user. Public keys must be in OpenSSH format"""
 
     return (
         await asyncio_detailed(
             client=client,
-            name=name,
+            json_body=json_body,
         )
     ).parsed

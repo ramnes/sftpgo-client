@@ -4,24 +4,28 @@ import httpx
 
 from ...client import Client
 from ...models.api_response import ApiResponse
+from ...models.user import User
 from ...types import Response
 
 
 def _get_kwargs(
     *,
     client: Client,
-    name: str,
+    json_body: User,
 ) -> Dict[str, Any]:
-    url = "{}/quotas/folders/{name}/scan".format(client.base_url, name=name)
+    url = "{}/quota-scans".format(client.base_url)
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
+
+    json_json_body = json_body.to_dict()
 
     return {
         "url": url,
         "headers": headers,
         "cookies": cookies,
         "timeout": client.get_timeout(),
+        "json": json_json_body,
     }
 
 
@@ -69,11 +73,11 @@ def _build_response(*, response: httpx.Response) -> Response[Union[Any, ApiRespo
 def sync_detailed(
     *,
     client: Client,
-    name: str,
+    json_body: User,
 ) -> Response[Union[Any, ApiResponse]]:
     kwargs = _get_kwargs(
         client=client,
-        name=name,
+        json_body=json_body,
     )
 
     response = httpx.post(
@@ -86,24 +90,24 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
-    name: str,
+    json_body: User,
 ) -> Optional[Union[Any, ApiResponse]]:
-    """Starts a new quota scan for the given folder. A quota scan update the number of files and their total size for the specified folder"""
+    """Deprecated, please use '/quotas/users/{username}/scan' instead"""
 
     return sync_detailed(
         client=client,
-        name=name,
+        json_body=json_body,
     ).parsed
 
 
 async def asyncio_detailed(
     *,
     client: Client,
-    name: str,
+    json_body: User,
 ) -> Response[Union[Any, ApiResponse]]:
     kwargs = _get_kwargs(
         client=client,
-        name=name,
+        json_body=json_body,
     )
 
     async with httpx.AsyncClient() as _client:
@@ -115,13 +119,13 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
-    name: str,
+    json_body: User,
 ) -> Optional[Union[Any, ApiResponse]]:
-    """Starts a new quota scan for the given folder. A quota scan update the number of files and their total size for the specified folder"""
+    """Deprecated, please use '/quotas/users/{username}/scan' instead"""
 
     return (
         await asyncio_detailed(
             client=client,
-            name=name,
+            json_body=json_body,
         )
     ).parsed

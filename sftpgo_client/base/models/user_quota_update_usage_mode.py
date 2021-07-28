@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class QuotaUpdateMode(str, Enum):
+class UserQuotaUpdateUsageMode(str, Enum):
     ADD = "add"
     RESET = "reset"
 

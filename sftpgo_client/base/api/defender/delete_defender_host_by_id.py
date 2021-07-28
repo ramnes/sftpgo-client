@@ -4,40 +4,32 @@ import httpx
 
 from ...client import Client
 from ...models.api_response import ApiResponse
-from ...models.user import User
 from ...types import Response
 
 
 def _get_kwargs(
     *,
     client: Client,
-    json_body: User,
+    id: str,
 ) -> Dict[str, Any]:
-    url = "{}/quota-scans".format(client.base_url)
+    url = "{}/defender/hosts/{id}".format(client.base_url, id=id)
 
     headers: Dict[str, Any] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
-
-    json_json_body = json_body.to_dict()
 
     return {
         "url": url,
         "headers": headers,
         "cookies": cookies,
         "timeout": client.get_timeout(),
-        "json": json_json_body,
     }
 
 
 def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, ApiResponse]]:
-    if response.status_code == 202:
-        response_202 = ApiResponse.from_dict(response.json())
+    if response.status_code == 200:
+        response_200 = ApiResponse.from_dict(response.json())
 
-        return response_202
-    if response.status_code == 400:
-        response_400 = None
-
-        return response_400
+        return response_200
     if response.status_code == 401:
         response_401 = None
 
@@ -50,10 +42,6 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, ApiRespo
         response_404 = None
 
         return response_404
-    if response.status_code == 409:
-        response_409 = None
-
-        return response_409
     if response.status_code == 500:
         response_500 = None
 
@@ -73,14 +61,14 @@ def _build_response(*, response: httpx.Response) -> Response[Union[Any, ApiRespo
 def sync_detailed(
     *,
     client: Client,
-    json_body: User,
+    id: str,
 ) -> Response[Union[Any, ApiResponse]]:
     kwargs = _get_kwargs(
         client=client,
-        json_body=json_body,
+        id=id,
     )
 
-    response = httpx.post(
+    response = httpx.delete(
         **kwargs,
     )
 
@@ -90,28 +78,28 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
-    json_body: User,
+    id: str,
 ) -> Optional[Union[Any, ApiResponse]]:
-    """Starts a new quota scan for the given user. A quota scan updates the number of files and their total size for the specified user and the virtual folders, if any, included in his quota"""
+    """Unbans the specified host or clears its violations"""
 
     return sync_detailed(
         client=client,
-        json_body=json_body,
+        id=id,
     ).parsed
 
 
 async def asyncio_detailed(
     *,
     client: Client,
-    json_body: User,
+    id: str,
 ) -> Response[Union[Any, ApiResponse]]:
     kwargs = _get_kwargs(
         client=client,
-        json_body=json_body,
+        id=id,
     )
 
     async with httpx.AsyncClient() as _client:
-        response = await _client.post(**kwargs)
+        response = await _client.delete(**kwargs)
 
     return _build_response(response=response)
 
@@ -119,13 +107,13 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
-    json_body: User,
+    id: str,
 ) -> Optional[Union[Any, ApiResponse]]:
-    """Starts a new quota scan for the given user. A quota scan updates the number of files and their total size for the specified user and the virtual folders, if any, included in his quota"""
+    """Unbans the specified host or clears its violations"""
 
     return (
         await asyncio_detailed(
             client=client,
-            json_body=json_body,
+            id=id,
         )
     ).parsed

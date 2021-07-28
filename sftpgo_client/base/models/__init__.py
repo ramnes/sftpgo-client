@@ -12,16 +12,21 @@ from .ban_status import BanStatus
 from .base_virtual_folder import BaseVirtualFolder
 from .connection_status import ConnectionStatus
 from .connection_status_protocol import ConnectionStatusProtocol
+from .create_user_files_multipart_data import CreateUserFilesMultipartData
 from .crypt_fs_config import CryptFsConfig
 from .data_provider_status import DataProviderStatus
+from .defender_entry import DefenderEntry
+from .dir_entry import DirEntry
 from .dir_permissions import DirPermissions
 from .dumpdata_indent import DumpdataIndent
 from .dumpdata_output_data import DumpdataOutputData
-from .extensions_filter import ExtensionsFilter
 from .filesystem_config import FilesystemConfig
 from .filesystem_config_provider import FilesystemConfigProvider
 from .folder_quota_scan import FolderQuotaScan
-from .folder_quota_update_mode import FolderQuotaUpdateMode
+from .folder_quota_update_usage_deprecated_mode import (
+    FolderQuotaUpdateUsageDeprecatedMode,
+)
+from .folder_quota_update_usage_mode import FolderQuotaUpdateUsageMode
 from .ftp_passive_port_range import FTPPassivePortRange
 from .ftp_service_status import FTPServiceStatus
 from .ftpd_binding import FTPDBinding
@@ -41,7 +46,7 @@ from .patterns_filter import PatternsFilter
 from .permission import Permission
 from .pwd_change import PwdChange
 from .quota_scan import QuotaScan
-from .quota_update_mode import QuotaUpdateMode
+from .quota_usage import QuotaUsage
 from .s3_config import S3Config
 from .score_status import ScoreStatus
 from .secret import Secret
@@ -62,8 +67,11 @@ from .user import User
 from .user_filters import UserFilters
 from .user_filters_tls_username import UserFiltersTlsUsername
 from .user_permissions import UserPermissions
+from .user_quota_update_usage_deprecated_mode import UserQuotaUpdateUsageDeprecatedMode
+from .user_quota_update_usage_mode import UserQuotaUpdateUsageMode
 from .user_status import UserStatus
 from .version_info import VersionInfo
 from .virtual_folder import VirtualFolder
+from .web_client_options import WebClientOptions
 from .web_dav_binding import WebDAVBinding
 from .web_dav_service_status import WebDAVServiceStatus
