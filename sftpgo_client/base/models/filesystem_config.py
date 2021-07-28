@@ -71,34 +71,46 @@ class FilesystemConfig:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        provider: Union[Unset, FilesystemConfigProvider] = UNSET
         _provider = d.pop("provider", UNSET)
-        if not isinstance(_provider, Unset):
+        provider: Union[Unset, FilesystemConfigProvider]
+        if isinstance(_provider, Unset):
+            provider = UNSET
+        else:
             provider = FilesystemConfigProvider(_provider)
 
-        s3config: Union[Unset, S3Config] = UNSET
         _s3config = d.pop("s3config", UNSET)
-        if not isinstance(_s3config, Unset):
+        s3config: Union[Unset, S3Config]
+        if isinstance(_s3config, Unset):
+            s3config = UNSET
+        else:
             s3config = S3Config.from_dict(_s3config)
 
-        gcsconfig: Union[Unset, GCSConfig] = UNSET
         _gcsconfig = d.pop("gcsconfig", UNSET)
-        if not isinstance(_gcsconfig, Unset):
+        gcsconfig: Union[Unset, GCSConfig]
+        if isinstance(_gcsconfig, Unset):
+            gcsconfig = UNSET
+        else:
             gcsconfig = GCSConfig.from_dict(_gcsconfig)
 
-        azblobconfig: Union[Unset, AzureBlobFsConfig] = UNSET
         _azblobconfig = d.pop("azblobconfig", UNSET)
-        if not isinstance(_azblobconfig, Unset):
+        azblobconfig: Union[Unset, AzureBlobFsConfig]
+        if isinstance(_azblobconfig, Unset):
+            azblobconfig = UNSET
+        else:
             azblobconfig = AzureBlobFsConfig.from_dict(_azblobconfig)
 
-        cryptconfig: Union[Unset, CryptFsConfig] = UNSET
         _cryptconfig = d.pop("cryptconfig", UNSET)
-        if not isinstance(_cryptconfig, Unset):
+        cryptconfig: Union[Unset, CryptFsConfig]
+        if isinstance(_cryptconfig, Unset):
+            cryptconfig = UNSET
+        else:
             cryptconfig = CryptFsConfig.from_dict(_cryptconfig)
 
-        sftpconfig: Union[Unset, SFTPFsConfig] = UNSET
         _sftpconfig = d.pop("sftpconfig", UNSET)
-        if not isinstance(_sftpconfig, Unset):
+        sftpconfig: Union[Unset, SFTPFsConfig]
+        if isinstance(_sftpconfig, Unset):
+            sftpconfig = UNSET
+        else:
             sftpconfig = SFTPFsConfig.from_dict(_sftpconfig)
 
         filesystem_config = cls(

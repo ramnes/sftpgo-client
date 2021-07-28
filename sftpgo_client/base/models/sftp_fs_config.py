@@ -70,14 +70,18 @@ class SFTPFsConfig:
 
         username = d.pop("username", UNSET)
 
-        password: Union[Unset, Secret] = UNSET
         _password = d.pop("password", UNSET)
-        if not isinstance(_password, Unset):
+        password: Union[Unset, Secret]
+        if isinstance(_password, Unset):
+            password = UNSET
+        else:
             password = Secret.from_dict(_password)
 
-        private_key: Union[Unset, Secret] = UNSET
         _private_key = d.pop("private_key", UNSET)
-        if not isinstance(_private_key, Unset):
+        private_key: Union[Unset, Secret]
+        if isinstance(_private_key, Unset):
+            private_key = UNSET
+        else:
             private_key = Secret.from_dict(_private_key)
 
         fingerprints = cast(List[str], d.pop("fingerprints", UNSET))

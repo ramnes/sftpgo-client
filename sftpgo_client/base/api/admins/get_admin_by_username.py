@@ -25,7 +25,7 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[Admin, None]]:
+def _parse_response(*, response: httpx.Response) -> Optional[Union[Admin, Any]]:
     if response.status_code == 200:
         response_200 = Admin.from_dict(response.json())
 
@@ -53,7 +53,7 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Admin, None]]
     return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[Union[Admin, None]]:
+def _build_response(*, response: httpx.Response) -> Response[Union[Admin, Any]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -66,7 +66,7 @@ def sync_detailed(
     *,
     client: Client,
     username: str,
-) -> Response[Union[Admin, None]]:
+) -> Response[Union[Admin, Any]]:
     kwargs = _get_kwargs(
         client=client,
         username=username,
@@ -83,7 +83,7 @@ def sync(
     *,
     client: Client,
     username: str,
-) -> Optional[Union[Admin, None]]:
+) -> Optional[Union[Admin, Any]]:
     """Returns the admin with the given username, if it exists. For security reasons the hashed password is omitted in the response"""
 
     return sync_detailed(
@@ -96,7 +96,7 @@ async def asyncio_detailed(
     *,
     client: Client,
     username: str,
-) -> Response[Union[Admin, None]]:
+) -> Response[Union[Admin, Any]]:
     kwargs = _get_kwargs(
         client=client,
         username=username,
@@ -112,7 +112,7 @@ async def asyncio(
     *,
     client: Client,
     username: str,
-) -> Optional[Union[Admin, None]]:
+) -> Optional[Union[Admin, Any]]:
     """Returns the admin with the given username, if it exists. For security reasons the hashed password is omitted in the response"""
 
     return (

@@ -149,9 +149,11 @@ class User:
         d = src_dict.copy()
         id = d.pop("id", UNSET)
 
-        status: Union[Unset, UserStatus] = UNSET
         _status = d.pop("status", UNSET)
-        if not isinstance(_status, Unset):
+        status: Union[Unset, UserStatus]
+        if isinstance(_status, Unset):
+            status = UNSET
+        else:
             status = UserStatus(_status)
 
         username = d.pop("username", UNSET)
@@ -183,9 +185,11 @@ class User:
 
         quota_files = d.pop("quota_files", UNSET)
 
-        permissions: Union[Unset, UserPermissions] = UNSET
         _permissions = d.pop("permissions", UNSET)
-        if not isinstance(_permissions, Unset):
+        permissions: Union[Unset, UserPermissions]
+        if isinstance(_permissions, Unset):
+            permissions = UNSET
+        else:
             permissions = UserPermissions.from_dict(_permissions)
 
         used_quota_size = d.pop("used_quota_size", UNSET)
@@ -200,14 +204,18 @@ class User:
 
         last_login = d.pop("last_login", UNSET)
 
-        filters: Union[Unset, UserFilters] = UNSET
         _filters = d.pop("filters", UNSET)
-        if not isinstance(_filters, Unset):
+        filters: Union[Unset, UserFilters]
+        if isinstance(_filters, Unset):
+            filters = UNSET
+        else:
             filters = UserFilters.from_dict(_filters)
 
-        filesystem: Union[Unset, FilesystemConfig] = UNSET
         _filesystem = d.pop("filesystem", UNSET)
-        if not isinstance(_filesystem, Unset):
+        filesystem: Union[Unset, FilesystemConfig]
+        if isinstance(_filesystem, Unset):
+            filesystem = UNSET
+        else:
             filesystem = FilesystemConfig.from_dict(_filesystem)
 
         additional_info = d.pop("additional_info", UNSET)

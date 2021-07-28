@@ -24,7 +24,7 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[None, VersionInfo]]:
+def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, VersionInfo]]:
     if response.status_code == 200:
         response_200 = VersionInfo.from_dict(response.json())
 
@@ -44,7 +44,7 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[None, Version
     return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[Union[None, VersionInfo]]:
+def _build_response(*, response: httpx.Response) -> Response[Union[Any, VersionInfo]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -56,7 +56,7 @@ def _build_response(*, response: httpx.Response) -> Response[Union[None, Version
 def sync_detailed(
     *,
     client: Client,
-) -> Response[Union[None, VersionInfo]]:
+) -> Response[Union[Any, VersionInfo]]:
     kwargs = _get_kwargs(
         client=client,
     )
@@ -71,7 +71,7 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
-) -> Optional[Union[None, VersionInfo]]:
+) -> Optional[Union[Any, VersionInfo]]:
     """Returns version details such as the version number, build date, commit hash and enabled features"""
 
     return sync_detailed(
@@ -82,7 +82,7 @@ def sync(
 async def asyncio_detailed(
     *,
     client: Client,
-) -> Response[Union[None, VersionInfo]]:
+) -> Response[Union[Any, VersionInfo]]:
     kwargs = _get_kwargs(
         client=client,
     )
@@ -96,7 +96,7 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
-) -> Optional[Union[None, VersionInfo]]:
+) -> Optional[Union[Any, VersionInfo]]:
     """Returns version details such as the version number, build date, commit hash and enabled features"""
 
     return (

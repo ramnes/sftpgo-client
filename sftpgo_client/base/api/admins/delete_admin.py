@@ -25,7 +25,7 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[ApiResponse, None]]:
+def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, ApiResponse]]:
     if response.status_code == 200:
         response_200 = ApiResponse.from_dict(response.json())
 
@@ -53,7 +53,7 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[ApiResponse, 
     return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[Union[ApiResponse, None]]:
+def _build_response(*, response: httpx.Response) -> Response[Union[Any, ApiResponse]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -66,7 +66,7 @@ def sync_detailed(
     *,
     client: Client,
     username: str,
-) -> Response[Union[ApiResponse, None]]:
+) -> Response[Union[Any, ApiResponse]]:
     kwargs = _get_kwargs(
         client=client,
         username=username,
@@ -83,7 +83,7 @@ def sync(
     *,
     client: Client,
     username: str,
-) -> Optional[Union[ApiResponse, None]]:
+) -> Optional[Union[Any, ApiResponse]]:
     """Deletes an existing admin"""
 
     return sync_detailed(
@@ -96,7 +96,7 @@ async def asyncio_detailed(
     *,
     client: Client,
     username: str,
-) -> Response[Union[ApiResponse, None]]:
+) -> Response[Union[Any, ApiResponse]]:
     kwargs = _get_kwargs(
         client=client,
         username=username,
@@ -112,7 +112,7 @@ async def asyncio(
     *,
     client: Client,
     username: str,
-) -> Optional[Union[ApiResponse, None]]:
+) -> Optional[Union[Any, ApiResponse]]:
     """Deletes an existing admin"""
 
     return (

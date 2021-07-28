@@ -85,9 +85,11 @@ class ConnectionStatus:
 
         last_activity = d.pop("last_activity", UNSET)
 
-        protocol: Union[Unset, ConnectionStatusProtocol] = UNSET
         _protocol = d.pop("protocol", UNSET)
-        if not isinstance(_protocol, Unset):
+        protocol: Union[Unset, ConnectionStatusProtocol]
+        if isinstance(_protocol, Unset):
+            protocol = UNSET
+        else:
             protocol = ConnectionStatusProtocol(_protocol)
 
         active_transfers = []

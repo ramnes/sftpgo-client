@@ -70,9 +70,11 @@ class S3Config:
 
         access_key = d.pop("access_key", UNSET)
 
-        access_secret: Union[Unset, Secret] = UNSET
         _access_secret = d.pop("access_secret", UNSET)
-        if not isinstance(_access_secret, Unset):
+        access_secret: Union[Unset, Secret]
+        if isinstance(_access_secret, Unset):
+            access_secret = UNSET
+        else:
             access_secret = Secret.from_dict(_access_secret)
 
         endpoint = d.pop("endpoint", UNSET)

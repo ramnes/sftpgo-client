@@ -32,9 +32,13 @@ class BanStatus:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        date_time = None
         _date_time = d.pop("date_time", UNSET)
-        if _date_time is not None and not isinstance(_date_time, Unset):
+        date_time: Union[Unset, None, datetime.datetime]
+        if _date_time is None:
+            date_time = None
+        elif isinstance(_date_time, Unset):
+            date_time = UNSET
+        else:
             date_time = isoparse(_date_time)
 
         ban_status = cls(

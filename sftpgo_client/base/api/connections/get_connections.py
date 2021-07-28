@@ -26,7 +26,7 @@ def _get_kwargs(
 
 def _parse_response(
     *, response: httpx.Response
-) -> Optional[Union[List[ConnectionStatus], None]]:
+) -> Optional[Union[Any, List[ConnectionStatus]]]:
     if response.status_code == 200:
         response_200 = []
         _response_200 = response.json()
@@ -53,7 +53,7 @@ def _parse_response(
 
 def _build_response(
     *, response: httpx.Response
-) -> Response[Union[List[ConnectionStatus], None]]:
+) -> Response[Union[Any, List[ConnectionStatus]]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -65,7 +65,7 @@ def _build_response(
 def sync_detailed(
     *,
     client: Client,
-) -> Response[Union[List[ConnectionStatus], None]]:
+) -> Response[Union[Any, List[ConnectionStatus]]]:
     kwargs = _get_kwargs(
         client=client,
     )
@@ -80,7 +80,7 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
-) -> Optional[Union[List[ConnectionStatus], None]]:
+) -> Optional[Union[Any, List[ConnectionStatus]]]:
     """Returns the active users and info about their current uploads/downloads"""
 
     return sync_detailed(
@@ -91,7 +91,7 @@ def sync(
 async def asyncio_detailed(
     *,
     client: Client,
-) -> Response[Union[List[ConnectionStatus], None]]:
+) -> Response[Union[Any, List[ConnectionStatus]]]:
     kwargs = _get_kwargs(
         client=client,
     )
@@ -105,7 +105,7 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
-) -> Optional[Union[List[ConnectionStatus], None]]:
+) -> Optional[Union[Any, List[ConnectionStatus]]]:
     """Returns the active users and info about their current uploads/downloads"""
 
     return (

@@ -30,7 +30,7 @@ def _get_kwargs(
 
 def _parse_response(
     *, response: httpx.Response
-) -> Optional[Union[BaseVirtualFolder, None]]:
+) -> Optional[Union[Any, BaseVirtualFolder]]:
     if response.status_code == 201:
         response_201 = BaseVirtualFolder.from_dict(response.json())
 
@@ -56,7 +56,7 @@ def _parse_response(
 
 def _build_response(
     *, response: httpx.Response
-) -> Response[Union[BaseVirtualFolder, None]]:
+) -> Response[Union[Any, BaseVirtualFolder]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -69,7 +69,7 @@ def sync_detailed(
     *,
     client: Client,
     json_body: BaseVirtualFolder,
-) -> Response[Union[BaseVirtualFolder, None]]:
+) -> Response[Union[Any, BaseVirtualFolder]]:
     kwargs = _get_kwargs(
         client=client,
         json_body=json_body,
@@ -86,7 +86,7 @@ def sync(
     *,
     client: Client,
     json_body: BaseVirtualFolder,
-) -> Optional[Union[BaseVirtualFolder, None]]:
+) -> Optional[Union[Any, BaseVirtualFolder]]:
     """Adds a new folder. A quota scan is required to update the used files/size"""
 
     return sync_detailed(
@@ -99,7 +99,7 @@ async def asyncio_detailed(
     *,
     client: Client,
     json_body: BaseVirtualFolder,
-) -> Response[Union[BaseVirtualFolder, None]]:
+) -> Response[Union[Any, BaseVirtualFolder]]:
     kwargs = _get_kwargs(
         client=client,
         json_body=json_body,
@@ -115,7 +115,7 @@ async def asyncio(
     *,
     client: Client,
     json_body: BaseVirtualFolder,
-) -> Optional[Union[BaseVirtualFolder, None]]:
+) -> Optional[Union[Any, BaseVirtualFolder]]:
     """Adds a new folder. A quota scan is required to update the used files/size"""
 
     return (

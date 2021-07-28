@@ -76,9 +76,11 @@ class AzureBlobFsConfig:
 
         account_name = d.pop("account_name", UNSET)
 
-        account_key: Union[Unset, Secret] = UNSET
         _account_key = d.pop("account_key", UNSET)
-        if not isinstance(_account_key, Unset):
+        account_key: Union[Unset, Secret]
+        if isinstance(_account_key, Unset):
+            account_key = UNSET
+        else:
             account_key = Secret.from_dict(_account_key)
 
         sas_url = d.pop("sas_url", UNSET)
@@ -89,9 +91,11 @@ class AzureBlobFsConfig:
 
         upload_concurrency = d.pop("upload_concurrency", UNSET)
 
-        access_tier: Union[Unset, AzureBlobFsConfigAccessTier] = UNSET
         _access_tier = d.pop("access_tier", UNSET)
-        if not isinstance(_access_tier, Unset):
+        access_tier: Union[Unset, AzureBlobFsConfigAccessTier]
+        if isinstance(_access_tier, Unset):
+            access_tier = UNSET
+        else:
             access_tier = AzureBlobFsConfigAccessTier(_access_tier)
 
         key_prefix = d.pop("key_prefix", UNSET)

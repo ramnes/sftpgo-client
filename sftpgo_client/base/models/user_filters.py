@@ -144,14 +144,18 @@ class UserFilters:
 
         max_upload_file_size = d.pop("max_upload_file_size", UNSET)
 
-        tls_username: Union[Unset, UserFiltersTlsUsername] = UNSET
         _tls_username = d.pop("tls_username", UNSET)
-        if not isinstance(_tls_username, Unset):
+        tls_username: Union[Unset, UserFiltersTlsUsername]
+        if isinstance(_tls_username, Unset):
+            tls_username = UNSET
+        else:
             tls_username = UserFiltersTlsUsername(_tls_username)
 
-        hooks: Union[Unset, HooksFilter] = UNSET
         _hooks = d.pop("hooks", UNSET)
-        if not isinstance(_hooks, Unset):
+        hooks: Union[Unset, HooksFilter]
+        if isinstance(_hooks, Unset):
+            hooks = UNSET
+        else:
             hooks = HooksFilter.from_dict(_hooks)
 
         disable_fs_checks = d.pop("disable_fs_checks", UNSET)

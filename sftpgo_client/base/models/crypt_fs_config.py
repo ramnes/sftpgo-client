@@ -31,9 +31,11 @@ class CryptFsConfig:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        passphrase: Union[Unset, Secret] = UNSET
         _passphrase = d.pop("passphrase", UNSET)
-        if not isinstance(_passphrase, Unset):
+        passphrase: Union[Unset, Secret]
+        if isinstance(_passphrase, Unset):
+            passphrase = UNSET
+        else:
             passphrase = Secret.from_dict(_passphrase)
 
         crypt_fs_config = cls(

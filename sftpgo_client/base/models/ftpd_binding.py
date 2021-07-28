@@ -58,9 +58,11 @@ class FTPDBinding:
 
         apply_proxy_config = d.pop("apply_proxy_config", UNSET)
 
-        tls_mode: Union[Unset, FTPDBindingTlsMode] = UNSET
         _tls_mode = d.pop("tls_mode", UNSET)
-        if not isinstance(_tls_mode, Unset):
+        tls_mode: Union[Unset, FTPDBindingTlsMode]
+        if isinstance(_tls_mode, Unset):
+            tls_mode = UNSET
+        else:
             tls_mode = FTPDBindingTlsMode(_tls_mode)
 
         force_passive_ip = d.pop("force_passive_ip", UNSET)

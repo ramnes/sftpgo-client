@@ -82,9 +82,11 @@ class BaseVirtualFolder:
 
         users = cast(List[str], d.pop("users", UNSET))
 
-        filesystem: Union[Unset, FilesystemConfig] = UNSET
         _filesystem = d.pop("filesystem", UNSET)
-        if not isinstance(_filesystem, Unset):
+        filesystem: Union[Unset, FilesystemConfig]
+        if isinstance(_filesystem, Unset):
+            filesystem = UNSET
+        else:
             filesystem = FilesystemConfig.from_dict(_filesystem)
 
         base_virtual_folder = cls(

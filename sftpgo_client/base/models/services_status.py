@@ -63,29 +63,39 @@ class ServicesStatus:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        ssh: Union[Unset, SSHServiceStatus] = UNSET
         _ssh = d.pop("ssh", UNSET)
-        if not isinstance(_ssh, Unset):
+        ssh: Union[Unset, SSHServiceStatus]
+        if isinstance(_ssh, Unset):
+            ssh = UNSET
+        else:
             ssh = SSHServiceStatus.from_dict(_ssh)
 
-        ftp: Union[Unset, FTPServiceStatus] = UNSET
         _ftp = d.pop("ftp", UNSET)
-        if not isinstance(_ftp, Unset):
+        ftp: Union[Unset, FTPServiceStatus]
+        if isinstance(_ftp, Unset):
+            ftp = UNSET
+        else:
             ftp = FTPServiceStatus.from_dict(_ftp)
 
-        webdav: Union[Unset, WebDAVServiceStatus] = UNSET
         _webdav = d.pop("webdav", UNSET)
-        if not isinstance(_webdav, Unset):
+        webdav: Union[Unset, WebDAVServiceStatus]
+        if isinstance(_webdav, Unset):
+            webdav = UNSET
+        else:
             webdav = WebDAVServiceStatus.from_dict(_webdav)
 
-        data_provider: Union[Unset, DataProviderStatus] = UNSET
         _data_provider = d.pop("data_provider", UNSET)
-        if not isinstance(_data_provider, Unset):
+        data_provider: Union[Unset, DataProviderStatus]
+        if isinstance(_data_provider, Unset):
+            data_provider = UNSET
+        else:
             data_provider = DataProviderStatus.from_dict(_data_provider)
 
-        defender: Union[Unset, ServicesStatusDefender] = UNSET
         _defender = d.pop("defender", UNSET)
-        if not isinstance(_defender, Unset):
+        defender: Union[Unset, ServicesStatusDefender]
+        if isinstance(_defender, Unset):
+            defender = UNSET
+        else:
             defender = ServicesStatusDefender.from_dict(_defender)
 
         services_status = cls(

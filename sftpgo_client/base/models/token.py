@@ -38,9 +38,11 @@ class Token:
         d = src_dict.copy()
         access_token = d.pop("access_token", UNSET)
 
-        expires_at: Union[Unset, datetime.datetime] = UNSET
         _expires_at = d.pop("expires_at", UNSET)
-        if not isinstance(_expires_at, Unset):
+        expires_at: Union[Unset, datetime.datetime]
+        if isinstance(_expires_at, Unset):
+            expires_at = UNSET
+        else:
             expires_at = isoparse(_expires_at)
 
         token = cls(

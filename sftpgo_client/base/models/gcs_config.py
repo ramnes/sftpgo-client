@@ -54,14 +54,18 @@ class GCSConfig:
         d = src_dict.copy()
         bucket = d.pop("bucket", UNSET)
 
-        credentials: Union[Unset, Secret] = UNSET
         _credentials = d.pop("credentials", UNSET)
-        if not isinstance(_credentials, Unset):
+        credentials: Union[Unset, Secret]
+        if isinstance(_credentials, Unset):
+            credentials = UNSET
+        else:
             credentials = Secret.from_dict(_credentials)
 
-        automatic_credentials: Union[Unset, GCSConfigAutomaticCredentials] = UNSET
         _automatic_credentials = d.pop("automatic_credentials", UNSET)
-        if not isinstance(_automatic_credentials, Unset):
+        automatic_credentials: Union[Unset, GCSConfigAutomaticCredentials]
+        if isinstance(_automatic_credentials, Unset):
+            automatic_credentials = UNSET
+        else:
             automatic_credentials = GCSConfigAutomaticCredentials(
                 _automatic_credentials
             )

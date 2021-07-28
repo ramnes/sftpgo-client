@@ -59,9 +59,11 @@ class FTPServiceStatus:
 
             bindings.append(bindings_item)
 
-        passive_port_range: Union[Unset, FTPPassivePortRange] = UNSET
         _passive_port_range = d.pop("passive_port_range", UNSET)
-        if not isinstance(_passive_port_range, Unset):
+        passive_port_range: Union[Unset, FTPPassivePortRange]
+        if isinstance(_passive_port_range, Unset):
+            passive_port_range = UNSET
+        else:
             passive_port_range = FTPPassivePortRange.from_dict(_passive_port_range)
 
         ftp_service_status = cls(

@@ -28,7 +28,7 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[None, User]]:
+def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, User]]:
     if response.status_code == 201:
         response_201 = User.from_dict(response.json())
 
@@ -52,7 +52,7 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[None, User]]:
     return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[Union[None, User]]:
+def _build_response(*, response: httpx.Response) -> Response[Union[Any, User]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -65,7 +65,7 @@ def sync_detailed(
     *,
     client: Client,
     json_body: User,
-) -> Response[Union[None, User]]:
+) -> Response[Union[Any, User]]:
     kwargs = _get_kwargs(
         client=client,
         json_body=json_body,
@@ -82,7 +82,7 @@ def sync(
     *,
     client: Client,
     json_body: User,
-) -> Optional[Union[None, User]]:
+) -> Optional[Union[Any, User]]:
     """Adds a new user"""
 
     return sync_detailed(
@@ -95,7 +95,7 @@ async def asyncio_detailed(
     *,
     client: Client,
     json_body: User,
-) -> Response[Union[None, User]]:
+) -> Response[Union[Any, User]]:
     kwargs = _get_kwargs(
         client=client,
         json_body=json_body,
@@ -111,7 +111,7 @@ async def asyncio(
     *,
     client: Client,
     json_body: User,
-) -> Optional[Union[None, User]]:
+) -> Optional[Union[Any, User]]:
     """Adds a new user"""
 
     return (

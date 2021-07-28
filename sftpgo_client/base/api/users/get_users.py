@@ -40,7 +40,7 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[List[User], None]]:
+def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, List[User]]]:
     if response.status_code == 200:
         response_200 = []
         _response_200 = response.json()
@@ -69,7 +69,7 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[List[User], N
     return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[Union[List[User], None]]:
+def _build_response(*, response: httpx.Response) -> Response[Union[Any, List[User]]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -84,7 +84,7 @@ def sync_detailed(
     offset: Union[Unset, int] = 0,
     limit: Union[Unset, int] = 100,
     order: Union[Unset, GetUsersOrder] = UNSET,
-) -> Response[Union[List[User], None]]:
+) -> Response[Union[Any, List[User]]]:
     kwargs = _get_kwargs(
         client=client,
         offset=offset,
@@ -105,7 +105,7 @@ def sync(
     offset: Union[Unset, int] = 0,
     limit: Union[Unset, int] = 100,
     order: Union[Unset, GetUsersOrder] = UNSET,
-) -> Optional[Union[List[User], None]]:
+) -> Optional[Union[Any, List[User]]]:
     """Returns an array with one or more users. For security reasons hashed passwords are omitted in the response"""
 
     return sync_detailed(
@@ -122,7 +122,7 @@ async def asyncio_detailed(
     offset: Union[Unset, int] = 0,
     limit: Union[Unset, int] = 100,
     order: Union[Unset, GetUsersOrder] = UNSET,
-) -> Response[Union[List[User], None]]:
+) -> Response[Union[Any, List[User]]]:
     kwargs = _get_kwargs(
         client=client,
         offset=offset,
@@ -142,7 +142,7 @@ async def asyncio(
     offset: Union[Unset, int] = 0,
     limit: Union[Unset, int] = 100,
     order: Union[Unset, GetUsersOrder] = UNSET,
-) -> Optional[Union[List[User], None]]:
+) -> Optional[Union[Any, List[User]]]:
     """Returns an array with one or more users. For security reasons hashed passwords are omitted in the response"""
 
     return (

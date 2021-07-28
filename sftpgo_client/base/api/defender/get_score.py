@@ -31,7 +31,7 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[Union[None, ScoreStatus]]:
+def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, ScoreStatus]]:
     if response.status_code == 200:
         response_200 = ScoreStatus.from_dict(response.json())
 
@@ -55,7 +55,7 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[None, ScoreSt
     return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[Union[None, ScoreStatus]]:
+def _build_response(*, response: httpx.Response) -> Response[Union[Any, ScoreStatus]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -68,7 +68,7 @@ def sync_detailed(
     *,
     client: Client,
     ip: str,
-) -> Response[Union[None, ScoreStatus]]:
+) -> Response[Union[Any, ScoreStatus]]:
     kwargs = _get_kwargs(
         client=client,
         ip=ip,
@@ -85,7 +85,7 @@ def sync(
     *,
     client: Client,
     ip: str,
-) -> Optional[Union[None, ScoreStatus]]:
+) -> Optional[Union[Any, ScoreStatus]]:
     """Returns the score for the specified IPv4/IPv6 address"""
 
     return sync_detailed(
@@ -98,7 +98,7 @@ async def asyncio_detailed(
     *,
     client: Client,
     ip: str,
-) -> Response[Union[None, ScoreStatus]]:
+) -> Response[Union[Any, ScoreStatus]]:
     kwargs = _get_kwargs(
         client=client,
         ip=ip,
@@ -114,7 +114,7 @@ async def asyncio(
     *,
     client: Client,
     ip: str,
-) -> Optional[Union[None, ScoreStatus]]:
+) -> Optional[Union[Any, ScoreStatus]]:
     """Returns the score for the specified IPv4/IPv6 address"""
 
     return (

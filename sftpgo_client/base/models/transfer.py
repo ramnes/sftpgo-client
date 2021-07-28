@@ -44,9 +44,11 @@ class Transfer:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        operation_type: Union[Unset, TransferOperationType] = UNSET
         _operation_type = d.pop("operation_type", UNSET)
-        if not isinstance(_operation_type, Unset):
+        operation_type: Union[Unset, TransferOperationType]
+        if isinstance(_operation_type, Unset):
+            operation_type = UNSET
+        else:
             operation_type = TransferOperationType(_operation_type)
 
         path = d.pop("path", UNSET)

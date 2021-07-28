@@ -48,9 +48,11 @@ class Secret:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        status: Union[Unset, SecretStatus] = UNSET
         _status = d.pop("status", UNSET)
-        if not isinstance(_status, Unset):
+        status: Union[Unset, SecretStatus]
+        if isinstance(_status, Unset):
+            status = UNSET
+        else:
             status = SecretStatus(_status)
 
         payload = d.pop("payload", UNSET)

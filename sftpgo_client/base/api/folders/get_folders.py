@@ -42,7 +42,7 @@ def _get_kwargs(
 
 def _parse_response(
     *, response: httpx.Response
-) -> Optional[Union[List[BaseVirtualFolder], None]]:
+) -> Optional[Union[Any, List[BaseVirtualFolder]]]:
     if response.status_code == 200:
         response_200 = []
         _response_200 = response.json()
@@ -73,7 +73,7 @@ def _parse_response(
 
 def _build_response(
     *, response: httpx.Response
-) -> Response[Union[List[BaseVirtualFolder], None]]:
+) -> Response[Union[Any, List[BaseVirtualFolder]]]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -88,7 +88,7 @@ def sync_detailed(
     offset: Union[Unset, int] = 0,
     limit: Union[Unset, int] = 100,
     order: Union[Unset, GetFoldersOrder] = UNSET,
-) -> Response[Union[List[BaseVirtualFolder], None]]:
+) -> Response[Union[Any, List[BaseVirtualFolder]]]:
     kwargs = _get_kwargs(
         client=client,
         offset=offset,
@@ -109,7 +109,7 @@ def sync(
     offset: Union[Unset, int] = 0,
     limit: Union[Unset, int] = 100,
     order: Union[Unset, GetFoldersOrder] = UNSET,
-) -> Optional[Union[List[BaseVirtualFolder], None]]:
+) -> Optional[Union[Any, List[BaseVirtualFolder]]]:
     """Returns an array with one or more folders"""
 
     return sync_detailed(
@@ -126,7 +126,7 @@ async def asyncio_detailed(
     offset: Union[Unset, int] = 0,
     limit: Union[Unset, int] = 100,
     order: Union[Unset, GetFoldersOrder] = UNSET,
-) -> Response[Union[List[BaseVirtualFolder], None]]:
+) -> Response[Union[Any, List[BaseVirtualFolder]]]:
     kwargs = _get_kwargs(
         client=client,
         offset=offset,
@@ -146,7 +146,7 @@ async def asyncio(
     offset: Union[Unset, int] = 0,
     limit: Union[Unset, int] = 100,
     order: Union[Unset, GetFoldersOrder] = UNSET,
-) -> Optional[Union[List[BaseVirtualFolder], None]]:
+) -> Optional[Union[Any, List[BaseVirtualFolder]]]:
     """Returns an array with one or more folders"""
 
     return (

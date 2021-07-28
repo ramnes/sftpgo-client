@@ -78,9 +78,11 @@ class Admin:
         d = src_dict.copy()
         id = d.pop("id", UNSET)
 
-        status: Union[Unset, AdminStatus] = UNSET
         _status = d.pop("status", UNSET)
-        if not isinstance(_status, Unset):
+        status: Union[Unset, AdminStatus]
+        if isinstance(_status, Unset):
+            status = UNSET
+        else:
             status = AdminStatus(_status)
 
         username = d.pop("username", UNSET)
@@ -98,9 +100,11 @@ class Admin:
 
             permissions.append(permissions_item)
 
-        filters: Union[Unset, AdminFilters] = UNSET
         _filters = d.pop("filters", UNSET)
-        if not isinstance(_filters, Unset):
+        filters: Union[Unset, AdminFilters]
+        if isinstance(_filters, Unset):
+            filters = UNSET
+        else:
             filters = AdminFilters.from_dict(_filters)
 
         additional_info = d.pop("additional_info", UNSET)
