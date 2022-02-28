@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, List, Optional, Union, cast
 
 import httpx
 
@@ -13,10 +13,11 @@ def _get_kwargs(
 ) -> Dict[str, Any]:
     url = "{}/folder-quota-scans".format(client.base_url)
 
-    headers: Dict[str, Any] = client.get_headers()
+    headers: Dict[str, str] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
 
     return {
+        "method": "get",
         "url": url,
         "headers": headers,
         "cookies": cookies,
@@ -37,16 +38,13 @@ def _parse_response(
 
         return response_200
     if response.status_code == 401:
-        response_401 = None
-
+        response_401 = cast(Any, None)
         return response_401
     if response.status_code == 403:
-        response_403 = None
-
+        response_403 = cast(Any, None)
         return response_403
     if response.status_code == 500:
-        response_500 = None
-
+        response_500 = cast(Any, None)
         return response_500
     return None
 
@@ -66,11 +64,20 @@ def sync_detailed(
     *,
     client: Client,
 ) -> Response[Union[Any, List[FolderQuotaScan]]]:
+    """Get folders quota scans
+
+     Deprecated, please use '/quotas/folders/scans' instead
+
+    Returns:
+        Response[Union[Any, List[FolderQuotaScan]]]
+    """
+
     kwargs = _get_kwargs(
         client=client,
     )
 
-    response = httpx.get(
+    response = httpx.request(
+        verify=client.verify_ssl,
         **kwargs,
     )
 
@@ -81,7 +88,13 @@ def sync(
     *,
     client: Client,
 ) -> Optional[Union[Any, List[FolderQuotaScan]]]:
-    """Deprecated, please use '/quotas/folders/scans' instead"""
+    """Get folders quota scans
+
+     Deprecated, please use '/quotas/folders/scans' instead
+
+    Returns:
+        Response[Union[Any, List[FolderQuotaScan]]]
+    """
 
     return sync_detailed(
         client=client,
@@ -92,12 +105,20 @@ async def asyncio_detailed(
     *,
     client: Client,
 ) -> Response[Union[Any, List[FolderQuotaScan]]]:
+    """Get folders quota scans
+
+     Deprecated, please use '/quotas/folders/scans' instead
+
+    Returns:
+        Response[Union[Any, List[FolderQuotaScan]]]
+    """
+
     kwargs = _get_kwargs(
         client=client,
     )
 
-    async with httpx.AsyncClient() as _client:
-        response = await _client.get(**kwargs)
+    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
+        response = await _client.request(**kwargs)
 
     return _build_response(response=response)
 
@@ -106,7 +127,13 @@ async def asyncio(
     *,
     client: Client,
 ) -> Optional[Union[Any, List[FolderQuotaScan]]]:
-    """Deprecated, please use '/quotas/folders/scans' instead"""
+    """Get folders quota scans
+
+     Deprecated, please use '/quotas/folders/scans' instead
+
+    Returns:
+        Response[Union[Any, List[FolderQuotaScan]]]
+    """
 
     return (
         await asyncio_detailed(

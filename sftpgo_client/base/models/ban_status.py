@@ -11,7 +11,10 @@ T = TypeVar("T", bound="BanStatus")
 
 @attr.s(auto_attribs=True)
 class BanStatus:
-    """ """
+    """
+    Attributes:
+        date_time (Union[Unset, None, datetime.datetime]): if null the host is not banned
+    """
 
     date_time: Union[Unset, None, datetime.datetime] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)

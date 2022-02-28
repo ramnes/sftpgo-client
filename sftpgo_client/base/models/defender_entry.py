@@ -11,7 +11,16 @@ T = TypeVar("T", bound="DefenderEntry")
 
 @attr.s(auto_attribs=True)
 class DefenderEntry:
-    """ """
+    """
+    Attributes:
+        id (Union[Unset, str]):
+        ip (Union[Unset, str]):
+        score (Union[Unset, int]): the score increases whenever a violation is detected, such as an attempt to log in
+            using an incorrect password or invalid username. If the score exceeds the configured threshold, the IP is
+            banned. Omitted for banned IPs
+        ban_time (Union[Unset, datetime.datetime]): date time until the IP is banned. For already banned hosts, the ban
+            time is increased each time a new violation is detected. Omitted if the IP is not banned
+    """
 
     id: Union[Unset, str] = UNSET
     ip: Union[Unset, str] = UNSET

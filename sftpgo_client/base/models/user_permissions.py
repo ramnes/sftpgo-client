@@ -7,7 +7,11 @@ T = TypeVar("T", bound="UserPermissions")
 
 @attr.s(auto_attribs=True)
 class UserPermissions:
-    """ """
+    """
+    Example:
+        {'/': ['*'], '/somedir': ['list', 'download']}
+
+    """
 
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 

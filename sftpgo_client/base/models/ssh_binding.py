@@ -9,7 +9,12 @@ T = TypeVar("T", bound="SSHBinding")
 
 @attr.s(auto_attribs=True)
 class SSHBinding:
-    """ """
+    """
+    Attributes:
+        address (Union[Unset, str]): TCP address the server listen on
+        port (Union[Unset, int]): the port used for serving requests
+        apply_proxy_config (Union[Unset, bool]): apply the proxy configuration, if any
+    """
 
     address: Union[Unset, str] = UNSET
     port: Union[Unset, int] = UNSET

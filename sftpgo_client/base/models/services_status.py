@@ -4,6 +4,7 @@ import attr
 
 from ..models.data_provider_status import DataProviderStatus
 from ..models.ftp_service_status import FTPServiceStatus
+from ..models.mfa_status import MFAStatus
 from ..models.services_status_defender import ServicesStatusDefender
 from ..models.ssh_service_status import SSHServiceStatus
 from ..models.web_dav_service_status import WebDAVServiceStatus
@@ -14,13 +15,22 @@ T = TypeVar("T", bound="ServicesStatus")
 
 @attr.s(auto_attribs=True)
 class ServicesStatus:
-    """ """
+    """
+    Attributes:
+        ssh (Union[Unset, SSHServiceStatus]):
+        ftp (Union[Unset, FTPServiceStatus]):
+        webdav (Union[Unset, WebDAVServiceStatus]):
+        data_provider (Union[Unset, DataProviderStatus]):
+        defender (Union[Unset, ServicesStatusDefender]):
+        mfa (Union[Unset, MFAStatus]):
+    """
 
     ssh: Union[Unset, SSHServiceStatus] = UNSET
     ftp: Union[Unset, FTPServiceStatus] = UNSET
     webdav: Union[Unset, WebDAVServiceStatus] = UNSET
     data_provider: Union[Unset, DataProviderStatus] = UNSET
     defender: Union[Unset, ServicesStatusDefender] = UNSET
+    mfa: Union[Unset, MFAStatus] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -44,6 +54,10 @@ class ServicesStatus:
         if not isinstance(self.defender, Unset):
             defender = self.defender.to_dict()
 
+        mfa: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.mfa, Unset):
+            mfa = self.mfa.to_dict()
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
@@ -57,6 +71,8 @@ class ServicesStatus:
             field_dict["data_provider"] = data_provider
         if defender is not UNSET:
             field_dict["defender"] = defender
+        if mfa is not UNSET:
+            field_dict["mfa"] = mfa
 
         return field_dict
 
@@ -98,12 +114,20 @@ class ServicesStatus:
         else:
             defender = ServicesStatusDefender.from_dict(_defender)
 
+        _mfa = d.pop("mfa", UNSET)
+        mfa: Union[Unset, MFAStatus]
+        if isinstance(_mfa, Unset):
+            mfa = UNSET
+        else:
+            mfa = MFAStatus.from_dict(_mfa)
+
         services_status = cls(
             ssh=ssh,
             ftp=ftp,
             webdav=webdav,
             data_provider=data_provider,
             defender=defender,
+            mfa=mfa,
         )
 
         services_status.additional_properties = d

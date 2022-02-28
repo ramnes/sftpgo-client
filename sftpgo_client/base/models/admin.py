@@ -12,7 +12,26 @@ T = TypeVar("T", bound="Admin")
 
 @attr.s(auto_attribs=True)
 class Admin:
-    """ """
+    """
+    Attributes:
+        id (Union[Unset, int]):
+        status (Union[Unset, AdminStatus]): status:
+              * `0` user is disabled, login is not allowed
+              * `1` user is enabled
+        username (Union[Unset, str]): username is unique
+        description (Union[Unset, str]): optional description, for example the admin full name
+        password (Union[Unset, str]): Admin password. For security reasons this field is omitted when you search/get
+            admins
+        email (Union[Unset, str]):
+        permissions (Union[Unset, List[AdminPermissions]]):
+        filters (Union[Unset, AdminFilters]):
+        additional_info (Union[Unset, str]): Free form text field
+        created_at (Union[Unset, int]): creation time as unix timestamp in milliseconds. It will be 0 for admins created
+            before v2.2.0
+        updated_at (Union[Unset, int]): last update time as unix timestamp in milliseconds
+        last_login (Union[Unset, int]): Last user login as unix timestamp in milliseconds. It is saved at most once
+            every 10 minutes
+    """
 
     id: Union[Unset, int] = UNSET
     status: Union[Unset, AdminStatus] = UNSET
@@ -23,6 +42,9 @@ class Admin:
     permissions: Union[Unset, List[AdminPermissions]] = UNSET
     filters: Union[Unset, AdminFilters] = UNSET
     additional_info: Union[Unset, str] = UNSET
+    created_at: Union[Unset, int] = UNSET
+    updated_at: Union[Unset, int] = UNSET
+    last_login: Union[Unset, int] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -48,6 +70,9 @@ class Admin:
             filters = self.filters.to_dict()
 
         additional_info = self.additional_info
+        created_at = self.created_at
+        updated_at = self.updated_at
+        last_login = self.last_login
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -70,6 +95,12 @@ class Admin:
             field_dict["filters"] = filters
         if additional_info is not UNSET:
             field_dict["additional_info"] = additional_info
+        if created_at is not UNSET:
+            field_dict["created_at"] = created_at
+        if updated_at is not UNSET:
+            field_dict["updated_at"] = updated_at
+        if last_login is not UNSET:
+            field_dict["last_login"] = last_login
 
         return field_dict
 
@@ -109,6 +140,12 @@ class Admin:
 
         additional_info = d.pop("additional_info", UNSET)
 
+        created_at = d.pop("created_at", UNSET)
+
+        updated_at = d.pop("updated_at", UNSET)
+
+        last_login = d.pop("last_login", UNSET)
+
         admin = cls(
             id=id,
             status=status,
@@ -119,6 +156,9 @@ class Admin:
             permissions=permissions,
             filters=filters,
             additional_info=additional_info,
+            created_at=created_at,
+            updated_at=updated_at,
+            last_login=last_login,
         )
 
         admin.additional_properties = d

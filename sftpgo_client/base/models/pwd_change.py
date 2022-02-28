@@ -9,7 +9,11 @@ T = TypeVar("T", bound="PwdChange")
 
 @attr.s(auto_attribs=True)
 class PwdChange:
-    """ """
+    """
+    Attributes:
+        current_password (Union[Unset, str]):
+        new_password (Union[Unset, str]):
+    """
 
     current_password: Union[Unset, str] = UNSET
     new_password: Union[Unset, str] = UNSET

@@ -1,4 +1,4 @@
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, Optional, Union, cast
 
 import httpx
 
@@ -8,16 +8,17 @@ from ...types import Response
 
 
 def _get_kwargs(
+    username: str,
     *,
     client: Client,
-    username: str,
 ) -> Dict[str, Any]:
     url = "{}/quotas/users/{username}/scan".format(client.base_url, username=username)
 
-    headers: Dict[str, Any] = client.get_headers()
+    headers: Dict[str, str] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
 
     return {
+        "method": "post",
         "url": url,
         "headers": headers,
         "cookies": cookies,
@@ -31,28 +32,22 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, ApiRespo
 
         return response_202
     if response.status_code == 400:
-        response_400 = None
-
+        response_400 = cast(Any, None)
         return response_400
     if response.status_code == 401:
-        response_401 = None
-
+        response_401 = cast(Any, None)
         return response_401
     if response.status_code == 403:
-        response_403 = None
-
+        response_403 = cast(Any, None)
         return response_403
     if response.status_code == 404:
-        response_404 = None
-
+        response_404 = cast(Any, None)
         return response_404
     if response.status_code == 409:
-        response_409 = None
-
+        response_409 = cast(Any, None)
         return response_409
     if response.status_code == 500:
-        response_500 = None
-
+        response_500 = cast(Any, None)
         return response_500
     return None
 
@@ -67,16 +62,29 @@ def _build_response(*, response: httpx.Response) -> Response[Union[Any, ApiRespo
 
 
 def sync_detailed(
+    username: str,
     *,
     client: Client,
-    username: str,
 ) -> Response[Union[Any, ApiResponse]]:
+    """Start a user quota scan
+
+     Starts a new quota scan for the given user. A quota scan updates the number of files and their total
+    size for the specified user and the virtual folders, if any, included in his quota
+
+    Args:
+        username (str):
+
+    Returns:
+        Response[Union[Any, ApiResponse]]
+    """
+
     kwargs = _get_kwargs(
-        client=client,
         username=username,
+        client=client,
     )
 
-    response = httpx.post(
+    response = httpx.request(
+        verify=client.verify_ssl,
         **kwargs,
     )
 
@@ -84,44 +92,76 @@ def sync_detailed(
 
 
 def sync(
+    username: str,
     *,
     client: Client,
-    username: str,
 ) -> Optional[Union[Any, ApiResponse]]:
-    """Starts a new quota scan for the given user. A quota scan updates the number of files and their total size for the specified user and the virtual folders, if any, included in his quota"""
+    """Start a user quota scan
+
+     Starts a new quota scan for the given user. A quota scan updates the number of files and their total
+    size for the specified user and the virtual folders, if any, included in his quota
+
+    Args:
+        username (str):
+
+    Returns:
+        Response[Union[Any, ApiResponse]]
+    """
 
     return sync_detailed(
-        client=client,
         username=username,
+        client=client,
     ).parsed
 
 
 async def asyncio_detailed(
+    username: str,
     *,
     client: Client,
-    username: str,
 ) -> Response[Union[Any, ApiResponse]]:
+    """Start a user quota scan
+
+     Starts a new quota scan for the given user. A quota scan updates the number of files and their total
+    size for the specified user and the virtual folders, if any, included in his quota
+
+    Args:
+        username (str):
+
+    Returns:
+        Response[Union[Any, ApiResponse]]
+    """
+
     kwargs = _get_kwargs(
-        client=client,
         username=username,
+        client=client,
     )
 
-    async with httpx.AsyncClient() as _client:
-        response = await _client.post(**kwargs)
+    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
+        response = await _client.request(**kwargs)
 
     return _build_response(response=response)
 
 
 async def asyncio(
+    username: str,
     *,
     client: Client,
-    username: str,
 ) -> Optional[Union[Any, ApiResponse]]:
-    """Starts a new quota scan for the given user. A quota scan updates the number of files and their total size for the specified user and the virtual folders, if any, included in his quota"""
+    """Start a user quota scan
+
+     Starts a new quota scan for the given user. A quota scan updates the number of files and their total
+    size for the specified user and the virtual folders, if any, included in his quota
+
+    Args:
+        username (str):
+
+    Returns:
+        Response[Union[Any, ApiResponse]]
+    """
 
     return (
         await asyncio_detailed(
-            client=client,
             username=username,
+            client=client,
         )
     ).parsed

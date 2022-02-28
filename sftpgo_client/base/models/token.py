@@ -11,7 +11,11 @@ T = TypeVar("T", bound="Token")
 
 @attr.s(auto_attribs=True)
 class Token:
-    """ """
+    """
+    Attributes:
+        access_token (Union[Unset, str]):
+        expires_at (Union[Unset, datetime.datetime]):
+    """
 
     access_token: Union[Unset, str] = UNSET
     expires_at: Union[Unset, datetime.datetime] = UNSET

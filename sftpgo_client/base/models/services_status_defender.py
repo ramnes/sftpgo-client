@@ -9,7 +9,10 @@ T = TypeVar("T", bound="ServicesStatusDefender")
 
 @attr.s(auto_attribs=True)
 class ServicesStatusDefender:
-    """ """
+    """
+    Attributes:
+        is_active (Union[Unset, bool]):
+    """
 
     is_active: Union[Unset, bool] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)

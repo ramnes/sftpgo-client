@@ -8,6 +8,7 @@ class SecretStatus(str, Enum):
     GCP = "GCP"
     AWS = "AWS"
     VAULTTRANSIT = "VaultTransit"
+    AZUREKEYVAULT = "AzureKeyVault"
     REDACTED = "Redacted"
 
     def __str__(self) -> str:

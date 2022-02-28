@@ -1,4 +1,4 @@
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, Optional, Union, cast
 
 import httpx
 
@@ -13,31 +13,34 @@ from ...types import UNSET, Response, Unset
 def _get_kwargs(
     *,
     client: Client,
-    output_file: Union[Unset, str] = UNSET,
-    output_data: Union[Unset, DumpdataOutputData] = UNSET,
-    indent: Union[Unset, DumpdataIndent] = UNSET,
+    output_file: Union[Unset, None, str] = UNSET,
+    output_data: Union[Unset, None, DumpdataOutputData] = UNSET,
+    indent: Union[Unset, None, DumpdataIndent] = UNSET,
 ) -> Dict[str, Any]:
     url = "{}/dumpdata".format(client.base_url)
 
-    headers: Dict[str, Any] = client.get_headers()
+    headers: Dict[str, str] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
 
-    json_output_data: Union[Unset, int] = UNSET
+    params: Dict[str, Any] = {}
+    params["output-file"] = output_file
+
+    json_output_data: Union[Unset, None, int] = UNSET
     if not isinstance(output_data, Unset):
-        json_output_data = output_data.value
+        json_output_data = output_data.value if output_data else None
 
-    json_indent: Union[Unset, int] = UNSET
+    params["output-data"] = json_output_data
+
+    json_indent: Union[Unset, None, int] = UNSET
     if not isinstance(indent, Unset):
-        json_indent = indent.value
+        json_indent = indent.value if indent else None
 
-    params: Dict[str, Any] = {
-        "output-file": output_file,
-        "output-data": json_output_data,
-        "indent": json_indent,
-    }
+    params["indent"] = json_indent
+
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
     return {
+        "method": "get",
         "url": url,
         "headers": headers,
         "cookies": cookies,
@@ -70,20 +73,16 @@ def _parse_response(
 
         return response_200
     if response.status_code == 400:
-        response_400 = None
-
+        response_400 = cast(Any, None)
         return response_400
     if response.status_code == 401:
-        response_401 = None
-
+        response_401 = cast(Any, None)
         return response_401
     if response.status_code == 403:
-        response_403 = None
-
+        response_403 = cast(Any, None)
         return response_403
     if response.status_code == 500:
-        response_500 = None
-
+        response_500 = cast(Any, None)
         return response_500
     return None
 
@@ -102,10 +101,25 @@ def _build_response(
 def sync_detailed(
     *,
     client: Client,
-    output_file: Union[Unset, str] = UNSET,
-    output_data: Union[Unset, DumpdataOutputData] = UNSET,
-    indent: Union[Unset, DumpdataIndent] = UNSET,
+    output_file: Union[Unset, None, str] = UNSET,
+    output_data: Union[Unset, None, DumpdataOutputData] = UNSET,
+    indent: Union[Unset, None, DumpdataIndent] = UNSET,
 ) -> Response[Union[Any, Union[ApiResponse, BackupData]]]:
+    """Dump data
+
+     Backups data as data provider independent JSON. The backup can be saved in a local file on the
+    server, to avoid exposing sensitive data over the network, or returned as response body. The output
+    of dumpdata can be used as input for loaddata
+
+    Args:
+        output_file (Union[Unset, None, str]):
+        output_data (Union[Unset, None, DumpdataOutputData]):
+        indent (Union[Unset, None, DumpdataIndent]):
+
+    Returns:
+        Response[Union[Any, Union[ApiResponse, BackupData]]]
+    """
+
     kwargs = _get_kwargs(
         client=client,
         output_file=output_file,
@@ -113,7 +127,8 @@ def sync_detailed(
         indent=indent,
     )
 
-    response = httpx.get(
+    response = httpx.request(
+        verify=client.verify_ssl,
         **kwargs,
     )
 
@@ -123,11 +138,24 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
-    output_file: Union[Unset, str] = UNSET,
-    output_data: Union[Unset, DumpdataOutputData] = UNSET,
-    indent: Union[Unset, DumpdataIndent] = UNSET,
+    output_file: Union[Unset, None, str] = UNSET,
+    output_data: Union[Unset, None, DumpdataOutputData] = UNSET,
+    indent: Union[Unset, None, DumpdataIndent] = UNSET,
 ) -> Optional[Union[Any, Union[ApiResponse, BackupData]]]:
-    """Backups data as data provider independent JSON. The backup can be saved in a local file on the server, to avoid exposing sensitive data over the network, or returned as response body. The output of dumpdata can be used as input for loaddata"""
+    """Dump data
+
+     Backups data as data provider independent JSON. The backup can be saved in a local file on the
+    server, to avoid exposing sensitive data over the network, or returned as response body. The output
+    of dumpdata can be used as input for loaddata
+
+    Args:
+        output_file (Union[Unset, None, str]):
+        output_data (Union[Unset, None, DumpdataOutputData]):
+        indent (Union[Unset, None, DumpdataIndent]):
+
+    Returns:
+        Response[Union[Any, Union[ApiResponse, BackupData]]]
+    """
 
     return sync_detailed(
         client=client,
@@ -140,10 +168,25 @@ def sync(
 async def asyncio_detailed(
     *,
     client: Client,
-    output_file: Union[Unset, str] = UNSET,
-    output_data: Union[Unset, DumpdataOutputData] = UNSET,
-    indent: Union[Unset, DumpdataIndent] = UNSET,
+    output_file: Union[Unset, None, str] = UNSET,
+    output_data: Union[Unset, None, DumpdataOutputData] = UNSET,
+    indent: Union[Unset, None, DumpdataIndent] = UNSET,
 ) -> Response[Union[Any, Union[ApiResponse, BackupData]]]:
+    """Dump data
+
+     Backups data as data provider independent JSON. The backup can be saved in a local file on the
+    server, to avoid exposing sensitive data over the network, or returned as response body. The output
+    of dumpdata can be used as input for loaddata
+
+    Args:
+        output_file (Union[Unset, None, str]):
+        output_data (Union[Unset, None, DumpdataOutputData]):
+        indent (Union[Unset, None, DumpdataIndent]):
+
+    Returns:
+        Response[Union[Any, Union[ApiResponse, BackupData]]]
+    """
+
     kwargs = _get_kwargs(
         client=client,
         output_file=output_file,
@@ -151,8 +194,8 @@ async def asyncio_detailed(
         indent=indent,
     )
 
-    async with httpx.AsyncClient() as _client:
-        response = await _client.get(**kwargs)
+    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
+        response = await _client.request(**kwargs)
 
     return _build_response(response=response)
 
@@ -160,11 +203,24 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
-    output_file: Union[Unset, str] = UNSET,
-    output_data: Union[Unset, DumpdataOutputData] = UNSET,
-    indent: Union[Unset, DumpdataIndent] = UNSET,
+    output_file: Union[Unset, None, str] = UNSET,
+    output_data: Union[Unset, None, DumpdataOutputData] = UNSET,
+    indent: Union[Unset, None, DumpdataIndent] = UNSET,
 ) -> Optional[Union[Any, Union[ApiResponse, BackupData]]]:
-    """Backups data as data provider independent JSON. The backup can be saved in a local file on the server, to avoid exposing sensitive data over the network, or returned as response body. The output of dumpdata can be used as input for loaddata"""
+    """Dump data
+
+     Backups data as data provider independent JSON. The backup can be saved in a local file on the
+    server, to avoid exposing sensitive data over the network, or returned as response body. The output
+    of dumpdata can be used as input for loaddata
+
+    Args:
+        output_file (Union[Unset, None, str]):
+        output_data (Union[Unset, None, DumpdataOutputData]):
+        indent (Union[Unset, None, DumpdataIndent]):
+
+    Returns:
+        Response[Union[Any, Union[ApiResponse, BackupData]]]
+    """
 
     return (
         await asyncio_detailed(

@@ -11,7 +11,12 @@ T = TypeVar("T", bound="FTPServiceStatus")
 
 @attr.s(auto_attribs=True)
 class FTPServiceStatus:
-    """ """
+    """
+    Attributes:
+        is_active (Union[Unset, bool]):
+        bindings (Union[Unset, None, List[FTPDBinding]]):
+        passive_port_range (Union[Unset, FTPPassivePortRange]):
+    """
 
     is_active: Union[Unset, bool] = UNSET
     bindings: Union[Unset, None, List[FTPDBinding]] = UNSET

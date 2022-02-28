@@ -9,7 +9,13 @@ T = TypeVar("T", bound="HooksFilter")
 
 @attr.s(auto_attribs=True)
 class HooksFilter:
-    """User specific hook overrides"""
+    """User specific hook overrides
+
+    Attributes:
+        external_auth_disabled (Union[Unset, bool]): If true, the external auth hook, if defined, will not be executed
+        pre_login_disabled (Union[Unset, bool]): If true, the pre-login hook, if defined, will not be executed
+        check_password_disabled (Union[Unset, bool]): If true, the check password hook, if defined, will not be executed
+    """
 
     external_auth_disabled: Union[Unset, bool] = UNSET
     pre_login_disabled: Union[Unset, bool] = UNSET

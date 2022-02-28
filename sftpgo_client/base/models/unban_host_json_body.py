@@ -9,7 +9,10 @@ T = TypeVar("T", bound="UnbanHostJsonBody")
 
 @attr.s(auto_attribs=True)
 class UnbanHostJsonBody:
-    """ """
+    """
+    Attributes:
+        ip (Union[Unset, str]): IPv4/IPv6 address to remove
+    """
 
     ip: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)

@@ -1,4 +1,4 @@
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, Optional, Union, cast
 
 import httpx
 
@@ -8,16 +8,17 @@ from ...types import Response
 
 
 def _get_kwargs(
+    name: str,
     *,
     client: Client,
-    name: str,
 ) -> Dict[str, Any]:
     url = "{}/folders/{name}".format(client.base_url, name=name)
 
-    headers: Dict[str, Any] = client.get_headers()
+    headers: Dict[str, str] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
 
     return {
+        "method": "get",
         "url": url,
         "headers": headers,
         "cookies": cookies,
@@ -33,24 +34,19 @@ def _parse_response(
 
         return response_200
     if response.status_code == 400:
-        response_400 = None
-
+        response_400 = cast(Any, None)
         return response_400
     if response.status_code == 401:
-        response_401 = None
-
+        response_401 = cast(Any, None)
         return response_401
     if response.status_code == 403:
-        response_403 = None
-
+        response_403 = cast(Any, None)
         return response_403
     if response.status_code == 404:
-        response_404 = None
-
+        response_404 = cast(Any, None)
         return response_404
     if response.status_code == 500:
-        response_500 = None
-
+        response_500 = cast(Any, None)
         return response_500
     return None
 
@@ -67,16 +63,28 @@ def _build_response(
 
 
 def sync_detailed(
+    name: str,
     *,
     client: Client,
-    name: str,
 ) -> Response[Union[Any, BaseVirtualFolder]]:
+    """Find folders by name
+
+     Returns the folder with the given name if it exists.
+
+    Args:
+        name (str):
+
+    Returns:
+        Response[Union[Any, BaseVirtualFolder]]
+    """
+
     kwargs = _get_kwargs(
-        client=client,
         name=name,
+        client=client,
     )
 
-    response = httpx.get(
+    response = httpx.request(
+        verify=client.verify_ssl,
         **kwargs,
     )
 
@@ -84,44 +92,73 @@ def sync_detailed(
 
 
 def sync(
+    name: str,
     *,
     client: Client,
-    name: str,
 ) -> Optional[Union[Any, BaseVirtualFolder]]:
-    """Returns the folder with the given name if it exists."""
+    """Find folders by name
+
+     Returns the folder with the given name if it exists.
+
+    Args:
+        name (str):
+
+    Returns:
+        Response[Union[Any, BaseVirtualFolder]]
+    """
 
     return sync_detailed(
-        client=client,
         name=name,
+        client=client,
     ).parsed
 
 
 async def asyncio_detailed(
+    name: str,
     *,
     client: Client,
-    name: str,
 ) -> Response[Union[Any, BaseVirtualFolder]]:
+    """Find folders by name
+
+     Returns the folder with the given name if it exists.
+
+    Args:
+        name (str):
+
+    Returns:
+        Response[Union[Any, BaseVirtualFolder]]
+    """
+
     kwargs = _get_kwargs(
-        client=client,
         name=name,
+        client=client,
     )
 
-    async with httpx.AsyncClient() as _client:
-        response = await _client.get(**kwargs)
+    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
+        response = await _client.request(**kwargs)
 
     return _build_response(response=response)
 
 
 async def asyncio(
+    name: str,
     *,
     client: Client,
-    name: str,
 ) -> Optional[Union[Any, BaseVirtualFolder]]:
-    """Returns the folder with the given name if it exists."""
+    """Find folders by name
+
+     Returns the folder with the given name if it exists.
+
+    Args:
+        name (str):
+
+    Returns:
+        Response[Union[Any, BaseVirtualFolder]]
+    """
 
     return (
         await asyncio_detailed(
-            client=client,
             name=name,
+            client=client,
         )
     ).parsed

@@ -10,7 +10,15 @@ T = TypeVar("T", bound="Transfer")
 
 @attr.s(auto_attribs=True)
 class Transfer:
-    """ """
+    """
+    Attributes:
+        operation_type (Union[Unset, TransferOperationType]): Operations:
+              * `upload`
+              * `download`
+        path (Union[Unset, str]): file path for the upload/download
+        start_time (Union[Unset, int]): start time as unix timestamp in milliseconds
+        size (Union[Unset, int]): bytes transferred
+    """
 
     operation_type: Union[Unset, TransferOperationType] = UNSET
     path: Union[Unset, str] = UNSET

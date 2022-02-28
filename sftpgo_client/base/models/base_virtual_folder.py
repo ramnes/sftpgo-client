@@ -10,7 +10,20 @@ T = TypeVar("T", bound="BaseVirtualFolder")
 
 @attr.s(auto_attribs=True)
 class BaseVirtualFolder:
-    """Defines the filesystem for the virtual folder and the used quota limits. The same folder can be shared among multiple users and each user can have different quota limits or a different virtual path."""
+    """Defines the filesystem for the virtual folder and the used quota limits. The same folder can be shared among
+    multiple users and each user can have different quota limits or a different virtual path.
+
+        Attributes:
+            id (Union[Unset, int]):
+            name (Union[Unset, str]): unique name for this virtual folder
+            mapped_path (Union[Unset, str]): absolute filesystem path to use as virtual folder
+            description (Union[Unset, str]): optional description
+            used_quota_size (Union[Unset, int]):
+            used_quota_files (Union[Unset, int]):
+            last_quota_update (Union[Unset, int]): Last quota update as unix timestamp in milliseconds
+            users (Union[Unset, List[str]]): list of usernames associated with this virtual folder
+            filesystem (Union[Unset, FilesystemConfig]): Storage filesystem details
+    """
 
     id: Union[Unset, int] = UNSET
     name: Union[Unset, str] = UNSET

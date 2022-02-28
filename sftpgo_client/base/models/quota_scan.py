@@ -9,7 +9,11 @@ T = TypeVar("T", bound="QuotaScan")
 
 @attr.s(auto_attribs=True)
 class QuotaScan:
-    """ """
+    """
+    Attributes:
+        username (Union[Unset, str]): username to which the quota scan refers
+        start_time (Union[Unset, int]): scan start time as unix timestamp in milliseconds
+    """
 
     username: Union[Unset, str] = UNSET
     start_time: Union[Unset, int] = UNSET

@@ -9,7 +9,11 @@ T = TypeVar("T", bound="SSHHostKey")
 
 @attr.s(auto_attribs=True)
 class SSHHostKey:
-    """ """
+    """
+    Attributes:
+        path (Union[Unset, str]):
+        fingerprint (Union[Unset, str]):
+    """
 
     path: Union[Unset, str] = UNSET
     fingerprint: Union[Unset, str] = UNSET

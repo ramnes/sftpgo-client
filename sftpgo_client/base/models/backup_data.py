@@ -3,7 +3,9 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 import attr
 
 from ..models.admin import Admin
+from ..models.api_key import APIKey
 from ..models.base_virtual_folder import BaseVirtualFolder
+from ..models.share import Share
 from ..models.user import User
 from ..types import UNSET, Unset
 
@@ -12,11 +14,21 @@ T = TypeVar("T", bound="BackupData")
 
 @attr.s(auto_attribs=True)
 class BackupData:
-    """ """
+    """
+    Attributes:
+        users (Union[Unset, List[User]]):
+        folders (Union[Unset, List[BaseVirtualFolder]]):
+        admins (Union[Unset, List[Admin]]):
+        api_keys (Union[Unset, List[APIKey]]):
+        shares (Union[Unset, List[Share]]):
+        version (Union[Unset, int]):
+    """
 
     users: Union[Unset, List[User]] = UNSET
     folders: Union[Unset, List[BaseVirtualFolder]] = UNSET
     admins: Union[Unset, List[Admin]] = UNSET
+    api_keys: Union[Unset, List[APIKey]] = UNSET
+    shares: Union[Unset, List[Share]] = UNSET
     version: Union[Unset, int] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -45,6 +57,22 @@ class BackupData:
 
                 admins.append(admins_item)
 
+        api_keys: Union[Unset, List[Dict[str, Any]]] = UNSET
+        if not isinstance(self.api_keys, Unset):
+            api_keys = []
+            for api_keys_item_data in self.api_keys:
+                api_keys_item = api_keys_item_data.to_dict()
+
+                api_keys.append(api_keys_item)
+
+        shares: Union[Unset, List[Dict[str, Any]]] = UNSET
+        if not isinstance(self.shares, Unset):
+            shares = []
+            for shares_item_data in self.shares:
+                shares_item = shares_item_data.to_dict()
+
+                shares.append(shares_item)
+
         version = self.version
 
         field_dict: Dict[str, Any] = {}
@@ -56,6 +84,10 @@ class BackupData:
             field_dict["folders"] = folders
         if admins is not UNSET:
             field_dict["admins"] = admins
+        if api_keys is not UNSET:
+            field_dict["api_keys"] = api_keys
+        if shares is not UNSET:
+            field_dict["shares"] = shares
         if version is not UNSET:
             field_dict["version"] = version
 
@@ -85,12 +117,28 @@ class BackupData:
 
             admins.append(admins_item)
 
+        api_keys = []
+        _api_keys = d.pop("api_keys", UNSET)
+        for api_keys_item_data in _api_keys or []:
+            api_keys_item = APIKey.from_dict(api_keys_item_data)
+
+            api_keys.append(api_keys_item)
+
+        shares = []
+        _shares = d.pop("shares", UNSET)
+        for shares_item_data in _shares or []:
+            shares_item = Share.from_dict(shares_item_data)
+
+            shares.append(shares_item)
+
         version = d.pop("version", UNSET)
 
         backup_data = cls(
             users=users,
             folders=folders,
             admins=admins,
+            api_keys=api_keys,
+            shares=shares,
             version=version,
         )
 

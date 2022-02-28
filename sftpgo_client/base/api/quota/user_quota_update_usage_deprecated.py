@@ -1,4 +1,4 @@
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, Optional, Union, cast
 
 import httpx
 
@@ -15,25 +15,26 @@ def _get_kwargs(
     *,
     client: Client,
     json_body: User,
-    mode: Union[Unset, UserQuotaUpdateUsageDeprecatedMode] = UNSET,
+    mode: Union[Unset, None, UserQuotaUpdateUsageDeprecatedMode] = UNSET,
 ) -> Dict[str, Any]:
     url = "{}/quota-update".format(client.base_url)
 
-    headers: Dict[str, Any] = client.get_headers()
+    headers: Dict[str, str] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
 
-    json_mode: Union[Unset, str] = UNSET
+    params: Dict[str, Any] = {}
+    json_mode: Union[Unset, None, str] = UNSET
     if not isinstance(mode, Unset):
-        json_mode = mode.value
+        json_mode = mode.value if mode else None
 
-    params: Dict[str, Any] = {
-        "mode": json_mode,
-    }
+    params["mode"] = json_mode
+
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
     json_json_body = json_body.to_dict()
 
     return {
+        "method": "put",
         "url": url,
         "headers": headers,
         "cookies": cookies,
@@ -49,24 +50,19 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, ApiRespo
 
         return response_200
     if response.status_code == 400:
-        response_400 = None
-
+        response_400 = cast(Any, None)
         return response_400
     if response.status_code == 401:
-        response_401 = None
-
+        response_401 = cast(Any, None)
         return response_401
     if response.status_code == 403:
-        response_403 = None
-
+        response_403 = cast(Any, None)
         return response_403
     if response.status_code == 404:
-        response_404 = None
-
+        response_404 = cast(Any, None)
         return response_404
     if response.status_code == 500:
-        response_500 = None
-
+        response_500 = cast(Any, None)
         return response_500
     return None
 
@@ -84,15 +80,31 @@ def sync_detailed(
     *,
     client: Client,
     json_body: User,
-    mode: Union[Unset, UserQuotaUpdateUsageDeprecatedMode] = UNSET,
+    mode: Union[Unset, None, UserQuotaUpdateUsageDeprecatedMode] = UNSET,
 ) -> Response[Union[Any, ApiResponse]]:
+    """Update quota usage limits
+
+     Deprecated, please use '/quotas/users/{username}/usage' instead
+
+    Args:
+        mode (Union[Unset, None, UserQuotaUpdateUsageDeprecatedMode]): Update type:
+              * `add` - add the specified quota limits to the current used ones
+              * `reset` - reset the values to the specified ones. This is the default
+             Example: reset.
+        json_body (User):
+
+    Returns:
+        Response[Union[Any, ApiResponse]]
+    """
+
     kwargs = _get_kwargs(
         client=client,
         json_body=json_body,
         mode=mode,
     )
 
-    response = httpx.put(
+    response = httpx.request(
+        verify=client.verify_ssl,
         **kwargs,
     )
 
@@ -103,9 +115,22 @@ def sync(
     *,
     client: Client,
     json_body: User,
-    mode: Union[Unset, UserQuotaUpdateUsageDeprecatedMode] = UNSET,
+    mode: Union[Unset, None, UserQuotaUpdateUsageDeprecatedMode] = UNSET,
 ) -> Optional[Union[Any, ApiResponse]]:
-    """Deprecated, please use '/quotas/users/{username}/usage' instead"""
+    """Update quota usage limits
+
+     Deprecated, please use '/quotas/users/{username}/usage' instead
+
+    Args:
+        mode (Union[Unset, None, UserQuotaUpdateUsageDeprecatedMode]): Update type:
+              * `add` - add the specified quota limits to the current used ones
+              * `reset` - reset the values to the specified ones. This is the default
+             Example: reset.
+        json_body (User):
+
+    Returns:
+        Response[Union[Any, ApiResponse]]
+    """
 
     return sync_detailed(
         client=client,
@@ -118,16 +143,31 @@ async def asyncio_detailed(
     *,
     client: Client,
     json_body: User,
-    mode: Union[Unset, UserQuotaUpdateUsageDeprecatedMode] = UNSET,
+    mode: Union[Unset, None, UserQuotaUpdateUsageDeprecatedMode] = UNSET,
 ) -> Response[Union[Any, ApiResponse]]:
+    """Update quota usage limits
+
+     Deprecated, please use '/quotas/users/{username}/usage' instead
+
+    Args:
+        mode (Union[Unset, None, UserQuotaUpdateUsageDeprecatedMode]): Update type:
+              * `add` - add the specified quota limits to the current used ones
+              * `reset` - reset the values to the specified ones. This is the default
+             Example: reset.
+        json_body (User):
+
+    Returns:
+        Response[Union[Any, ApiResponse]]
+    """
+
     kwargs = _get_kwargs(
         client=client,
         json_body=json_body,
         mode=mode,
     )
 
-    async with httpx.AsyncClient() as _client:
-        response = await _client.put(**kwargs)
+    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
+        response = await _client.request(**kwargs)
 
     return _build_response(response=response)
 
@@ -136,9 +176,22 @@ async def asyncio(
     *,
     client: Client,
     json_body: User,
-    mode: Union[Unset, UserQuotaUpdateUsageDeprecatedMode] = UNSET,
+    mode: Union[Unset, None, UserQuotaUpdateUsageDeprecatedMode] = UNSET,
 ) -> Optional[Union[Any, ApiResponse]]:
-    """Deprecated, please use '/quotas/users/{username}/usage' instead"""
+    """Update quota usage limits
+
+     Deprecated, please use '/quotas/users/{username}/usage' instead
+
+    Args:
+        mode (Union[Unset, None, UserQuotaUpdateUsageDeprecatedMode]): Update type:
+              * `add` - add the specified quota limits to the current used ones
+              * `reset` - reset the values to the specified ones. This is the default
+             Example: reset.
+        json_body (User):
+
+    Returns:
+        Response[Union[Any, ApiResponse]]
+    """
 
     return (
         await asyncio_detailed(

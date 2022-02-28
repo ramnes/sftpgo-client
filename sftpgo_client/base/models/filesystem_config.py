@@ -4,7 +4,7 @@ import attr
 
 from ..models.azure_blob_fs_config import AzureBlobFsConfig
 from ..models.crypt_fs_config import CryptFsConfig
-from ..models.filesystem_config_provider import FilesystemConfigProvider
+from ..models.fs_providers import FsProviders
 from ..models.gcs_config import GCSConfig
 from ..models.s3_config import S3Config
 from ..models.sftp_fs_config import SFTPFsConfig
@@ -15,9 +15,26 @@ T = TypeVar("T", bound="FilesystemConfig")
 
 @attr.s(auto_attribs=True)
 class FilesystemConfig:
-    """Storage filesystem details"""
+    """Storage filesystem details
 
-    provider: Union[Unset, FilesystemConfigProvider] = UNSET
+    Attributes:
+        provider (Union[Unset, FsProviders]): Filesystem providers:
+              * `0` - Local filesystem
+              * `1` - S3 Compatible Object Storage
+              * `2` - Google Cloud Storage
+              * `3` - Azure Blob Storage
+              * `4` - Local filesystem encrypted
+              * `5` - SFTP
+        s3config (Union[Unset, S3Config]): S3 Compatible Object Storage configuration details
+        gcsconfig (Union[Unset, GCSConfig]): Google Cloud Storage configuration details. The "credentials" field must be
+            populated only when adding/updating a user. It will be always omitted, since there are sensitive data, when you
+            search/get users
+        azblobconfig (Union[Unset, AzureBlobFsConfig]): Azure Blob Storage configuration details
+        cryptconfig (Union[Unset, CryptFsConfig]): Crypt filesystem configuration details
+        sftpconfig (Union[Unset, SFTPFsConfig]):
+    """
+
+    provider: Union[Unset, FsProviders] = UNSET
     s3config: Union[Unset, S3Config] = UNSET
     gcsconfig: Union[Unset, GCSConfig] = UNSET
     azblobconfig: Union[Unset, AzureBlobFsConfig] = UNSET
@@ -72,11 +89,11 @@ class FilesystemConfig:
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
         _provider = d.pop("provider", UNSET)
-        provider: Union[Unset, FilesystemConfigProvider]
+        provider: Union[Unset, FsProviders]
         if isinstance(_provider, Unset):
             provider = UNSET
         else:
-            provider = FilesystemConfigProvider(_provider)
+            provider = FsProviders(_provider)
 
         _s3config = d.pop("s3config", UNSET)
         s3config: Union[Unset, S3Config]

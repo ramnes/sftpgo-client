@@ -9,7 +9,10 @@ T = TypeVar("T", bound="ScoreStatus")
 
 @attr.s(auto_attribs=True)
 class ScoreStatus:
-    """ """
+    """
+    Attributes:
+        score (Union[Unset, int]): if 0 the host is not listed
+    """
 
     score: Union[Unset, int] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)

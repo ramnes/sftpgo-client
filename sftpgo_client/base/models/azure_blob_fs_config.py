@@ -11,7 +11,34 @@ T = TypeVar("T", bound="AzureBlobFsConfig")
 
 @attr.s(auto_attribs=True)
 class AzureBlobFsConfig:
-    """Azure Blob Storage configuration details"""
+    """Azure Blob Storage configuration details
+
+    Attributes:
+        container (Union[Unset, str]):
+        account_name (Union[Unset, str]): Storage Account Name, leave blank to use SAS URL
+        account_key (Union[Unset, Secret]): The secret is encrypted before saving, so to set a new secret you must
+            provide a payload and set the status to "Plain". The encryption key and additional data will be generated
+            automatically. If you set the status to "Redacted" the existig secret will be preserved
+        sas_url (Union[Unset, Secret]): The secret is encrypted before saving, so to set a new secret you must provide a
+            payload and set the status to "Plain". The encryption key and additional data will be generated automatically.
+            If you set the status to "Redacted" the existig secret will be preserved
+        endpoint (Union[Unset, str]): optional endpoint. Default is "blob.core.windows.net". If you use the emulator the
+            endpoint must include the protocol, for example "http://127.0.0.1:10000"
+        upload_part_size (Union[Unset, int]): the buffer size (in MB) to use for multipart uploads. If this value is set
+            to zero, the default value (5MB) will be used.
+        upload_concurrency (Union[Unset, int]): the number of parts to upload in parallel. If this value is set to zero,
+            the default value (5) will be used
+        download_part_size (Union[Unset, int]): the buffer size (in MB) to use for multipart downloads. If this value is
+            set to zero, the default value (5MB) will be used.
+        download_concurrency (Union[Unset, int]): the number of parts to download in parallel. If this value is set to
+            zero, the default value (5) will be used
+        access_tier (Union[Unset, AzureBlobFsConfigAccessTier]):
+        key_prefix (Union[Unset, str]): key_prefix is similar to a chroot directory for a local filesystem. If specified
+            the user will only see contents that starts with this prefix and so you can restrict access to a specific
+            virtual folder. The prefix, if not empty, must not start with "/" and must end with "/". If empty the whole
+            container contents will be available Example: folder/subfolder/.
+        use_emulator (Union[Unset, bool]):
+    """
 
     container: Union[Unset, str] = UNSET
     account_name: Union[Unset, str] = UNSET
@@ -20,6 +47,8 @@ class AzureBlobFsConfig:
     endpoint: Union[Unset, str] = UNSET
     upload_part_size: Union[Unset, int] = UNSET
     upload_concurrency: Union[Unset, int] = UNSET
+    download_part_size: Union[Unset, int] = UNSET
+    download_concurrency: Union[Unset, int] = UNSET
     access_tier: Union[Unset, AzureBlobFsConfigAccessTier] = UNSET
     key_prefix: Union[Unset, str] = UNSET
     use_emulator: Union[Unset, bool] = UNSET
@@ -39,6 +68,8 @@ class AzureBlobFsConfig:
         endpoint = self.endpoint
         upload_part_size = self.upload_part_size
         upload_concurrency = self.upload_concurrency
+        download_part_size = self.download_part_size
+        download_concurrency = self.download_concurrency
         access_tier: Union[Unset, str] = UNSET
         if not isinstance(self.access_tier, Unset):
             access_tier = self.access_tier.value
@@ -63,6 +94,10 @@ class AzureBlobFsConfig:
             field_dict["upload_part_size"] = upload_part_size
         if upload_concurrency is not UNSET:
             field_dict["upload_concurrency"] = upload_concurrency
+        if download_part_size is not UNSET:
+            field_dict["download_part_size"] = download_part_size
+        if download_concurrency is not UNSET:
+            field_dict["download_concurrency"] = download_concurrency
         if access_tier is not UNSET:
             field_dict["access_tier"] = access_tier
         if key_prefix is not UNSET:
@@ -99,6 +134,10 @@ class AzureBlobFsConfig:
 
         upload_concurrency = d.pop("upload_concurrency", UNSET)
 
+        download_part_size = d.pop("download_part_size", UNSET)
+
+        download_concurrency = d.pop("download_concurrency", UNSET)
+
         _access_tier = d.pop("access_tier", UNSET)
         access_tier: Union[Unset, AzureBlobFsConfigAccessTier]
         if isinstance(_access_tier, Unset):
@@ -118,6 +157,8 @@ class AzureBlobFsConfig:
             endpoint=endpoint,
             upload_part_size=upload_part_size,
             upload_concurrency=upload_concurrency,
+            download_part_size=download_part_size,
+            download_concurrency=download_concurrency,
             access_tier=access_tier,
             key_prefix=key_prefix,
             use_emulator=use_emulator,

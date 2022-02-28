@@ -10,7 +10,13 @@ T = TypeVar("T", bound="CryptFsConfig")
 
 @attr.s(auto_attribs=True)
 class CryptFsConfig:
-    """Crypt filesystem configuration details"""
+    """Crypt filesystem configuration details
+
+    Attributes:
+        passphrase (Union[Unset, Secret]): The secret is encrypted before saving, so to set a new secret you must
+            provide a payload and set the status to "Plain". The encryption key and additional data will be generated
+            automatically. If you set the status to "Redacted" the existig secret will be preserved
+    """
 
     passphrase: Union[Unset, Secret] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)

@@ -11,10 +11,14 @@ class AdminPermissions(str, Enum):
     CLOSE_CONNS = "close_conns"
     VIEW_STATUS = "view_status"
     MANAGE_ADMINS = "manage_admins"
+    MANAGE_APIKEYS = "manage_apikeys"
     QUOTA_SCANS = "quota_scans"
     MANAGE_SYSTEM = "manage_system"
     MANAGE_DEFENDER = "manage_defender"
     VIEW_DEFENDER = "view_defender"
+    RETENTION_CHECKS = "retention_checks"
+    METADATA_CHECKS = "metadata_checks"
+    VIEW_EVENTS = "view_events"
 
     def __str__(self) -> str:
         return str(self.value)

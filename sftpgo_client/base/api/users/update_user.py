@@ -1,4 +1,4 @@
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, Optional, Union, cast
 
 import httpx
 
@@ -10,29 +10,30 @@ from ...types import UNSET, Response, Unset
 
 
 def _get_kwargs(
+    username: str,
     *,
     client: Client,
-    username: str,
     json_body: User,
-    disconnect: Union[Unset, UpdateUserDisconnect] = UNSET,
+    disconnect: Union[Unset, None, UpdateUserDisconnect] = UNSET,
 ) -> Dict[str, Any]:
     url = "{}/users/{username}".format(client.base_url, username=username)
 
-    headers: Dict[str, Any] = client.get_headers()
+    headers: Dict[str, str] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
 
-    json_disconnect: Union[Unset, int] = UNSET
+    params: Dict[str, Any] = {}
+    json_disconnect: Union[Unset, None, int] = UNSET
     if not isinstance(disconnect, Unset):
-        json_disconnect = disconnect.value
+        json_disconnect = disconnect.value if disconnect else None
 
-    params: Dict[str, Any] = {
-        "disconnect": json_disconnect,
-    }
+    params["disconnect"] = json_disconnect
+
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
     json_json_body = json_body.to_dict()
 
     return {
+        "method": "put",
         "url": url,
         "headers": headers,
         "cookies": cookies,
@@ -48,24 +49,19 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, ApiRespo
 
         return response_200
     if response.status_code == 400:
-        response_400 = None
-
+        response_400 = cast(Any, None)
         return response_400
     if response.status_code == 401:
-        response_401 = None
-
+        response_401 = cast(Any, None)
         return response_401
     if response.status_code == 403:
-        response_403 = None
-
+        response_403 = cast(Any, None)
         return response_403
     if response.status_code == 404:
-        response_404 = None
-
+        response_404 = cast(Any, None)
         return response_404
     if response.status_code == 500:
-        response_500 = None
-
+        response_500 = cast(Any, None)
         return response_500
     return None
 
@@ -80,20 +76,36 @@ def _build_response(*, response: httpx.Response) -> Response[Union[Any, ApiRespo
 
 
 def sync_detailed(
+    username: str,
     *,
     client: Client,
-    username: str,
     json_body: User,
-    disconnect: Union[Unset, UpdateUserDisconnect] = UNSET,
+    disconnect: Union[Unset, None, UpdateUserDisconnect] = UNSET,
 ) -> Response[Union[Any, ApiResponse]]:
+    """Update user
+
+     Updates an existing user and optionally disconnects it, if connected, to apply the new settings.
+    Recovery codes and TOTP configuration cannot be set/updated using this API: each user must use the
+    specific APIs
+
+    Args:
+        username (str):
+        disconnect (Union[Unset, None, UpdateUserDisconnect]):
+        json_body (User):
+
+    Returns:
+        Response[Union[Any, ApiResponse]]
+    """
+
     kwargs = _get_kwargs(
-        client=client,
         username=username,
+        client=client,
         json_body=json_body,
         disconnect=disconnect,
     )
 
-    response = httpx.put(
+    response = httpx.request(
+        verify=client.verify_ssl,
         **kwargs,
     )
 
@@ -101,55 +113,96 @@ def sync_detailed(
 
 
 def sync(
+    username: str,
     *,
     client: Client,
-    username: str,
     json_body: User,
-    disconnect: Union[Unset, UpdateUserDisconnect] = UNSET,
+    disconnect: Union[Unset, None, UpdateUserDisconnect] = UNSET,
 ) -> Optional[Union[Any, ApiResponse]]:
-    """Updates an existing user and optionally disconnects it, if connected, to apply the new settings"""
+    """Update user
+
+     Updates an existing user and optionally disconnects it, if connected, to apply the new settings.
+    Recovery codes and TOTP configuration cannot be set/updated using this API: each user must use the
+    specific APIs
+
+    Args:
+        username (str):
+        disconnect (Union[Unset, None, UpdateUserDisconnect]):
+        json_body (User):
+
+    Returns:
+        Response[Union[Any, ApiResponse]]
+    """
 
     return sync_detailed(
-        client=client,
         username=username,
+        client=client,
         json_body=json_body,
         disconnect=disconnect,
     ).parsed
 
 
 async def asyncio_detailed(
+    username: str,
     *,
     client: Client,
-    username: str,
     json_body: User,
-    disconnect: Union[Unset, UpdateUserDisconnect] = UNSET,
+    disconnect: Union[Unset, None, UpdateUserDisconnect] = UNSET,
 ) -> Response[Union[Any, ApiResponse]]:
+    """Update user
+
+     Updates an existing user and optionally disconnects it, if connected, to apply the new settings.
+    Recovery codes and TOTP configuration cannot be set/updated using this API: each user must use the
+    specific APIs
+
+    Args:
+        username (str):
+        disconnect (Union[Unset, None, UpdateUserDisconnect]):
+        json_body (User):
+
+    Returns:
+        Response[Union[Any, ApiResponse]]
+    """
+
     kwargs = _get_kwargs(
-        client=client,
         username=username,
+        client=client,
         json_body=json_body,
         disconnect=disconnect,
     )
 
-    async with httpx.AsyncClient() as _client:
-        response = await _client.put(**kwargs)
+    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
+        response = await _client.request(**kwargs)
 
     return _build_response(response=response)
 
 
 async def asyncio(
+    username: str,
     *,
     client: Client,
-    username: str,
     json_body: User,
-    disconnect: Union[Unset, UpdateUserDisconnect] = UNSET,
+    disconnect: Union[Unset, None, UpdateUserDisconnect] = UNSET,
 ) -> Optional[Union[Any, ApiResponse]]:
-    """Updates an existing user and optionally disconnects it, if connected, to apply the new settings"""
+    """Update user
+
+     Updates an existing user and optionally disconnects it, if connected, to apply the new settings.
+    Recovery codes and TOTP configuration cannot be set/updated using this API: each user must use the
+    specific APIs
+
+    Args:
+        username (str):
+        disconnect (Union[Unset, None, UpdateUserDisconnect]):
+        json_body (User):
+
+    Returns:
+        Response[Union[Any, ApiResponse]]
+    """
 
     return (
         await asyncio_detailed(
-            client=client,
             username=username,
+            client=client,
             json_body=json_body,
             disconnect=disconnect,
         )

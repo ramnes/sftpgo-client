@@ -11,7 +11,19 @@ T = TypeVar("T", bound="DirEntry")
 
 @attr.s(auto_attribs=True)
 class DirEntry:
-    """ """
+    """
+    Attributes:
+        name (Union[Unset, str]): name of the file (or subdirectory) described by the entry. This name is the final
+            element of the path (the base name), not the entire path
+        size (Union[Unset, int]): file size, omitted for folders and non regular files
+        mode (Union[Unset, int]): File mode and permission bits. More details here:
+            https://golang.org/pkg/io/fs/#FileMode.
+            Let's see some examples:
+            - for a directory mode&2147483648 != 0
+            - for a symlink mode&134217728 != 0
+            - for a regular file mode&2401763328 == 0
+        last_modified (Union[Unset, datetime.datetime]):
+    """
 
     name: Union[Unset, str] = UNSET
     size: Union[Unset, int] = UNSET

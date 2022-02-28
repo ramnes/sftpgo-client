@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, List, Optional, Union, cast
 
 import httpx
 
@@ -11,27 +11,30 @@ from ...types import UNSET, Response, Unset
 def _get_kwargs(
     *,
     client: Client,
-    offset: Union[Unset, int] = 0,
-    limit: Union[Unset, int] = 100,
-    order: Union[Unset, GetUsersOrder] = UNSET,
+    offset: Union[Unset, None, int] = 0,
+    limit: Union[Unset, None, int] = 100,
+    order: Union[Unset, None, GetUsersOrder] = UNSET,
 ) -> Dict[str, Any]:
     url = "{}/users".format(client.base_url)
 
-    headers: Dict[str, Any] = client.get_headers()
+    headers: Dict[str, str] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
 
-    json_order: Union[Unset, str] = UNSET
-    if not isinstance(order, Unset):
-        json_order = order.value
+    params: Dict[str, Any] = {}
+    params["offset"] = offset
 
-    params: Dict[str, Any] = {
-        "offset": offset,
-        "limit": limit,
-        "order": json_order,
-    }
+    params["limit"] = limit
+
+    json_order: Union[Unset, None, str] = UNSET
+    if not isinstance(order, Unset):
+        json_order = order.value if order else None
+
+    params["order"] = json_order
+
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
     return {
+        "method": "get",
         "url": url,
         "headers": headers,
         "cookies": cookies,
@@ -51,20 +54,16 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, List[Use
 
         return response_200
     if response.status_code == 400:
-        response_400 = None
-
+        response_400 = cast(Any, None)
         return response_400
     if response.status_code == 401:
-        response_401 = None
-
+        response_401 = cast(Any, None)
         return response_401
     if response.status_code == 403:
-        response_403 = None
-
+        response_403 = cast(Any, None)
         return response_403
     if response.status_code == 500:
-        response_500 = None
-
+        response_500 = cast(Any, None)
         return response_500
     return None
 
@@ -81,10 +80,24 @@ def _build_response(*, response: httpx.Response) -> Response[Union[Any, List[Use
 def sync_detailed(
     *,
     client: Client,
-    offset: Union[Unset, int] = 0,
-    limit: Union[Unset, int] = 100,
-    order: Union[Unset, GetUsersOrder] = UNSET,
+    offset: Union[Unset, None, int] = 0,
+    limit: Union[Unset, None, int] = 100,
+    order: Union[Unset, None, GetUsersOrder] = UNSET,
 ) -> Response[Union[Any, List[User]]]:
+    """Get users
+
+     Returns an array with one or more users. For security reasons hashed passwords are omitted in the
+    response
+
+    Args:
+        offset (Union[Unset, None, int]):
+        limit (Union[Unset, None, int]):  Default: 100.
+        order (Union[Unset, None, GetUsersOrder]):  Example: ASC.
+
+    Returns:
+        Response[Union[Any, List[User]]]
+    """
+
     kwargs = _get_kwargs(
         client=client,
         offset=offset,
@@ -92,7 +105,8 @@ def sync_detailed(
         order=order,
     )
 
-    response = httpx.get(
+    response = httpx.request(
+        verify=client.verify_ssl,
         **kwargs,
     )
 
@@ -102,11 +116,23 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
-    offset: Union[Unset, int] = 0,
-    limit: Union[Unset, int] = 100,
-    order: Union[Unset, GetUsersOrder] = UNSET,
+    offset: Union[Unset, None, int] = 0,
+    limit: Union[Unset, None, int] = 100,
+    order: Union[Unset, None, GetUsersOrder] = UNSET,
 ) -> Optional[Union[Any, List[User]]]:
-    """Returns an array with one or more users. For security reasons hashed passwords are omitted in the response"""
+    """Get users
+
+     Returns an array with one or more users. For security reasons hashed passwords are omitted in the
+    response
+
+    Args:
+        offset (Union[Unset, None, int]):
+        limit (Union[Unset, None, int]):  Default: 100.
+        order (Union[Unset, None, GetUsersOrder]):  Example: ASC.
+
+    Returns:
+        Response[Union[Any, List[User]]]
+    """
 
     return sync_detailed(
         client=client,
@@ -119,10 +145,24 @@ def sync(
 async def asyncio_detailed(
     *,
     client: Client,
-    offset: Union[Unset, int] = 0,
-    limit: Union[Unset, int] = 100,
-    order: Union[Unset, GetUsersOrder] = UNSET,
+    offset: Union[Unset, None, int] = 0,
+    limit: Union[Unset, None, int] = 100,
+    order: Union[Unset, None, GetUsersOrder] = UNSET,
 ) -> Response[Union[Any, List[User]]]:
+    """Get users
+
+     Returns an array with one or more users. For security reasons hashed passwords are omitted in the
+    response
+
+    Args:
+        offset (Union[Unset, None, int]):
+        limit (Union[Unset, None, int]):  Default: 100.
+        order (Union[Unset, None, GetUsersOrder]):  Example: ASC.
+
+    Returns:
+        Response[Union[Any, List[User]]]
+    """
+
     kwargs = _get_kwargs(
         client=client,
         offset=offset,
@@ -130,8 +170,8 @@ async def asyncio_detailed(
         order=order,
     )
 
-    async with httpx.AsyncClient() as _client:
-        response = await _client.get(**kwargs)
+    async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
+        response = await _client.request(**kwargs)
 
     return _build_response(response=response)
 
@@ -139,11 +179,23 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
-    offset: Union[Unset, int] = 0,
-    limit: Union[Unset, int] = 100,
-    order: Union[Unset, GetUsersOrder] = UNSET,
+    offset: Union[Unset, None, int] = 0,
+    limit: Union[Unset, None, int] = 100,
+    order: Union[Unset, None, GetUsersOrder] = UNSET,
 ) -> Optional[Union[Any, List[User]]]:
-    """Returns an array with one or more users. For security reasons hashed passwords are omitted in the response"""
+    """Get users
+
+     Returns an array with one or more users. For security reasons hashed passwords are omitted in the
+    response
+
+    Args:
+        offset (Union[Unset, None, int]):
+        limit (Union[Unset, None, int]):  Default: 100.
+        order (Union[Unset, None, GetUsersOrder]):  Example: ASC.
+
+    Returns:
+        Response[Union[Any, List[User]]]
+    """
 
     return (
         await asyncio_detailed(

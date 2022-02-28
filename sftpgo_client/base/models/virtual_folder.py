@@ -10,7 +10,29 @@ T = TypeVar("T", bound="VirtualFolder")
 
 @attr.s(auto_attribs=True)
 class VirtualFolder:
-    """A virtual folder is a mapping between a SFTPGo virtual path and a filesystem path outside the user home directory. The specified paths must be absolute and the virtual path cannot be "/", it must be a sub directory. The parent directory for the specified virtual path must exist. SFTPGo will try to automatically create any missing parent directory for the configured virtual folders at user login."""
+    """A virtual folder is a mapping between a SFTPGo virtual path and a filesystem path outside the user home directory.
+    The specified paths must be absolute and the virtual path cannot be "/", it must be a sub directory. The parent
+    directory for the specified virtual path must exist. SFTPGo will try to automatically create any missing parent
+    directory for the configured virtual folders at user login.
+
+        Attributes:
+            virtual_path (str):
+            id (Union[Unset, int]):
+            name (Union[Unset, str]): unique name for this virtual folder
+            mapped_path (Union[Unset, str]): absolute filesystem path to use as virtual folder
+            description (Union[Unset, str]): optional description
+            used_quota_size (Union[Unset, int]):
+            used_quota_files (Union[Unset, int]):
+            last_quota_update (Union[Unset, int]): Last quota update as unix timestamp in milliseconds
+            users (Union[Unset, List[str]]): list of usernames associated with this virtual folder
+            filesystem (Union[Unset, FilesystemConfig]): Storage filesystem details
+            quota_size (Union[Unset, int]): Quota as size in bytes. 0 menas unlimited, -1 means included in user quota.
+                Please note that quota is updated if files are added/removed via SFTPGo otherwise a quota scan or a manual quota
+                update is needed
+            quota_files (Union[Unset, int]): Quota as number of files. 0 menas unlimited, , -1 means included in user quota.
+                Please note that quota is updated if files are added/removed via SFTPGo otherwise a quota scan or a manual quota
+                update is needed
+    """
 
     virtual_path: str
     id: Union[Unset, int] = UNSET

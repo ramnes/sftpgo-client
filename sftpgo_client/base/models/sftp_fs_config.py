@@ -10,7 +10,30 @@ T = TypeVar("T", bound="SFTPFsConfig")
 
 @attr.s(auto_attribs=True)
 class SFTPFsConfig:
-    """ """
+    """
+    Attributes:
+        endpoint (Union[Unset, str]): remote SFTP endpoint as host:port
+        username (Union[Unset, str]): you can specify a password or private key or both. In the latter case the private
+            key will be tried first.
+        password (Union[Unset, Secret]): The secret is encrypted before saving, so to set a new secret you must provide
+            a payload and set the status to "Plain". The encryption key and additional data will be generated automatically.
+            If you set the status to "Redacted" the existig secret will be preserved
+        private_key (Union[Unset, Secret]): The secret is encrypted before saving, so to set a new secret you must
+            provide a payload and set the status to "Plain". The encryption key and additional data will be generated
+            automatically. If you set the status to "Redacted" the existig secret will be preserved
+        fingerprints (Union[Unset, List[str]]): SHA256 fingerprints to use for host key verification. If you don't
+            provide any fingerprint the remote host key will not be verified, this is a security risk
+        prefix (Union[Unset, str]): Specifying a prefix you can restrict all operations to a given path within the
+            remote SFTP server.
+        disable_concurrent_reads (Union[Unset, bool]): Concurrent reads are safe to use and disabling them will degrade
+            performance. Some servers automatically delete files once they are downloaded. Using concurrent reads is
+            problematic with such servers.
+        buffer_size (Union[Unset, int]): The size of the buffer (in MB) to use for transfers. By enabling buffering, the
+            reads and writes, from/to the remote SFTP server, are split in multiple concurrent requests and this allows data
+            to be transferred at a faster rate, over high latency networks, by overlapping round-trip times. With buffering
+            enabled, resuming uploads is not supported and a file cannot be opened for both reading and writing at the same
+            time. 0 means disabled. Example: 2.
+    """
 
     endpoint: Union[Unset, str] = UNSET
     username: Union[Unset, str] = UNSET

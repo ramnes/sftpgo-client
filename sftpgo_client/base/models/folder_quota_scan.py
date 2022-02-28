@@ -9,7 +9,11 @@ T = TypeVar("T", bound="FolderQuotaScan")
 
 @attr.s(auto_attribs=True)
 class FolderQuotaScan:
-    """ """
+    """
+    Attributes:
+        name (Union[Unset, str]): folder name to which the quota scan refers
+        start_time (Union[Unset, int]): scan start time as unix timestamp in milliseconds
+    """
 
     name: Union[Unset, str] = UNSET
     start_time: Union[Unset, int] = UNSET

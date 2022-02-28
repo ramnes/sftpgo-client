@@ -10,7 +10,18 @@ T = TypeVar("T", bound="Secret")
 
 @attr.s(auto_attribs=True)
 class Secret:
-    """The secret is encrypted before saving, so to set a new secret you must provide a payload and set the status to "Plain". The encryption key and additional data will be generated automatically. If you set the status to "Redacted" the existig secret will be preserved"""
+    """The secret is encrypted before saving, so to set a new secret you must provide a payload and set the status to
+    "Plain". The encryption key and additional data will be generated automatically. If you set the status to "Redacted"
+    the existig secret will be preserved
+
+        Attributes:
+            status (Union[Unset, SecretStatus]): Set to "Plain" to add or update an existing secret, set to "Redacted" to
+                preserve the existing value
+            payload (Union[Unset, str]):
+            key (Union[Unset, str]):
+            additional_data (Union[Unset, str]):
+            mode (Union[Unset, int]): 1 means encrypted using a master key
+    """
 
     status: Union[Unset, SecretStatus] = UNSET
     payload: Union[Unset, str] = UNSET

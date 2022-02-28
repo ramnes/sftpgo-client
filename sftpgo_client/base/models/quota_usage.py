@@ -9,7 +9,11 @@ T = TypeVar("T", bound="QuotaUsage")
 
 @attr.s(auto_attribs=True)
 class QuotaUsage:
-    """ """
+    """
+    Attributes:
+        used_quota_size (Union[Unset, int]):
+        used_quota_files (Union[Unset, int]):
+    """
 
     used_quota_size: Union[Unset, int] = UNSET
     used_quota_files: Union[Unset, int] = UNSET

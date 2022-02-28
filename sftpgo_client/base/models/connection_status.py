@@ -11,7 +11,18 @@ T = TypeVar("T", bound="ConnectionStatus")
 
 @attr.s(auto_attribs=True)
 class ConnectionStatus:
-    """ """
+    """
+    Attributes:
+        username (Union[Unset, str]): connected username
+        connection_id (Union[Unset, str]): unique connection identifier
+        client_version (Union[Unset, str]): client version
+        remote_address (Union[Unset, str]): Remote address for the connected client
+        connection_time (Union[Unset, int]): connection time as unix timestamp in milliseconds
+        command (Union[Unset, str]): Last SSH/FTP command or WebDAV method
+        last_activity (Union[Unset, int]): last client activity as unix timestamp in milliseconds
+        protocol (Union[Unset, ConnectionStatusProtocol]):
+        active_transfers (Union[Unset, List[Transfer]]):
+    """
 
     username: Union[Unset, str] = UNSET
     connection_id: Union[Unset, str] = UNSET

@@ -11,63 +11,66 @@ T = TypeVar("T", bound="CreateUserFilesMultipartData")
 
 @attr.s(auto_attribs=True)
 class CreateUserFilesMultipartData:
-    """ """
+    """
+    Attributes:
+        filenames (Union[Unset, List[File]]):
+    """
 
-    filename: Union[Unset, List[File]] = UNSET
+    filenames: Union[Unset, List[File]] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        filename: Union[Unset, List[FileJsonType]] = UNSET
-        if not isinstance(self.filename, Unset):
-            filename = []
-            for filename_item_data in self.filename:
-                filename_item = filename_item_data.to_tuple()
+        filenames: Union[Unset, List[FileJsonType]] = UNSET
+        if not isinstance(self.filenames, Unset):
+            filenames = []
+            for filenames_item_data in self.filenames:
+                filenames_item = filenames_item_data.to_tuple()
 
-                filename.append(filename_item)
+                filenames.append(filenames_item)
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if filename is not UNSET:
-            field_dict["filename"] = filename
+        if filenames is not UNSET:
+            field_dict["filenames"] = filenames
 
         return field_dict
 
     def to_multipart(self) -> Dict[str, Any]:
-        filename: Union[Unset, Tuple[None, str, str]] = UNSET
-        if not isinstance(self.filename, Unset):
-            _temp_filename = []
-            for filename_item_data in self.filename:
-                filename_item = filename_item_data.to_tuple()
+        filenames: Union[Unset, Tuple[None, bytes, str]] = UNSET
+        if not isinstance(self.filenames, Unset):
+            _temp_filenames = []
+            for filenames_item_data in self.filenames:
+                filenames_item = filenames_item_data.to_tuple()
 
-                _temp_filename.append(filename_item)
-            filename = (None, json.dumps(_temp_filename), "application/json")
+                _temp_filenames.append(filenames_item)
+            filenames = (None, json.dumps(_temp_filenames).encode(), "application/json")
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(
             {
-                key: (None, str(value), "text/plain")
+                key: (None, str(value).encode(), "text/plain")
                 for key, value in self.additional_properties.items()
             }
         )
         field_dict.update({})
-        if filename is not UNSET:
-            field_dict["filename"] = filename
+        if filenames is not UNSET:
+            field_dict["filenames"] = filenames
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        filename = []
-        _filename = d.pop("filename", UNSET)
-        for filename_item_data in _filename or []:
-            filename_item = File(payload=BytesIO(filename_item_data))
+        filenames = []
+        _filenames = d.pop("filenames", UNSET)
+        for filenames_item_data in _filenames or []:
+            filenames_item = File(payload=BytesIO(filenames_item_data))
 
-            filename.append(filename_item)
+            filenames.append(filenames_item)
 
         create_user_files_multipart_data = cls(
-            filename=filename,
+            filenames=filenames,
         )
 
         create_user_files_multipart_data.additional_properties = d

@@ -10,7 +10,11 @@ T = TypeVar("T", bound="WebDAVServiceStatus")
 
 @attr.s(auto_attribs=True)
 class WebDAVServiceStatus:
-    """ """
+    """
+    Attributes:
+        is_active (Union[Unset, bool]):
+        bindings (Union[Unset, None, List[WebDAVBinding]]):
+    """
 
     is_active: Union[Unset, bool] = UNSET
     bindings: Union[Unset, None, List[WebDAVBinding]] = UNSET
