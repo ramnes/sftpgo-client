@@ -19,7 +19,7 @@ class S3Config:
         access_secret (Union[Unset, Secret]): The secret is encrypted before saving, so to set a new secret you must
             provide a payload and set the status to "Plain". The encryption key and additional data will be generated
             automatically. If you set the status to "Redacted" the existig secret will be preserved
-        session_token (Union[Unset, str]):
+        role_arn (Union[Unset, str]): Optional IAM Role ARN to assume
         endpoint (Union[Unset, str]): optional endpoint
         storage_class (Union[Unset, str]):
         acl (Union[Unset, str]): The canned ACL to apply to uploaded objects. Leave empty to use the default ACL. For
@@ -52,7 +52,7 @@ class S3Config:
     region: Union[Unset, str] = UNSET
     access_key: Union[Unset, str] = UNSET
     access_secret: Union[Unset, Secret] = UNSET
-    session_token: Union[Unset, str] = UNSET
+    role_arn: Union[Unset, str] = UNSET
     endpoint: Union[Unset, str] = UNSET
     storage_class: Union[Unset, str] = UNSET
     acl: Union[Unset, str] = UNSET
@@ -74,7 +74,7 @@ class S3Config:
         if not isinstance(self.access_secret, Unset):
             access_secret = self.access_secret.to_dict()
 
-        session_token = self.session_token
+        role_arn = self.role_arn
         endpoint = self.endpoint
         storage_class = self.storage_class
         acl = self.acl
@@ -98,8 +98,8 @@ class S3Config:
             field_dict["access_key"] = access_key
         if access_secret is not UNSET:
             field_dict["access_secret"] = access_secret
-        if session_token is not UNSET:
-            field_dict["session_token"] = session_token
+        if role_arn is not UNSET:
+            field_dict["role_arn"] = role_arn
         if endpoint is not UNSET:
             field_dict["endpoint"] = endpoint
         if storage_class is not UNSET:
@@ -141,7 +141,7 @@ class S3Config:
         else:
             access_secret = Secret.from_dict(_access_secret)
 
-        session_token = d.pop("session_token", UNSET)
+        role_arn = d.pop("role_arn", UNSET)
 
         endpoint = d.pop("endpoint", UNSET)
 
@@ -170,7 +170,7 @@ class S3Config:
             region=region,
             access_key=access_key,
             access_secret=access_secret,
-            session_token=session_token,
+            role_arn=role_arn,
             endpoint=endpoint,
             storage_class=storage_class,
             acl=acl,

@@ -4,6 +4,7 @@ import attr
 
 from ..models.filesystem_config import FilesystemConfig
 from ..models.user_filters import UserFilters
+from ..models.user_oidc_custom_fields import UserOidcCustomFields
 from ..models.user_permissions import UserPermissions
 from ..models.user_status import UserStatus
 from ..models.virtual_folder import VirtualFolder
@@ -66,6 +67,9 @@ class User:
         filters (Union[Unset, UserFilters]): Additional user options
         filesystem (Union[Unset, FilesystemConfig]): Storage filesystem details
         additional_info (Union[Unset, str]): Free form text field for external systems
+        oidc_custom_fields (Union[Unset, UserOidcCustomFields]): This field is passed to the pre-login hook if custom
+            OIDC token fields have been configured. Field values can be of any type (this is a free form object) and depend
+            on the type of the configured OIDC token fields
     """
 
     id: Union[Unset, int] = UNSET
@@ -100,6 +104,7 @@ class User:
     filters: Union[Unset, UserFilters] = UNSET
     filesystem: Union[Unset, FilesystemConfig] = UNSET
     additional_info: Union[Unset, str] = UNSET
+    oidc_custom_fields: Union[Unset, UserOidcCustomFields] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -157,6 +162,9 @@ class User:
             filesystem = self.filesystem.to_dict()
 
         additional_info = self.additional_info
+        oidc_custom_fields: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.oidc_custom_fields, Unset):
+            oidc_custom_fields = self.oidc_custom_fields.to_dict()
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -225,6 +233,8 @@ class User:
             field_dict["filesystem"] = filesystem
         if additional_info is not UNSET:
             field_dict["additional_info"] = additional_info
+        if oidc_custom_fields is not UNSET:
+            field_dict["oidc_custom_fields"] = oidc_custom_fields
 
         return field_dict
 
@@ -320,6 +330,13 @@ class User:
 
         additional_info = d.pop("additional_info", UNSET)
 
+        _oidc_custom_fields = d.pop("oidc_custom_fields", UNSET)
+        oidc_custom_fields: Union[Unset, UserOidcCustomFields]
+        if isinstance(_oidc_custom_fields, Unset):
+            oidc_custom_fields = UNSET
+        else:
+            oidc_custom_fields = UserOidcCustomFields.from_dict(_oidc_custom_fields)
+
         user = cls(
             id=id,
             status=status,
@@ -353,6 +370,7 @@ class User:
             filters=filters,
             filesystem=filesystem,
             additional_info=additional_info,
+            oidc_custom_fields=oidc_custom_fields,
         )
 
         user.additional_properties = d

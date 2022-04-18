@@ -18,11 +18,12 @@ tags:
 info:
   title: SFTPGo
   description: |
-    SFTPGo allows to securely share your files over SFTP, HTTP and optionally FTP/S and WebDAV as well.
-    Several storage backends are supported and they are configurable per user, so you can serve a local directory for a user and an S3 bucket (or part of it) for another one.
-    SFTPGo also supports virtual folders, a virtual folder can use any of the supported storage backends. So you can have, for example, an S3 user that exposes a GCS bucket (or part of it) on a specified path and an encrypted local filesystem on another one.
+    SFTPGo allows you to securely share your files over SFTP and optionally over HTTP/S, FTP/S and WebDAV as well.
+    Several storage backends are supported and they are configurable per-user, so you can serve a local directory for a user and an S3 bucket (or part of it) for another one.
+    SFTPGo also supports virtual folders, a virtual folder can use any of the supported storage backends. So you can have, for example, an S3 user that exposes a Google Cloud Storage bucket (or part of it) on a specified path and an encrypted local filesystem on another one.
     Virtual folders can be private or shared among multiple users, for shared virtual folders you can define different quota limits for each user.
-    SFTPGo allows to create HTTP/S links to externally share files and folders securely, by setting limits to the number of downloads/uploads, protecting the share with a password, limiting access by source IP address, setting an automatic expiration date.
+    The SFTPGo WebClient allows end users to change their credentials, browse and manage their files in the browser and setup two-factor authentication which works with Authy, Google Authenticator and other compatible apps.
+    From the WebClient each authorized user can also create HTTP/S links to externally share files and folders securely, by setting limits to the number of downloads/uploads, protecting the share with a password, limiting access by source IP address, setting an automatic expiration date.
   version: 2.2.2-dev
   contact:
     name: API support
@@ -211,7 +212,7 @@ paths:
       parameters:
         - in: query
           name: path
-          description: Path to the folder to read. It must be URL encoded, for example the path "my dir/àdir" must be sent as "my%20dir%2F%C3%A0dir". If empty or missing the root folder is assumed
+          description: Path to the folder to read. It must be URL encoded, for example the path "my dir/àdir" must be sent as "my%20dir%2F%C3%A0dir". If empty or missing the user's start directory is assumed. If relative, the user's start directory is used as the base
           schema:
             type: string
       responses:
@@ -3632,7 +3633,7 @@ paths:
       parameters:
         - in: query
           name: path
-          description: Path to the folder to read. It must be URL encoded, for example the path "my dir/àdir" must be sent as "my%20dir%2F%C3%A0dir". If empty or missing the root folder is assumed
+          description: Path to the folder to read. It must be URL encoded, for example the path "my dir/àdir" must be sent as "my%20dir%2F%C3%A0dir". If empty or missing the user's start directory is assumed. If relative, the user's start directory is used as the base
           schema:
             type: string
       responses:
@@ -3664,7 +3665,7 @@ paths:
       parameters:
         - in: query
           name: path
-          description: Path to the folder to read. It must be URL encoded, for example the path "my dir/àdir" must be sent as "my%20dir%2F%C3%A0dir". If empty or missing the root folder is assumed
+          description: Path to the folder to read. It must be URL encoded, for example the path "my dir/àdir" must be sent as "my%20dir%2F%C3%A0dir". If empty or missing the user's start directory is assumed. If relative, the user's start directory is used as the base
           schema:
             type: string
       responses:
@@ -4308,6 +4309,7 @@ components:
       enum:
         - publickey
         - password
+        - password-over-SSH
         - keyboard-interactive
         - publickey+password
         - publickey+keyboard-interactive
@@ -4316,7 +4318,8 @@ components:
       description: |
         Available login methods. To enable multi-step authentication you have to allow only multi-step login methods
           * `publickey`
-          * `password`
+          * `password`, password for all the supported protocols
+          * `password-over-SSH`, password over SSH protocol (SSH/SFTP/SCP)
           * `keyboard-interactive`
           * `publickey+password` - multi-step auth: public key and password
           * `publickey+keyboard-interactive` - multi-step auth: public key and keyboard interactive
@@ -4679,6 +4682,14 @@ components:
         external_auth_cache_time:
           type: integer
           description: 'Defines the cache time, in seconds, for users authenticated using an external auth hook. 0 means no cache'
+        start_directory:
+          type: string
+          description: 'Specifies an alternate starting directory. If not set, the default is "/". This option is supported for SFTP/SCP, FTP and HTTP (WebClient/REST API) protocols. Relative paths will use this directory as base.'
+        2fa_protocols:
+          type: array
+          items:
+            $ref: '#/components/schemas/MFAProtocols'
+          description: 'Defines protocols that require two factor authentication'
       description: Additional user options
     Secret:
       type: object
@@ -4718,8 +4729,9 @@ components:
           type: string
         access_secret:
           $ref: '#/components/schemas/Secret'
-        session_token:
+        role_arn:
           type: string
+          description: 'Optional IAM Role ARN to assume'
         endpoint:
           type: string
           description: optional endpoint
@@ -5058,6 +5070,10 @@ components:
         additional_info:
           type: string
           description: Free form text field for external systems
+        oidc_custom_fields:
+          type: object
+          additionalProperties: true
+          description: 'This field is passed to the pre-login hook if custom OIDC token fields have been configured. Field values can be of any type (this is a free form object) and depend on the type of the configured OIDC token fields'
     AdminFilters:
       type: object
       properties:

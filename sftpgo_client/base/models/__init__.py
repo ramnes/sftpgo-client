@@ -113,6 +113,7 @@ from .upload_to_share_multipart_data import UploadToShareMultipartData
 from .user import User
 from .user_filters import UserFilters
 from .user_filters_tls_username import UserFiltersTlsUsername
+from .user_oidc_custom_fields import UserOidcCustomFields
 from .user_permissions import UserPermissions
 from .user_profile import UserProfile
 from .user_quota_update_usage_deprecated_mode import UserQuotaUpdateUsageDeprecatedMode

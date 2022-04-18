@@ -6,6 +6,7 @@ from ..models.bandwidth_limit import BandwidthLimit
 from ..models.data_transfer_limit import DataTransferLimit
 from ..models.hooks_filter import HooksFilter
 from ..models.login_methods import LoginMethods
+from ..models.mfa_protocols import MFAProtocols
 from ..models.patterns_filter import PatternsFilter
 from ..models.recovery_code import RecoveryCode
 from ..models.supported_protocols import SupportedProtocols
@@ -56,6 +57,10 @@ class UserFilters:
         data_transfer_limits (Union[Unset, List[DataTransferLimit]]):
         external_auth_cache_time (Union[Unset, int]): Defines the cache time, in seconds, for users authenticated using
             an external auth hook. 0 means no cache
+        start_directory (Union[Unset, str]): Specifies an alternate starting directory. If not set, the default is "/".
+            This option is supported for SFTP/SCP, FTP and HTTP (WebClient/REST API) protocols. Relative paths will use this
+            directory as base.
+        field_2fa_protocols (Union[Unset, List[MFAProtocols]]): Defines protocols that require two factor authentication
     """
 
     allowed_ip: Union[Unset, List[str]] = UNSET
@@ -75,6 +80,8 @@ class UserFilters:
     bandwidth_limits: Union[Unset, List[BandwidthLimit]] = UNSET
     data_transfer_limits: Union[Unset, List[DataTransferLimit]] = UNSET
     external_auth_cache_time: Union[Unset, int] = UNSET
+    start_directory: Union[Unset, str] = UNSET
+    field_2fa_protocols: Union[Unset, List[MFAProtocols]] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -162,6 +169,14 @@ class UserFilters:
                 data_transfer_limits.append(data_transfer_limits_item)
 
         external_auth_cache_time = self.external_auth_cache_time
+        start_directory = self.start_directory
+        field_2fa_protocols: Union[Unset, List[str]] = UNSET
+        if not isinstance(self.field_2fa_protocols, Unset):
+            field_2fa_protocols = []
+            for field_2fa_protocols_item_data in self.field_2fa_protocols:
+                field_2fa_protocols_item = field_2fa_protocols_item_data.value
+
+                field_2fa_protocols.append(field_2fa_protocols_item)
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -200,6 +215,10 @@ class UserFilters:
             field_dict["data_transfer_limits"] = data_transfer_limits
         if external_auth_cache_time is not UNSET:
             field_dict["external_auth_cache_time"] = external_auth_cache_time
+        if start_directory is not UNSET:
+            field_dict["start_directory"] = start_directory
+        if field_2fa_protocols is not UNSET:
+            field_dict["2fa_protocols"] = field_2fa_protocols
 
         return field_dict
 
@@ -297,6 +316,15 @@ class UserFilters:
 
         external_auth_cache_time = d.pop("external_auth_cache_time", UNSET)
 
+        start_directory = d.pop("start_directory", UNSET)
+
+        field_2fa_protocols = []
+        _field_2fa_protocols = d.pop("2fa_protocols", UNSET)
+        for field_2fa_protocols_item_data in _field_2fa_protocols or []:
+            field_2fa_protocols_item = MFAProtocols(field_2fa_protocols_item_data)
+
+            field_2fa_protocols.append(field_2fa_protocols_item)
+
         user_filters = cls(
             allowed_ip=allowed_ip,
             denied_ip=denied_ip,
@@ -315,6 +343,8 @@ class UserFilters:
             bandwidth_limits=bandwidth_limits,
             data_transfer_limits=data_transfer_limits,
             external_auth_cache_time=external_auth_cache_time,
+            start_directory=start_directory,
+            field_2fa_protocols=field_2fa_protocols,
         )
 
         user_filters.additional_properties = d
