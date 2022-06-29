@@ -19,7 +19,7 @@ setup(
     python_requires=">=3.6, <4",
     install_requires=[
         "httpx >= 0.23.0",
-        "attrs >= 20.1.0",
+        "attrs >= 21.3.0",
         "python-dateutil >= 2.8.0, < 3",
     ],
     package_data={"sftpgo_client": ["py.typed"]},
