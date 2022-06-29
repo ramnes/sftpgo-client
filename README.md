@@ -89,6 +89,7 @@ update `sftpgo_client.base` with:
 You can run the tests with:
 
 ```
+pip install -r requirements.txt
 docker-compose up -d
 pytest
 ```
