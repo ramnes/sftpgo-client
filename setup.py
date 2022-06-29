@@ -18,7 +18,7 @@ setup(
     packages=find_packages(),
     python_requires=">=3.6, <4",
     install_requires=[
-        "httpx >= 0.15.0, < 0.18.0",
+        "httpx >= 0.23.0",
         "attrs >= 20.1.0",
         "python-dateutil >= 2.8.0, < 3",
     ],
