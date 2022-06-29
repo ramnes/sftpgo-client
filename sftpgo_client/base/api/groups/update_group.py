@@ -1,23 +1,25 @@
-from typing import Any, Dict, List, Optional, Union, cast
+from typing import Any, Dict, Optional, Union, cast
 
 import httpx
 
-from ...client import AuthenticatedClient
+from ...client import Client
 from ...models.api_response import ApiResponse
+from ...models.group import Group
 from ...types import Response
 
 
 def _get_kwargs(
+    name: str,
     *,
-    client: AuthenticatedClient,
-    json_body: List[str],
+    client: Client,
+    json_body: Group,
 ) -> Dict[str, Any]:
-    url = "{}/user/publickeys".format(client.base_url)
+    url = "{}/groups/{name}".format(client.base_url, name=name)
 
     headers: Dict[str, str] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
 
-    json_json_body = json_body
+    json_json_body = json_body.to_dict()
 
     return {
         "method": "put",
@@ -43,6 +45,9 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, ApiRespo
     if response.status_code == 403:
         response_403 = cast(Any, None)
         return response_403
+    if response.status_code == 404:
+        response_404 = cast(Any, None)
+        return response_404
     if response.status_code == 500:
         response_500 = cast(Any, None)
         return response_500
@@ -59,23 +64,25 @@ def _build_response(*, response: httpx.Response) -> Response[Union[Any, ApiRespo
 
 
 def sync_detailed(
+    name: str,
     *,
-    client: AuthenticatedClient,
-    json_body: List[str],
+    client: Client,
+    json_body: Group,
 ) -> Response[Union[Any, ApiResponse]]:
-    """Set the user's public keys
+    """Update group
 
-     Sets the public keys for the logged in user. Public keys must be in OpenSSH format. Deprecated
-    please use \"/user/profile\" instead
+     Updates an existing group
 
     Args:
-        json_body (List[str]):
+        name (str):
+        json_body (Group):
 
     Returns:
         Response[Union[Any, ApiResponse]]
     """
 
     kwargs = _get_kwargs(
+        name=name,
         client=client,
         json_body=json_body,
     )
@@ -89,46 +96,50 @@ def sync_detailed(
 
 
 def sync(
+    name: str,
     *,
-    client: AuthenticatedClient,
-    json_body: List[str],
+    client: Client,
+    json_body: Group,
 ) -> Optional[Union[Any, ApiResponse]]:
-    """Set the user's public keys
+    """Update group
 
-     Sets the public keys for the logged in user. Public keys must be in OpenSSH format. Deprecated
-    please use \"/user/profile\" instead
+     Updates an existing group
 
     Args:
-        json_body (List[str]):
+        name (str):
+        json_body (Group):
 
     Returns:
         Response[Union[Any, ApiResponse]]
     """
 
     return sync_detailed(
+        name=name,
         client=client,
         json_body=json_body,
     ).parsed
 
 
 async def asyncio_detailed(
+    name: str,
     *,
-    client: AuthenticatedClient,
-    json_body: List[str],
+    client: Client,
+    json_body: Group,
 ) -> Response[Union[Any, ApiResponse]]:
-    """Set the user's public keys
+    """Update group
 
-     Sets the public keys for the logged in user. Public keys must be in OpenSSH format. Deprecated
-    please use \"/user/profile\" instead
+     Updates an existing group
 
     Args:
-        json_body (List[str]):
+        name (str):
+        json_body (Group):
 
     Returns:
         Response[Union[Any, ApiResponse]]
     """
 
     kwargs = _get_kwargs(
+        name=name,
         client=client,
         json_body=json_body,
     )
@@ -140,17 +151,18 @@ async def asyncio_detailed(
 
 
 async def asyncio(
+    name: str,
     *,
-    client: AuthenticatedClient,
-    json_body: List[str],
+    client: Client,
+    json_body: Group,
 ) -> Optional[Union[Any, ApiResponse]]:
-    """Set the user's public keys
+    """Update group
 
-     Sets the public keys for the logged in user. Public keys must be in OpenSSH format. Deprecated
-    please use \"/user/profile\" instead
+     Updates an existing group
 
     Args:
-        json_body (List[str]):
+        name (str):
+        json_body (Group):
 
     Returns:
         Response[Union[Any, ApiResponse]]
@@ -158,6 +170,7 @@ async def asyncio(
 
     return (
         await asyncio_detailed(
+            name=name,
             client=client,
             json_body=json_body,
         )

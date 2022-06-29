@@ -4,13 +4,16 @@ import attr
 
 from ..models.permission import Permission
 
-T = TypeVar("T", bound="DirPermissions")
+T = TypeVar("T", bound="GroupUserSettingsPermissions")
 
 
 @attr.s(auto_attribs=True)
-class DirPermissions:
+class GroupUserSettingsPermissions:
     """hash map with directory as key and an array of permissions as value. Directories must be absolute paths, permissions
     for root directory ("/") are required
+
+        Example:
+            {'/': ['*'], '/somedir': ['list', 'download']}
 
     """
 
@@ -35,7 +38,7 @@ class DirPermissions:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        dir_permissions = cls()
+        group_user_settings_permissions = cls()
 
         additional_properties = {}
         for prop_name, prop_dict in d.items():
@@ -48,8 +51,8 @@ class DirPermissions:
 
             additional_properties[prop_name] = additional_property
 
-        dir_permissions.additional_properties = additional_properties
-        return dir_permissions
+        group_user_settings_permissions.additional_properties = additional_properties
+        return group_user_settings_permissions
 
     @property
     def additional_keys(self) -> List[str]:

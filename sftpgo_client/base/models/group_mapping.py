@@ -2,43 +2,61 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
+from ..models.group_mapping_type import GroupMappingType
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="UnbanHostJsonBody")
+T = TypeVar("T", bound="GroupMapping")
 
 
 @attr.s(auto_attribs=True)
-class UnbanHostJsonBody:
+class GroupMapping:
     """
     Attributes:
-        ip (Union[Unset, str]): IPv4/IPv6 address to remove
+        name (Union[Unset, str]): group name
+        type (Union[Unset, GroupMappingType]): Group type:
+              * `1` - Primary group
+              * `2` - Secondaru group
     """
 
-    ip: Union[Unset, str] = UNSET
+    name: Union[Unset, str] = UNSET
+    type: Union[Unset, GroupMappingType] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        ip = self.ip
+        name = self.name
+        type: Union[Unset, int] = UNSET
+        if not isinstance(self.type, Unset):
+            type = self.type.value
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if ip is not UNSET:
-            field_dict["ip"] = ip
+        if name is not UNSET:
+            field_dict["name"] = name
+        if type is not UNSET:
+            field_dict["type"] = type
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        ip = d.pop("ip", UNSET)
+        name = d.pop("name", UNSET)
 
-        unban_host_json_body = cls(
-            ip=ip,
+        _type = d.pop("type", UNSET)
+        type: Union[Unset, GroupMappingType]
+        if isinstance(_type, Unset):
+            type = UNSET
+        else:
+            type = GroupMappingType(_type)
+
+        group_mapping = cls(
+            name=name,
+            type=type,
         )
 
-        unban_host_json_body.additional_properties = d
-        return unban_host_json_body
+        group_mapping.additional_properties = d
+        return group_mapping
 
     @property
     def additional_keys(self) -> List[str]:

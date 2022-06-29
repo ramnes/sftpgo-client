@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class UserFiltersTlsUsername(str, Enum):
+class BaseUserFiltersTlsUsername(str, Enum):
     NONE = "None"
     COMMONNAME = "CommonName"
 

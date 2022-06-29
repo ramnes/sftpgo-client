@@ -26,10 +26,10 @@ class VirtualFolder:
             last_quota_update (Union[Unset, int]): Last quota update as unix timestamp in milliseconds
             users (Union[Unset, List[str]]): list of usernames associated with this virtual folder
             filesystem (Union[Unset, FilesystemConfig]): Storage filesystem details
-            quota_size (Union[Unset, int]): Quota as size in bytes. 0 menas unlimited, -1 means included in user quota.
+            quota_size (Union[Unset, int]): Quota as size in bytes. 0 means unlimited, -1 means included in user quota.
                 Please note that quota is updated if files are added/removed via SFTPGo otherwise a quota scan or a manual quota
                 update is needed
-            quota_files (Union[Unset, int]): Quota as number of files. 0 menas unlimited, , -1 means included in user quota.
+            quota_files (Union[Unset, int]): Quota as number of files. 0 means unlimited, , -1 means included in user quota.
                 Please note that quota is updated if files are added/removed via SFTPGo otherwise a quota scan or a manual quota
                 update is needed
     """

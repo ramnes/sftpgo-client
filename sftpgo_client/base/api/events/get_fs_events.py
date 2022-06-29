@@ -206,6 +206,7 @@ def sync_detailed(
               * `3` - Azure Blob Storage
               * `4` - Local filesystem encrypted
               * `5` - SFTP
+              * `6` - HTTP filesystem
         bucket (Union[Unset, None, str]):
         endpoint (Union[Unset, None, str]):
         protocols (Union[Unset, None, List[EventProtocols]]):
@@ -284,6 +285,7 @@ def sync(
               * `3` - Azure Blob Storage
               * `4` - Local filesystem encrypted
               * `5` - SFTP
+              * `6` - HTTP filesystem
         bucket (Union[Unset, None, str]):
         endpoint (Union[Unset, None, str]):
         protocols (Union[Unset, None, List[EventProtocols]]):
@@ -355,6 +357,7 @@ async def asyncio_detailed(
               * `3` - Azure Blob Storage
               * `4` - Local filesystem encrypted
               * `5` - SFTP
+              * `6` - HTTP filesystem
         bucket (Union[Unset, None, str]):
         endpoint (Union[Unset, None, str]):
         protocols (Union[Unset, None, List[EventProtocols]]):
@@ -431,6 +434,7 @@ async def asyncio(
               * `3` - Azure Blob Storage
               * `4` - Local filesystem encrypted
               * `5` - SFTP
+              * `6` - HTTP filesystem
         bucket (Union[Unset, None, str]):
         endpoint (Union[Unset, None, str]):
         protocols (Union[Unset, None, List[EventProtocols]]):

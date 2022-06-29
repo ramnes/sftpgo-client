@@ -16,6 +16,8 @@ from .backup_data import BackupData
 from .ban_status import BanStatus
 from .bandwidth_limit import BandwidthLimit
 from .base_totp_config import BaseTOTPConfig
+from .base_user_filters import BaseUserFilters
+from .base_user_filters_tls_username import BaseUserFiltersTlsUsername
 from .base_virtual_folder import BaseVirtualFolder
 from .connection_status import ConnectionStatus
 from .connection_status_protocol import ConnectionStatusProtocol
@@ -25,15 +27,11 @@ from .data_provider_status import DataProviderStatus
 from .data_transfer_limit import DataTransferLimit
 from .defender_entry import DefenderEntry
 from .dir_entry import DirEntry
-from .dir_permissions import DirPermissions
 from .dumpdata_indent import DumpdataIndent
 from .dumpdata_output_data import DumpdataOutputData
 from .event_protocols import EventProtocols
 from .filesystem_config import FilesystemConfig
 from .folder_quota_scan import FolderQuotaScan
-from .folder_quota_update_usage_deprecated_mode import (
-    FolderQuotaUpdateUsageDeprecatedMode,
-)
 from .folder_quota_update_usage_mode import FolderQuotaUpdateUsageMode
 from .folder_retention import FolderRetention
 from .fs_event import FsEvent
@@ -60,10 +58,17 @@ from .get_admins_order import GetAdminsOrder
 from .get_api_keys_order import GetApiKeysOrder
 from .get_folders_order import GetFoldersOrder
 from .get_fs_events_order import GetFsEventsOrder
+from .get_groups_order import GetGroupsOrder
 from .get_provider_events_order import GetProviderEventsOrder
 from .get_user_shares_order import GetUserSharesOrder
 from .get_users_order import GetUsersOrder
+from .group import Group
+from .group_mapping import GroupMapping
+from .group_mapping_type import GroupMappingType
+from .group_user_settings import GroupUserSettings
+from .group_user_settings_permissions import GroupUserSettingsPermissions
 from .hooks_filter import HooksFilter
+from .http_fs_config import HTTPFsConfig
 from .loaddata_from_file_mode import LoaddataFromFileMode
 from .loaddata_from_file_scan_quota import LoaddataFromFileScanQuota
 from .loaddata_from_request_body_mode import LoaddataFromRequestBodyMode
@@ -107,16 +112,13 @@ from .totph_mac_algo import TOTPHMacAlgo
 from .transfer import Transfer
 from .transfer_operation_type import TransferOperationType
 from .transfer_quota_usage import TransferQuotaUsage
-from .unban_host_json_body import UnbanHostJsonBody
 from .update_user_disconnect import UpdateUserDisconnect
 from .upload_to_share_multipart_data import UploadToShareMultipartData
 from .user import User
 from .user_filters import UserFilters
-from .user_filters_tls_username import UserFiltersTlsUsername
 from .user_oidc_custom_fields import UserOidcCustomFields
 from .user_permissions import UserPermissions
 from .user_profile import UserProfile
-from .user_quota_update_usage_deprecated_mode import UserQuotaUpdateUsageDeprecatedMode
 from .user_quota_update_usage_mode import UserQuotaUpdateUsageMode
 from .user_reset_password_json_body import UserResetPasswordJsonBody
 from .user_status import UserStatus

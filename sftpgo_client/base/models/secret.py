@@ -12,7 +12,7 @@ T = TypeVar("T", bound="Secret")
 class Secret:
     """The secret is encrypted before saving, so to set a new secret you must provide a payload and set the status to
     "Plain". The encryption key and additional data will be generated automatically. If you set the status to "Redacted"
-    the existig secret will be preserved
+    the existing secret will be preserved
 
         Attributes:
             status (Union[Unset, SecretStatus]): Set to "Plain" to add or update an existing secret, set to "Redacted" to

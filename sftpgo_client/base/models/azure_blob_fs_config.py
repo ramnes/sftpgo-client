@@ -18,10 +18,10 @@ class AzureBlobFsConfig:
         account_name (Union[Unset, str]): Storage Account Name, leave blank to use SAS URL
         account_key (Union[Unset, Secret]): The secret is encrypted before saving, so to set a new secret you must
             provide a payload and set the status to "Plain". The encryption key and additional data will be generated
-            automatically. If you set the status to "Redacted" the existig secret will be preserved
+            automatically. If you set the status to "Redacted" the existing secret will be preserved
         sas_url (Union[Unset, Secret]): The secret is encrypted before saving, so to set a new secret you must provide a
             payload and set the status to "Plain". The encryption key and additional data will be generated automatically.
-            If you set the status to "Redacted" the existig secret will be preserved
+            If you set the status to "Redacted" the existing secret will be preserved
         endpoint (Union[Unset, str]): optional endpoint. Default is "blob.core.windows.net". If you use the emulator the
             endpoint must include the protocol, for example "http://127.0.0.1:10000"
         upload_part_size (Union[Unset, int]): the buffer size (in MB) to use for multipart uploads. If this value is set

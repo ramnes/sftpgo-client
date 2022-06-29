@@ -3,6 +3,7 @@ from typing import Any, Dict, List, Type, TypeVar, Union, cast
 import attr
 
 from ..models.filesystem_config import FilesystemConfig
+from ..models.group_mapping import GroupMapping
 from ..models.user_filters import UserFilters
 from ..models.user_oidc_custom_fields import UserOidcCustomFields
 from ..models.user_permissions import UserPermissions
@@ -34,20 +35,21 @@ class User:
             user certificate are mandatory.
         home_dir (Union[Unset, str]): path to the user home directory. The user cannot upload or download files outside
             this directory. SFTPGo tries to automatically create this folder if missing. Must be an absolute path
-        virtual_folders (Union[Unset, List[VirtualFolder]]): mapping between virtual SFTPGo paths and filesystem paths
-            outside the user home directory. Supported for local filesystem only. If one or more of the specified folders
-            are not inside the dataprovider they will be automatically created. You have to create the folder on the
-            filesystem yourself
+        virtual_folders (Union[Unset, List[VirtualFolder]]): mapping between virtual SFTPGo paths and virtual folders.
+            If one or more of the specified folders are not inside the dataprovider they will be automatically created. You
+            have to create the folder on the filesystem yourself
         uid (Union[Unset, int]): if you run SFTPGo as root user, the created files and directories will be assigned to
             this uid. 0 means no change, the owner will be the user that runs SFTPGo. Ignored on windows
         gid (Union[Unset, int]): if you run SFTPGo as root user, the created files and directories will be assigned to
             this gid. 0 means no change, the group will be the one of the user that runs SFTPGo. Ignored on windows
         max_sessions (Union[Unset, int]): Limit the sessions that a user can open. 0 means unlimited
-        quota_size (Union[Unset, int]): Quota as size in bytes. 0 menas unlimited. Please note that quota is updated if
+        quota_size (Union[Unset, int]): Quota as size in bytes. 0 means unlimited. Please note that quota is updated if
             files are added/removed via SFTPGo otherwise a quota scan or a manual quota update is needed
-        quota_files (Union[Unset, int]): Quota as number of files. 0 menas unlimited. Please note that quota is updated
+        quota_files (Union[Unset, int]): Quota as number of files. 0 means unlimited. Please note that quota is updated
             if files are added/removed via SFTPGo otherwise a quota scan or a manual quota update is needed
-        permissions (Union[Unset, UserPermissions]):  Example: {'/': ['*'], '/somedir': ['list', 'download']}.
+        permissions (Union[Unset, UserPermissions]): hash map with directory as key and an array of permissions as
+            value. Directories must be absolute paths, permissions for root directory ("/") are required Example: {'/':
+            ['*'], '/somedir': ['list', 'download']}.
         used_quota_size (Union[Unset, int]):
         used_quota_files (Union[Unset, int]):
         last_quota_update (Union[Unset, int]): Last quota update as unix timestamp in milliseconds
@@ -64,9 +66,10 @@ class User:
         updated_at (Union[Unset, int]): last update time as unix timestamp in milliseconds
         last_login (Union[Unset, int]): Last user login as unix timestamp in milliseconds. It is saved at most once
             every 10 minutes
-        filters (Union[Unset, UserFilters]): Additional user options
+        filters (Union[Unset, UserFilters]):
         filesystem (Union[Unset, FilesystemConfig]): Storage filesystem details
         additional_info (Union[Unset, str]): Free form text field for external systems
+        groups (Union[Unset, List[GroupMapping]]):
         oidc_custom_fields (Union[Unset, UserOidcCustomFields]): This field is passed to the pre-login hook if custom
             OIDC token fields have been configured. Field values can be of any type (this is a free form object) and depend
             on the type of the configured OIDC token fields
@@ -104,6 +107,7 @@ class User:
     filters: Union[Unset, UserFilters] = UNSET
     filesystem: Union[Unset, FilesystemConfig] = UNSET
     additional_info: Union[Unset, str] = UNSET
+    groups: Union[Unset, List[GroupMapping]] = UNSET
     oidc_custom_fields: Union[Unset, UserOidcCustomFields] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -162,6 +166,14 @@ class User:
             filesystem = self.filesystem.to_dict()
 
         additional_info = self.additional_info
+        groups: Union[Unset, List[Dict[str, Any]]] = UNSET
+        if not isinstance(self.groups, Unset):
+            groups = []
+            for groups_item_data in self.groups:
+                groups_item = groups_item_data.to_dict()
+
+                groups.append(groups_item)
+
         oidc_custom_fields: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.oidc_custom_fields, Unset):
             oidc_custom_fields = self.oidc_custom_fields.to_dict()
@@ -233,6 +245,8 @@ class User:
             field_dict["filesystem"] = filesystem
         if additional_info is not UNSET:
             field_dict["additional_info"] = additional_info
+        if groups is not UNSET:
+            field_dict["groups"] = groups
         if oidc_custom_fields is not UNSET:
             field_dict["oidc_custom_fields"] = oidc_custom_fields
 
@@ -330,6 +344,13 @@ class User:
 
         additional_info = d.pop("additional_info", UNSET)
 
+        groups = []
+        _groups = d.pop("groups", UNSET)
+        for groups_item_data in _groups or []:
+            groups_item = GroupMapping.from_dict(groups_item_data)
+
+            groups.append(groups_item)
+
         _oidc_custom_fields = d.pop("oidc_custom_fields", UNSET)
         oidc_custom_fields: Union[Unset, UserOidcCustomFields]
         if isinstance(_oidc_custom_fields, Unset):
@@ -370,6 +391,7 @@ class User:
             filters=filters,
             filesystem=filesystem,
             additional_info=additional_info,
+            groups=groups,
             oidc_custom_fields=oidc_custom_fields,
         )
 

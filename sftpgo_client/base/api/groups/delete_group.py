@@ -4,37 +4,33 @@ import httpx
 
 from ...client import Client
 from ...models.api_response import ApiResponse
-from ...models.base_virtual_folder import BaseVirtualFolder
 from ...types import Response
 
 
 def _get_kwargs(
+    name: str,
     *,
     client: Client,
-    json_body: BaseVirtualFolder,
 ) -> Dict[str, Any]:
-    url = "{}/folder-quota-scans".format(client.base_url)
+    url = "{}/groups/{name}".format(client.base_url, name=name)
 
     headers: Dict[str, str] = client.get_headers()
     cookies: Dict[str, Any] = client.get_cookies()
 
-    json_json_body = json_body.to_dict()
-
     return {
-        "method": "post",
+        "method": "delete",
         "url": url,
         "headers": headers,
         "cookies": cookies,
         "timeout": client.get_timeout(),
-        "json": json_json_body,
     }
 
 
 def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, ApiResponse]]:
-    if response.status_code == 202:
-        response_202 = ApiResponse.from_dict(response.json())
+    if response.status_code == 200:
+        response_200 = ApiResponse.from_dict(response.json())
 
-        return response_202
+        return response_200
     if response.status_code == 400:
         response_400 = cast(Any, None)
         return response_400
@@ -47,9 +43,6 @@ def _parse_response(*, response: httpx.Response) -> Optional[Union[Any, ApiRespo
     if response.status_code == 404:
         response_404 = cast(Any, None)
         return response_404
-    if response.status_code == 409:
-        response_409 = cast(Any, None)
-        return response_409
     if response.status_code == 500:
         response_500 = cast(Any, None)
         return response_500
@@ -66,26 +59,24 @@ def _build_response(*, response: httpx.Response) -> Response[Union[Any, ApiRespo
 
 
 def sync_detailed(
+    name: str,
     *,
     client: Client,
-    json_body: BaseVirtualFolder,
 ) -> Response[Union[Any, ApiResponse]]:
-    """Start a folder quota scan
+    """Delete
 
-     Deprecated, please use '/quotas/folders/{name}/scan' instead
+     Deletes an existing group
 
     Args:
-        json_body (BaseVirtualFolder): Defines the filesystem for the virtual folder and the used
-            quota limits. The same folder can be shared among multiple users and each user can have
-            different quota limits or a different virtual path.
+        name (str):
 
     Returns:
         Response[Union[Any, ApiResponse]]
     """
 
     kwargs = _get_kwargs(
+        name=name,
         client=client,
-        json_body=json_body,
     )
 
     response = httpx.request(
@@ -97,50 +88,46 @@ def sync_detailed(
 
 
 def sync(
+    name: str,
     *,
     client: Client,
-    json_body: BaseVirtualFolder,
 ) -> Optional[Union[Any, ApiResponse]]:
-    """Start a folder quota scan
+    """Delete
 
-     Deprecated, please use '/quotas/folders/{name}/scan' instead
+     Deletes an existing group
 
     Args:
-        json_body (BaseVirtualFolder): Defines the filesystem for the virtual folder and the used
-            quota limits. The same folder can be shared among multiple users and each user can have
-            different quota limits or a different virtual path.
+        name (str):
 
     Returns:
         Response[Union[Any, ApiResponse]]
     """
 
     return sync_detailed(
+        name=name,
         client=client,
-        json_body=json_body,
     ).parsed
 
 
 async def asyncio_detailed(
+    name: str,
     *,
     client: Client,
-    json_body: BaseVirtualFolder,
 ) -> Response[Union[Any, ApiResponse]]:
-    """Start a folder quota scan
+    """Delete
 
-     Deprecated, please use '/quotas/folders/{name}/scan' instead
+     Deletes an existing group
 
     Args:
-        json_body (BaseVirtualFolder): Defines the filesystem for the virtual folder and the used
-            quota limits. The same folder can be shared among multiple users and each user can have
-            different quota limits or a different virtual path.
+        name (str):
 
     Returns:
         Response[Union[Any, ApiResponse]]
     """
 
     kwargs = _get_kwargs(
+        name=name,
         client=client,
-        json_body=json_body,
     )
 
     async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
@@ -150,18 +137,16 @@ async def asyncio_detailed(
 
 
 async def asyncio(
+    name: str,
     *,
     client: Client,
-    json_body: BaseVirtualFolder,
 ) -> Optional[Union[Any, ApiResponse]]:
-    """Start a folder quota scan
+    """Delete
 
-     Deprecated, please use '/quotas/folders/{name}/scan' instead
+     Deletes an existing group
 
     Args:
-        json_body (BaseVirtualFolder): Defines the filesystem for the virtual folder and the used
-            quota limits. The same folder can be shared among multiple users and each user can have
-            different quota limits or a different virtual path.
+        name (str):
 
     Returns:
         Response[Union[Any, ApiResponse]]
@@ -169,7 +154,7 @@ async def asyncio(
 
     return (
         await asyncio_detailed(
+            name=name,
             client=client,
-            json_body=json_body,
         )
     ).parsed

@@ -18,7 +18,7 @@ class UserTOTPConfig:
             file. You will be unable to save a user/admin referencing a missing config_name
         secret (Union[Unset, Secret]): The secret is encrypted before saving, so to set a new secret you must provide a
             payload and set the status to "Plain". The encryption key and additional data will be generated automatically.
-            If you set the status to "Redacted" the existig secret will be preserved
+            If you set the status to "Redacted" the existing secret will be preserved
         protocols (Union[Unset, List[MFAProtocols]]): TOTP will be required for the specified protocols. SSH protocol
             (SFTP/SCP/SSH commands) will ask for the TOTP passcode if the client uses keyboard interactive authentication.
             FTP has no standard way to support two factor authentication, if you enable the FTP support, you have to add the

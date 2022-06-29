@@ -9,6 +9,7 @@ tags:
   - name: defender
   - name: quota
   - name: folders
+  - name: groups
   - name: users
   - name: data retention
   - name: events
@@ -22,9 +23,10 @@ info:
     Several storage backends are supported and they are configurable per-user, so you can serve a local directory for a user and an S3 bucket (or part of it) for another one.
     SFTPGo also supports virtual folders, a virtual folder can use any of the supported storage backends. So you can have, for example, an S3 user that exposes a Google Cloud Storage bucket (or part of it) on a specified path and an encrypted local filesystem on another one.
     Virtual folders can be private or shared among multiple users, for shared virtual folders you can define different quota limits for each user.
+    SFTPGo supports groups to simplify the administration of multiple accounts by letting you assign settings once to a group, instead of multiple times to each individual user.
     The SFTPGo WebClient allows end users to change their credentials, browse and manage their files in the browser and setup two-factor authentication which works with Authy, Google Authenticator and other compatible apps.
     From the WebClient each authorized user can also create HTTP/S links to externally share files and folders securely, by setting limits to the number of downloads/uploads, protecting the share with a password, limiting access by source IP address, setting an automatic expiration date.
-  version: 2.2.2-dev
+  version: 2.3.1-dev
   contact:
     name: API support
     url: 'https://github.com/drakkan/sftpgo'
@@ -429,37 +431,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/VersionInfo'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-        default:
-          $ref: '#/components/responses/DefaultResponse'
-  /changepwd/admin:
-    put:
-      security:
-        - BearerAuth: []
-      tags:
-        - admins
-      summary: Change admin password
-      description: Changes the password for the logged in admin. Please use '/admin/changepwd' instead
-      operationId: change_admin_password_deprecated
-      deprecated: true
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PwdChange'
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '403':
@@ -884,107 +855,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApiResponse'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-        default:
-          $ref: '#/components/responses/DefaultResponse'
-  /defender/bantime:
-    get:
-      deprecated: true
-      tags:
-        - defender
-      summary: Get ban time
-      description: Deprecated, please use '/defender/hosts', '/defender/hosts/{id}' instead
-      operationId: get_ban_time
-      parameters:
-        - in: query
-          name: ip
-          required: true
-          description: IPv4/IPv6 address
-          schema:
-            type: string
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BanStatus'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-        default:
-          $ref: '#/components/responses/DefaultResponse'
-  /defender/unban:
-    post:
-      deprecated: true
-      tags:
-        - defender
-      summary: Unban
-      description: Deprecated, please use '/defender/hosts/{id}' instead
-      operationId: unban_host
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                ip:
-                  type: string
-                  description: IPv4/IPv6 address to remove
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-        default:
-          $ref: '#/components/responses/DefaultResponse'
-  /defender/score:
-    get:
-      deprecated: true
-      tags:
-        - defender
-      summary: Get score
-      description: Deprecated, please use '/defender/hosts', '/defender/hosts/{id}' instead
-      operationId: get_score
-      parameters:
-        - in: query
-          name: ip
-          required: true
-          description: IPv4/IPv6 address
-          schema:
-            type: string
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ScoreStatus'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '403':
@@ -1445,230 +1315,6 @@ paths:
           $ref: '#/components/responses/InternalServerError'
         default:
           $ref: '#/components/responses/DefaultResponse'
-  /quota-scans:
-    get:
-      deprecated: true
-      tags:
-        - quota
-      summary: Get quota scans
-      description: Deprecated, please use '/quotas/users/scans' instead
-      operationId: get_users_quota_scans_deprecated
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/QuotaScan'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-        default:
-          $ref: '#/components/responses/DefaultResponse'
-    post:
-      deprecated: true
-      tags:
-        - quota
-      summary: Start user quota scan
-      description: Deprecated, please use '/quotas/users/{username}/scan' instead
-      operationId: start_user_quota_scan_deprecated
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/User'
-      responses:
-        '202':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-              example:
-                message: Scan started
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '409':
-          $ref: '#/components/responses/Conflict'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-        default:
-          $ref: '#/components/responses/DefaultResponse'
-  /quota-update:
-    put:
-      deprecated: true
-      tags:
-        - quota
-      summary: Update quota usage limits
-      description: Deprecated, please use '/quotas/users/{username}/usage' instead
-      operationId: user_quota_update_usage_deprecated
-      parameters:
-        - in: query
-          name: mode
-          required: false
-          description: the update mode specifies if the given quota usage values should be added or replace the current ones
-          schema:
-            type: string
-            enum:
-              - add
-              - reset
-            description: |
-              Update type:
-                * `add` - add the specified quota limits to the current used ones
-                * `reset` - reset the values to the specified ones. This is the default
-            example: reset
-      requestBody:
-        required: true
-        description: 'The only user mandatory fields are username, used_quota_size and used_quota_files. Please note that if the quota fields are missing they will default to 0, this means that if mode is "add" the current value will remain unchanged, if mode is "reset" the missing field is set to 0'
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/User'
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-              example:
-                message: Quota updated
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-        default:
-          $ref: '#/components/responses/DefaultResponse'
-  /folder-quota-update:
-    put:
-      deprecated: true
-      tags:
-        - quota
-      summary: Update folder quota limits
-      description: Deprecated, please use '/quotas/folders/{name}/usage' instead
-      operationId: folder_quota_update_usage_deprecated
-      parameters:
-        - in: query
-          name: mode
-          required: false
-          description: the update mode specifies if the given quota usage values should be added or replace the current ones
-          schema:
-            type: string
-            enum:
-              - add
-              - reset
-            description: |
-              Update type:
-                * `add` - add the specified quota limits to the current used ones
-                * `reset` - reset the values to the specified ones. This is the default
-            example: reset
-      requestBody:
-        required: true
-        description: 'The only folder mandatory fields are mapped_path,used_quota_size and used_quota_files. Please note that if the used quota fields are missing they will default to 0, this means that if mode is "add" the current value will remain unchanged, if mode is "reset" the missing field is set to 0'
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/BaseVirtualFolder'
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-              example:
-                message: Quota updated
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-        default:
-          $ref: '#/components/responses/DefaultResponse'
-  /folder-quota-scans:
-    get:
-      deprecated: true
-      tags:
-        - quota
-      summary: Get folders quota scans
-      description: Deprecated, please use '/quotas/folders/scans' instead
-      operationId: get_folders_quota_scans_deprecated
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/FolderQuotaScan'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-        default:
-          $ref: '#/components/responses/DefaultResponse'
-    post:
-      deprecated: true
-      tags:
-        - quota
-      summary: Start a folder quota scan
-      description: Deprecated, please use '/quotas/folders/{name}/scan' instead
-      operationId: start_folder_quota_scan_deprecated
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/BaseVirtualFolder'
-      responses:
-        '202':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-              example:
-                message: Scan started
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '409':
-          $ref: '#/components/responses/Conflict'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-        default:
-          $ref: '#/components/responses/DefaultResponse'
   /folders:
     get:
       tags:
@@ -1696,7 +1342,7 @@ paths:
         - in: query
           name: order
           required: false
-          description: Ordering folders by path. Default ASC
+          description: Ordering folders by name. Default ASC
           schema:
             type: string
             enum:
@@ -1823,6 +1469,181 @@ paths:
       summary: Delete folder
       description: Deletes an existing folder
       operationId: delete_folder
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+              example:
+                message: User deleted
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        default:
+          $ref: '#/components/responses/DefaultResponse'
+  /groups:
+    get:
+      tags:
+        - groups
+      summary: Get groups
+      description: Returns an array with one or more groups
+      operationId: get_groups
+      parameters:
+        - in: query
+          name: offset
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+          required: false
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 500
+            default: 100
+          required: false
+          description: 'The maximum number of items to return. Max value is 500, default is 100'
+        - in: query
+          name: order
+          required: false
+          description: Ordering groups by name. Default ASC
+          schema:
+            type: string
+            enum:
+              - ASC
+              - DESC
+            example: ASC
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Group'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        default:
+          $ref: '#/components/responses/DefaultResponse'
+    post:
+      tags:
+        - groups
+      summary: Add group
+      operationId: add_group
+      description: Adds a new group
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Group'
+      responses:
+        '201':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Group'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        default:
+          $ref: '#/components/responses/DefaultResponse'
+  '/groups/{name}':
+    parameters:
+      - name: name
+        in: path
+        description: group name
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - groups
+      summary: Find groups by name
+      description: Returns the group with the given name if it exists.
+      operationId: get_group_by_name
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Group'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        default:
+          $ref: '#/components/responses/DefaultResponse'
+    put:
+      tags:
+        - groups
+      summary: Update group
+      description: Updates an existing group
+      operationId: update_group
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Group'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+              example:
+                message: User updated
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        default:
+          $ref: '#/components/responses/DefaultResponse'
+    delete:
+      tags:
+        - groups
+      summary: Delete
+      description: Deletes an existing group
+      operationId: delete_group
       responses:
         '200':
           description: successful operation
@@ -3114,71 +2935,6 @@ paths:
           $ref: '#/components/responses/InternalServerError'
         default:
           $ref: '#/components/responses/DefaultResponse'
-  /user/publickeys:
-    get:
-      security:
-        - BearerAuth: []
-      tags:
-        - user APIs
-      deprecated: true
-      summary: Get the user's public keys
-      description: 'Returns the public keys for the logged in user. Deprecated please use "/user/profile" instead'
-      operationId: get_user_public_keys
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: string
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-        default:
-          $ref: '#/components/responses/DefaultResponse'
-    put:
-      security:
-        - BearerAuth: []
-      tags:
-        - user APIs
-      deprecated: true
-      summary: Set the user's public keys
-      description: 'Sets the public keys for the logged in user. Public keys must be in OpenSSH format. Deprecated please use "/user/profile" instead'
-      operationId: set_user_public_keys
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: array
-              items:
-                type: string
-                description: Public key in OpenSSH format
-                example: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPVILdH2u3yV5SAeE6XksD1z1vXRg0E4hJUov8ITDAZ2 user@host
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-        default:
-          $ref: '#/components/responses/DefaultResponse'
   /user/profile:
     get:
       security:
@@ -3622,39 +3378,6 @@ paths:
           $ref: '#/components/responses/InternalServerError'
         default:
           $ref: '#/components/responses/DefaultResponse'
-  /user/folder:
-    get:
-      tags:
-        - user APIs
-      summary: Read folders contents
-      description: Returns the contents of the specified folder for the logged in user. Please use '/user/dirs' instead
-      operationId: get_user_folder_contents
-      deprecated: true
-      parameters:
-        - in: query
-          name: path
-          description: Path to the folder to read. It must be URL encoded, for example the path "my dir/àdir" must be sent as "my%20dir%2F%C3%A0dir". If empty or missing the user's start directory is assumed. If relative, the user's start directory is used as the base
-          schema:
-            type: string
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/DirEntry'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-        default:
-          $ref: '#/components/responses/DefaultResponse'
   /user/dirs:
     get:
       tags:
@@ -3785,46 +3508,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/ApiResponse'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-        default:
-          $ref: '#/components/responses/DefaultResponse'
-  /user/file:
-    get:
-      tags:
-        - user APIs
-      summary: Download a single file
-      description: Returns the file contents as response body. Please use '/user/files' instead
-      operationId: get_user_file
-      deprecated: true
-      parameters:
-        - in: query
-          name: path
-          required: true
-          description: Path to the file to download. It must be URL encoded, for example the path "my dir/àdir/file.txt" must be sent as "my%20dir%2F%C3%A0dir%2Ffile.txt"
-          schema:
-            type: string
-      responses:
-        '200':
-          description: successful operation
-          content:
-            '*/*':
-              schema:
-                type: string
-                format: binary
-        '206':
-          description: successful operation
-          content:
-            '*/*':
-              schema:
-                type: string
-                format: binary
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -4239,15 +3922,6 @@ components:
           * `chmod` changing file or directory permissions is allowed
           * `chown` changing file or directory owner and group is allowed
           * `chtimes` changing file or directory access and modification time is allowed
-    DirPermissions:
-      type: object
-      additionalProperties:
-        type: array
-        items:
-          $ref: '#/components/schemas/Permission'
-        minItems: 1
-      minProperties: 1
-      description: 'hash map with directory as key and an array of permissions as value. Directories must be absolute paths, permissions for root directory ("/") are required'
     AdminPermissions:
       type: string
       enum:
@@ -4296,6 +3970,7 @@ components:
         - 3
         - 4
         - 5
+        - 6
       description: |
         Filesystem providers:
           * `0` - Local filesystem
@@ -4304,6 +3979,7 @@ components:
           * `3` - Azure Blob Storage
           * `4` - Local filesystem encrypted
           * `5` - SFTP
+          * `6` - HTTP filesystem
     LoginMethods:
       type: string
       enum:
@@ -4606,7 +4282,7 @@ components:
         total_data_transfer:
           type: integer
           description: 'Maximum total data transfer as MB. 0 means unlimited. You can set a total data transfer instead of the individual values for uploads and downloads'
-    UserFilters:
+    BaseUserFilters:
       type: object
       properties:
         allowed_ip:
@@ -4665,12 +4341,6 @@ components:
           description: 'API key authentication allows to impersonate this user with an API key'
         user_type:
           $ref: '#/components/schemas/UserType'
-        totp_config:
-          $ref: '#/components/schemas/UserTOTPConfig'
-        recovery_codes:
-          type: array
-          items:
-            $ref: '#/components/schemas/RecoveryCode'
         bandwidth_limits:
           type: array
           items:
@@ -4691,6 +4361,17 @@ components:
             $ref: '#/components/schemas/MFAProtocols'
           description: 'Defines protocols that require two factor authentication'
       description: Additional user options
+    UserFilters:
+      allOf:
+        - $ref: '#/components/schemas/BaseUserFilters'
+        - type: object
+          properties:
+            totp_config:
+              $ref: '#/components/schemas/UserTOTPConfig'
+            recovery_codes:
+              type: array
+              items:
+                $ref: '#/components/schemas/RecoveryCode'
     Secret:
       type: object
       properties:
@@ -4715,7 +4396,7 @@ components:
         mode:
           type: integer
           description: 1 means encrypted using a master key
-      description: The secret is encrypted before saving, so to set a new secret you must provide a payload and set the status to "Plain". The encryption key and additional data will be generated automatically. If you set the status to "Redacted" the existig secret will be preserved
+      description: The secret is encrypted before saving, so to set a new secret you must provide a payload and set the status to "Plain". The encryption key and additional data will be generated automatically. If you set the status to "Redacted" the existing secret will be preserved
     S3Config:
       type: object
       properties:
@@ -4853,6 +4534,8 @@ components:
           $ref: '#/components/schemas/Secret'
         private_key:
           $ref: '#/components/schemas/Secret'
+        key_passphrase:
+          $ref: '#/components/schemas/Secret'
         fingerprints:
           type: array
           items:
@@ -4870,6 +4553,20 @@ components:
           maximum: 16
           example: 2
           description: The size of the buffer (in MB) to use for transfers. By enabling buffering, the reads and writes, from/to the remote SFTP server, are split in multiple concurrent requests and this allows data to be transferred at a faster rate, over high latency networks, by overlapping round-trip times. With buffering enabled, resuming uploads is not supported and a file cannot be opened for both reading and writing at the same time. 0 means disabled.
+    HTTPFsConfig:
+      type: object
+      properties:
+        endpoint:
+          type: string
+          description: 'HTTP/S endpoint URL. SFTPGo will use this URL as base, for example for the `stat` API, SFTPGo will add `/stat/{name}`'
+        username:
+          type: string
+        password:
+          $ref: '#/components/schemas/Secret'
+        api_key:
+          $ref: '#/components/schemas/Secret'
+        skip_tls_verify:
+          type: boolean
     FilesystemConfig:
       type: object
       properties:
@@ -4885,6 +4582,8 @@ components:
           $ref: '#/components/schemas/CryptFsConfig'
         sftpconfig:
           $ref: '#/components/schemas/SFTPFsConfig'
+        httpconfig:
+          $ref: '#/components/schemas/HTTPFsConfig'
       description: Storage filesystem details
     BaseVirtualFolder:
       type: object
@@ -4930,11 +4629,11 @@ components:
             quota_size:
               type: integer
               format: int64
-              description: 'Quota as size in bytes. 0 menas unlimited, -1 means included in user quota. Please note that quota is updated if files are added/removed via SFTPGo otherwise a quota scan or a manual quota update is needed'
+              description: 'Quota as size in bytes. 0 means unlimited, -1 means included in user quota. Please note that quota is updated if files are added/removed via SFTPGo otherwise a quota scan or a manual quota update is needed'
             quota_files:
               type: integer
               format: int32
-              description: 'Quota as number of files. 0 menas unlimited, , -1 means included in user quota. Please note that quota is updated if files are added/removed via SFTPGo otherwise a quota scan or a manual quota update is needed'
+              description: 'Quota as number of files. 0 means unlimited, , -1 means included in user quota. Please note that quota is updated if files are added/removed via SFTPGo otherwise a quota scan or a manual quota update is needed'
           required:
             - virtual_path
       description: 'A virtual folder is a mapping between a SFTPGo virtual path and a filesystem path outside the user home directory. The specified paths must be absolute and the virtual path cannot be "/", it must be a sub directory. The parent directory for the specified virtual path must exist. SFTPGo will try to automatically create any missing parent directory for the configured virtual folders at user login.'
@@ -4984,7 +4683,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/VirtualFolder'
-          description: mapping between virtual SFTPGo paths and filesystem paths outside the user home directory. Supported for local filesystem only. If one or more of the specified folders are not inside the dataprovider they will be automatically created. You have to create the folder on the filesystem yourself
+          description: mapping between virtual SFTPGo paths and virtual folders. If one or more of the specified folders are not inside the dataprovider they will be automatically created. You have to create the folder on the filesystem yourself
         uid:
           type: integer
           format: int32
@@ -5004,16 +4703,20 @@ components:
         quota_size:
           type: integer
           format: int64
-          description: Quota as size in bytes. 0 menas unlimited. Please note that quota is updated if files are added/removed via SFTPGo otherwise a quota scan or a manual quota update is needed
+          description: Quota as size in bytes. 0 means unlimited. Please note that quota is updated if files are added/removed via SFTPGo otherwise a quota scan or a manual quota update is needed
         quota_files:
           type: integer
           format: int32
-          description: Quota as number of files. 0 menas unlimited. Please note that quota is updated if files are added/removed via SFTPGo otherwise a quota scan or a manual quota update is needed
+          description: Quota as number of files. 0 means unlimited. Please note that quota is updated if files are added/removed via SFTPGo otherwise a quota scan or a manual quota update is needed
         permissions:
           type: object
-          items:
-            $ref: '#/components/schemas/DirPermissions'
-          minItems: 1
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/Permission'
+            minItems: 1
+          minProperties: 1
+          description: 'hash map with directory as key and an array of permissions as value. Directories must be absolute paths, permissions for root directory ("/") are required'
           example:
             /:
               - '*'
@@ -5070,6 +4773,10 @@ components:
         additional_info:
           type: string
           description: Free form text field for external systems
+        groups:
+          type: array
+          items:
+            $ref: '#/components/schemas/GroupMapping'
         oidc_custom_fields:
           type: object
           additionalProperties: true
@@ -5652,6 +5359,99 @@ components:
           example:
             - 192.0.2.0/24
             - '2001:db8::/32'
+    GroupUserSettings:
+      type: object
+      properties:
+        home_dir:
+          type: string
+        max_sessions:
+          type: integer
+          format: int32
+        quota_size:
+          type: integer
+          format: int64
+        quota_files:
+          type: integer
+          format: int32
+        permissions:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/Permission'
+            minItems: 1
+          minProperties: 1
+          description: 'hash map with directory as key and an array of permissions as value. Directories must be absolute paths, permissions for root directory ("/") are required'
+          example:
+            /:
+              - '*'
+            /somedir:
+              - list
+              - download
+        upload_bandwidth:
+          type: integer
+          description: 'Maximum upload bandwidth as KB/s'
+        download_bandwidth:
+          type: integer
+          description: 'Maximum download bandwidth as KB/s'
+        upload_data_transfer:
+          type: integer
+          description: 'Maximum data transfer allowed for uploads as MB'
+        download_data_transfer:
+          type: integer
+          description: 'Maximum data transfer allowed for downloads as MB'
+        total_data_transfer:
+          type: integer
+          description: 'Maximum total data transfer as MB'
+        filters:
+          $ref: '#/components/schemas/BaseUserFilters'
+    Group:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          minimum: 1
+        name:
+          type: string
+          description: name is unique
+        description:
+          type: string
+          description: 'optional description'
+        created_at:
+          type: integer
+          format: int64
+          description: creation time as unix timestamp in milliseconds
+        updated_at:
+          type: integer
+          format: int64
+          description: last update time as unix timestamp in milliseconds
+        user_settings:
+          $ref: '#/components/schemas/GroupUserSettings'
+        virtual_folders:
+          type: array
+          items:
+            $ref: '#/components/schemas/VirtualFolder'
+          description: mapping between virtual SFTPGo paths and folders
+        users:
+          type: array
+          items:
+            type: string
+          description: list of usernames associated with this group
+    GroupMapping:
+      type: object
+      properties:
+        name:
+          type: string
+          description: group name
+        type:
+          enum:
+            - 1
+            - 2
+          description: |
+            Group type:
+              * `1` - Primary group
+              * `2` - Secondaru group
     BackupData:
       type: object
       properties:
@@ -5663,6 +5463,10 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/BaseVirtualFolder'
+        groups:
+          type: array
+          items:
+            $ref: '#/components/schemas/Group'
         admins:
           type: array
           items:

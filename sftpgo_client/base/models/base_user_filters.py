@@ -9,19 +9,18 @@ from ..models.hooks_filter import HooksFilter
 from ..models.login_methods import LoginMethods
 from ..models.mfa_protocols import MFAProtocols
 from ..models.patterns_filter import PatternsFilter
-from ..models.recovery_code import RecoveryCode
 from ..models.supported_protocols import SupportedProtocols
-from ..models.user_totp_config import UserTOTPConfig
 from ..models.user_type import UserType
 from ..models.web_client_options import WebClientOptions
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="UserFilters")
+T = TypeVar("T", bound="BaseUserFilters")
 
 
 @attr.s(auto_attribs=True)
-class UserFilters:
-    """
+class BaseUserFilters:
+    """Additional user options
+
     Attributes:
         allowed_ip (Union[Unset, List[str]]): only clients connecting from these IP/Mask are allowed. IP/Mask must be in
             CIDR notation as defined in RFC 4632 and RFC 4291, for example "192.0.2.0/24" or "2001:db8::/32" Example:
@@ -58,8 +57,6 @@ class UserFilters:
             This option is supported for SFTP/SCP, FTP and HTTP (WebClient/REST API) protocols. Relative paths will use this
             directory as base.
         field_2fa_protocols (Union[Unset, List[MFAProtocols]]): Defines protocols that require two factor authentication
-        totp_config (Union[Unset, UserTOTPConfig]):
-        recovery_codes (Union[Unset, List[RecoveryCode]]):
     """
 
     allowed_ip: Union[Unset, List[str]] = UNSET
@@ -79,8 +76,6 @@ class UserFilters:
     external_auth_cache_time: Union[Unset, int] = UNSET
     start_directory: Union[Unset, str] = UNSET
     field_2fa_protocols: Union[Unset, List[MFAProtocols]] = UNSET
-    totp_config: Union[Unset, UserTOTPConfig] = UNSET
-    recovery_codes: Union[Unset, List[RecoveryCode]] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -165,18 +160,6 @@ class UserFilters:
 
                 field_2fa_protocols.append(field_2fa_protocols_item)
 
-        totp_config: Union[Unset, Dict[str, Any]] = UNSET
-        if not isinstance(self.totp_config, Unset):
-            totp_config = self.totp_config.to_dict()
-
-        recovery_codes: Union[Unset, List[Dict[str, Any]]] = UNSET
-        if not isinstance(self.recovery_codes, Unset):
-            recovery_codes = []
-            for recovery_codes_item_data in self.recovery_codes:
-                recovery_codes_item = recovery_codes_item_data.to_dict()
-
-                recovery_codes.append(recovery_codes_item)
-
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
@@ -214,10 +197,6 @@ class UserFilters:
             field_dict["start_directory"] = start_directory
         if field_2fa_protocols is not UNSET:
             field_dict["2fa_protocols"] = field_2fa_protocols
-        if totp_config is not UNSET:
-            field_dict["totp_config"] = totp_config
-        if recovery_codes is not UNSET:
-            field_dict["recovery_codes"] = recovery_codes
 
         return field_dict
 
@@ -310,21 +289,7 @@ class UserFilters:
 
             field_2fa_protocols.append(field_2fa_protocols_item)
 
-        _totp_config = d.pop("totp_config", UNSET)
-        totp_config: Union[Unset, UserTOTPConfig]
-        if isinstance(_totp_config, Unset):
-            totp_config = UNSET
-        else:
-            totp_config = UserTOTPConfig.from_dict(_totp_config)
-
-        recovery_codes = []
-        _recovery_codes = d.pop("recovery_codes", UNSET)
-        for recovery_codes_item_data in _recovery_codes or []:
-            recovery_codes_item = RecoveryCode.from_dict(recovery_codes_item_data)
-
-            recovery_codes.append(recovery_codes_item)
-
-        user_filters = cls(
+        base_user_filters = cls(
             allowed_ip=allowed_ip,
             denied_ip=denied_ip,
             denied_login_methods=denied_login_methods,
@@ -342,12 +307,10 @@ class UserFilters:
             external_auth_cache_time=external_auth_cache_time,
             start_directory=start_directory,
             field_2fa_protocols=field_2fa_protocols,
-            totp_config=totp_config,
-            recovery_codes=recovery_codes,
         )
 
-        user_filters.additional_properties = d
-        return user_filters
+        base_user_filters.additional_properties = d
+        return base_user_filters
 
     @property
     def additional_keys(self) -> List[str]:

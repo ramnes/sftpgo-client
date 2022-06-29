@@ -6,6 +6,7 @@ from ..models.azure_blob_fs_config import AzureBlobFsConfig
 from ..models.crypt_fs_config import CryptFsConfig
 from ..models.fs_providers import FsProviders
 from ..models.gcs_config import GCSConfig
+from ..models.http_fs_config import HTTPFsConfig
 from ..models.s3_config import S3Config
 from ..models.sftp_fs_config import SFTPFsConfig
 from ..types import UNSET, Unset
@@ -25,6 +26,7 @@ class FilesystemConfig:
               * `3` - Azure Blob Storage
               * `4` - Local filesystem encrypted
               * `5` - SFTP
+              * `6` - HTTP filesystem
         s3config (Union[Unset, S3Config]): S3 Compatible Object Storage configuration details
         gcsconfig (Union[Unset, GCSConfig]): Google Cloud Storage configuration details. The "credentials" field must be
             populated only when adding/updating a user. It will be always omitted, since there are sensitive data, when you
@@ -32,6 +34,7 @@ class FilesystemConfig:
         azblobconfig (Union[Unset, AzureBlobFsConfig]): Azure Blob Storage configuration details
         cryptconfig (Union[Unset, CryptFsConfig]): Crypt filesystem configuration details
         sftpconfig (Union[Unset, SFTPFsConfig]):
+        httpconfig (Union[Unset, HTTPFsConfig]):
     """
 
     provider: Union[Unset, FsProviders] = UNSET
@@ -40,6 +43,7 @@ class FilesystemConfig:
     azblobconfig: Union[Unset, AzureBlobFsConfig] = UNSET
     cryptconfig: Union[Unset, CryptFsConfig] = UNSET
     sftpconfig: Union[Unset, SFTPFsConfig] = UNSET
+    httpconfig: Union[Unset, HTTPFsConfig] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -67,6 +71,10 @@ class FilesystemConfig:
         if not isinstance(self.sftpconfig, Unset):
             sftpconfig = self.sftpconfig.to_dict()
 
+        httpconfig: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.httpconfig, Unset):
+            httpconfig = self.httpconfig.to_dict()
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
@@ -82,6 +90,8 @@ class FilesystemConfig:
             field_dict["cryptconfig"] = cryptconfig
         if sftpconfig is not UNSET:
             field_dict["sftpconfig"] = sftpconfig
+        if httpconfig is not UNSET:
+            field_dict["httpconfig"] = httpconfig
 
         return field_dict
 
@@ -130,6 +140,13 @@ class FilesystemConfig:
         else:
             sftpconfig = SFTPFsConfig.from_dict(_sftpconfig)
 
+        _httpconfig = d.pop("httpconfig", UNSET)
+        httpconfig: Union[Unset, HTTPFsConfig]
+        if isinstance(_httpconfig, Unset):
+            httpconfig = UNSET
+        else:
+            httpconfig = HTTPFsConfig.from_dict(_httpconfig)
+
         filesystem_config = cls(
             provider=provider,
             s3config=s3config,
@@ -137,6 +154,7 @@ class FilesystemConfig:
             azblobconfig=azblobconfig,
             cryptconfig=cryptconfig,
             sftpconfig=sftpconfig,
+            httpconfig=httpconfig,
         )
 
         filesystem_config.additional_properties = d

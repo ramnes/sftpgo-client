@@ -5,6 +5,7 @@ import attr
 from ..models.admin import Admin
 from ..models.api_key import APIKey
 from ..models.base_virtual_folder import BaseVirtualFolder
+from ..models.group import Group
 from ..models.share import Share
 from ..models.user import User
 from ..types import UNSET, Unset
@@ -18,6 +19,7 @@ class BackupData:
     Attributes:
         users (Union[Unset, List[User]]):
         folders (Union[Unset, List[BaseVirtualFolder]]):
+        groups (Union[Unset, List[Group]]):
         admins (Union[Unset, List[Admin]]):
         api_keys (Union[Unset, List[APIKey]]):
         shares (Union[Unset, List[Share]]):
@@ -26,6 +28,7 @@ class BackupData:
 
     users: Union[Unset, List[User]] = UNSET
     folders: Union[Unset, List[BaseVirtualFolder]] = UNSET
+    groups: Union[Unset, List[Group]] = UNSET
     admins: Union[Unset, List[Admin]] = UNSET
     api_keys: Union[Unset, List[APIKey]] = UNSET
     shares: Union[Unset, List[Share]] = UNSET
@@ -48,6 +51,14 @@ class BackupData:
                 folders_item = folders_item_data.to_dict()
 
                 folders.append(folders_item)
+
+        groups: Union[Unset, List[Dict[str, Any]]] = UNSET
+        if not isinstance(self.groups, Unset):
+            groups = []
+            for groups_item_data in self.groups:
+                groups_item = groups_item_data.to_dict()
+
+                groups.append(groups_item)
 
         admins: Union[Unset, List[Dict[str, Any]]] = UNSET
         if not isinstance(self.admins, Unset):
@@ -82,6 +93,8 @@ class BackupData:
             field_dict["users"] = users
         if folders is not UNSET:
             field_dict["folders"] = folders
+        if groups is not UNSET:
+            field_dict["groups"] = groups
         if admins is not UNSET:
             field_dict["admins"] = admins
         if api_keys is not UNSET:
@@ -110,6 +123,13 @@ class BackupData:
 
             folders.append(folders_item)
 
+        groups = []
+        _groups = d.pop("groups", UNSET)
+        for groups_item_data in _groups or []:
+            groups_item = Group.from_dict(groups_item_data)
+
+            groups.append(groups_item)
+
         admins = []
         _admins = d.pop("admins", UNSET)
         for admins_item_data in _admins or []:
@@ -136,6 +156,7 @@ class BackupData:
         backup_data = cls(
             users=users,
             folders=folders,
+            groups=groups,
             admins=admins,
             api_keys=api_keys,
             shares=shares,

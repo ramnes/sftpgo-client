@@ -17,10 +17,13 @@ class SFTPFsConfig:
             key will be tried first.
         password (Union[Unset, Secret]): The secret is encrypted before saving, so to set a new secret you must provide
             a payload and set the status to "Plain". The encryption key and additional data will be generated automatically.
-            If you set the status to "Redacted" the existig secret will be preserved
+            If you set the status to "Redacted" the existing secret will be preserved
         private_key (Union[Unset, Secret]): The secret is encrypted before saving, so to set a new secret you must
             provide a payload and set the status to "Plain". The encryption key and additional data will be generated
-            automatically. If you set the status to "Redacted" the existig secret will be preserved
+            automatically. If you set the status to "Redacted" the existing secret will be preserved
+        key_passphrase (Union[Unset, Secret]): The secret is encrypted before saving, so to set a new secret you must
+            provide a payload and set the status to "Plain". The encryption key and additional data will be generated
+            automatically. If you set the status to "Redacted" the existing secret will be preserved
         fingerprints (Union[Unset, List[str]]): SHA256 fingerprints to use for host key verification. If you don't
             provide any fingerprint the remote host key will not be verified, this is a security risk
         prefix (Union[Unset, str]): Specifying a prefix you can restrict all operations to a given path within the
@@ -39,6 +42,7 @@ class SFTPFsConfig:
     username: Union[Unset, str] = UNSET
     password: Union[Unset, Secret] = UNSET
     private_key: Union[Unset, Secret] = UNSET
+    key_passphrase: Union[Unset, Secret] = UNSET
     fingerprints: Union[Unset, List[str]] = UNSET
     prefix: Union[Unset, str] = UNSET
     disable_concurrent_reads: Union[Unset, bool] = UNSET
@@ -55,6 +59,10 @@ class SFTPFsConfig:
         private_key: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.private_key, Unset):
             private_key = self.private_key.to_dict()
+
+        key_passphrase: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.key_passphrase, Unset):
+            key_passphrase = self.key_passphrase.to_dict()
 
         fingerprints: Union[Unset, List[str]] = UNSET
         if not isinstance(self.fingerprints, Unset):
@@ -75,6 +83,8 @@ class SFTPFsConfig:
             field_dict["password"] = password
         if private_key is not UNSET:
             field_dict["private_key"] = private_key
+        if key_passphrase is not UNSET:
+            field_dict["key_passphrase"] = key_passphrase
         if fingerprints is not UNSET:
             field_dict["fingerprints"] = fingerprints
         if prefix is not UNSET:
@@ -107,6 +117,13 @@ class SFTPFsConfig:
         else:
             private_key = Secret.from_dict(_private_key)
 
+        _key_passphrase = d.pop("key_passphrase", UNSET)
+        key_passphrase: Union[Unset, Secret]
+        if isinstance(_key_passphrase, Unset):
+            key_passphrase = UNSET
+        else:
+            key_passphrase = Secret.from_dict(_key_passphrase)
+
         fingerprints = cast(List[str], d.pop("fingerprints", UNSET))
 
         prefix = d.pop("prefix", UNSET)
@@ -120,6 +137,7 @@ class SFTPFsConfig:
             username=username,
             password=password,
             private_key=private_key,
+            key_passphrase=key_passphrase,
             fingerprints=fingerprints,
             prefix=prefix,
             disable_concurrent_reads=disable_concurrent_reads,

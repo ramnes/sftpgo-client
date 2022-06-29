@@ -18,7 +18,7 @@ class GCSConfig:
             bucket (Union[Unset, str]):
             credentials (Union[Unset, Secret]): The secret is encrypted before saving, so to set a new secret you must
                 provide a payload and set the status to "Plain". The encryption key and additional data will be generated
-                automatically. If you set the status to "Redacted" the existig secret will be preserved
+                automatically. If you set the status to "Redacted" the existing secret will be preserved
             automatic_credentials (Union[Unset, GCSConfigAutomaticCredentials]): Automatic credentials:
                   * `0` - disabled, explicit credentials, using a JSON credentials file, must be provided. This is the default
                 value if the field is null

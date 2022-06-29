@@ -47,6 +47,7 @@ class FsEvent:
               * `3` - Azure Blob Storage
               * `4` - Local filesystem encrypted
               * `5` - SFTP
+              * `6` - HTTP filesystem
         bucket (Union[Unset, str]):
         endpoint (Union[Unset, str]):
         open_flags (Union[Unset, str]):
