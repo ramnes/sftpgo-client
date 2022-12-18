@@ -15,8 +15,8 @@ class VersionInfo:
         build_date (Union[Unset, str]):
         commit_hash (Union[Unset, str]):
         features (Union[Unset, List[str]]): Features for the current build. Available features are `portable`, `bolt`,
-            `mysql`, `sqlite`, `pgsql`, `s3`, `gcs`, `metrics`. If a feature is available it has a `+` prefix, otherwise a
-            `-` prefix
+            `mysql`, `sqlite`, `pgsql`, `s3`, `gcs`, `azblob`, `metrics`. If a feature is available it has a `+` prefix,
+            otherwise a `-` prefix
     """
 
     version: Union[Unset, str] = UNSET

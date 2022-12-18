@@ -20,6 +20,7 @@ class ProviderEvent:
         ip (Union[Unset, str]):
         object_type (Union[Unset, ProviderEventObjectType]):
         object_name (Union[Unset, str]):
+        object_data (Union[Unset, str]): base64 of the JSON serialized object with sensitive fields removed
         instance_id (Union[Unset, str]):
     """
 
@@ -30,6 +31,7 @@ class ProviderEvent:
     ip: Union[Unset, str] = UNSET
     object_type: Union[Unset, ProviderEventObjectType] = UNSET
     object_name: Union[Unset, str] = UNSET
+    object_data: Union[Unset, str] = UNSET
     instance_id: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -47,6 +49,7 @@ class ProviderEvent:
             object_type = self.object_type.value
 
         object_name = self.object_name
+        object_data = self.object_data
         instance_id = self.instance_id
 
         field_dict: Dict[str, Any] = {}
@@ -66,6 +69,8 @@ class ProviderEvent:
             field_dict["object_type"] = object_type
         if object_name is not UNSET:
             field_dict["object_name"] = object_name
+        if object_data is not UNSET:
+            field_dict["object_data"] = object_data
         if instance_id is not UNSET:
             field_dict["instance_id"] = instance_id
 
@@ -98,6 +103,8 @@ class ProviderEvent:
 
         object_name = d.pop("object_name", UNSET)
 
+        object_data = d.pop("object_data", UNSET)
+
         instance_id = d.pop("instance_id", UNSET)
 
         provider_event = cls(
@@ -108,6 +115,7 @@ class ProviderEvent:
             ip=ip,
             object_type=object_type,
             object_name=object_name,
+            object_data=object_data,
             instance_id=instance_id,
         )
 

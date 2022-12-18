@@ -1,44 +1,54 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="ScoreStatus")
+T = TypeVar("T", bound="EventActionFsCompress")
 
 
 @attr.s(auto_attribs=True)
-class ScoreStatus:
+class EventActionFsCompress:
     """
     Attributes:
-        score (Union[Unset, int]): if 0 the host is not listed
+        name (Union[Unset, str]): Full path to the (zip) archive to create. The parent dir must exist
+        paths (Union[Unset, List[str]]): paths to add the archive
     """
 
-    score: Union[Unset, int] = UNSET
+    name: Union[Unset, str] = UNSET
+    paths: Union[Unset, List[str]] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-        score = self.score
+        name = self.name
+        paths: Union[Unset, List[str]] = UNSET
+        if not isinstance(self.paths, Unset):
+            paths = self.paths
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
-        if score is not UNSET:
-            field_dict["score"] = score
+        if name is not UNSET:
+            field_dict["name"] = name
+        if paths is not UNSET:
+            field_dict["paths"] = paths
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
-        score = d.pop("score", UNSET)
+        name = d.pop("name", UNSET)
 
-        score_status = cls(
-            score=score,
+        paths = cast(List[str], d.pop("paths", UNSET))
+
+        event_action_fs_compress = cls(
+            name=name,
+            paths=paths,
         )
 
-        score_status.additional_properties = d
-        return score_status
+        event_action_fs_compress.additional_properties = d
+        return event_action_fs_compress
 
     @property
     def additional_keys(self) -> List[str]:

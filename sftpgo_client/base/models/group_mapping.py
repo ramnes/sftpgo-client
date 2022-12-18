@@ -15,7 +15,8 @@ class GroupMapping:
         name (Union[Unset, str]): group name
         type (Union[Unset, GroupMappingType]): Group type:
               * `1` - Primary group
-              * `2` - Secondaru group
+              * `2` - Secondary group
+              * `3` - Membership only, no settings are inherited from this group type
     """
 
     name: Union[Unset, str] = UNSET

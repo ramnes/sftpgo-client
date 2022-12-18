@@ -24,6 +24,7 @@ class Group:
         user_settings (Union[Unset, GroupUserSettings]):
         virtual_folders (Union[Unset, List['VirtualFolder']]): mapping between virtual SFTPGo paths and folders
         users (Union[Unset, List[str]]): list of usernames associated with this group
+        admins (Union[Unset, List[str]]): list of admins usernames associated with this group
     """
 
     id: Union[Unset, int] = UNSET
@@ -34,6 +35,7 @@ class Group:
     user_settings: Union[Unset, "GroupUserSettings"] = UNSET
     virtual_folders: Union[Unset, List["VirtualFolder"]] = UNSET
     users: Union[Unset, List[str]] = UNSET
+    admins: Union[Unset, List[str]] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -58,6 +60,10 @@ class Group:
         if not isinstance(self.users, Unset):
             users = self.users
 
+        admins: Union[Unset, List[str]] = UNSET
+        if not isinstance(self.admins, Unset):
+            admins = self.admins
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
@@ -77,6 +83,8 @@ class Group:
             field_dict["virtual_folders"] = virtual_folders
         if users is not UNSET:
             field_dict["users"] = users
+        if admins is not UNSET:
+            field_dict["admins"] = admins
 
         return field_dict
 
@@ -112,6 +120,8 @@ class Group:
 
         users = cast(List[str], d.pop("users", UNSET))
 
+        admins = cast(List[str], d.pop("admins", UNSET))
+
         group = cls(
             id=id,
             name=name,
@@ -121,6 +131,7 @@ class Group:
             user_settings=user_settings,
             virtual_folders=virtual_folders,
             users=users,
+            admins=admins,
         )
 
         group.additional_properties = d

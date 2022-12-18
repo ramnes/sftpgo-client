@@ -69,6 +69,9 @@ class User:
         updated_at (Union[Unset, int]): last update time as unix timestamp in milliseconds
         last_login (Union[Unset, int]): Last user login as unix timestamp in milliseconds. It is saved at most once
             every 10 minutes
+        first_download (Union[Unset, int]): first download time as unix timestamp in milliseconds
+        first_upload (Union[Unset, int]): first upload time as unix timestamp in milliseconds
+        last_password_change (Union[Unset, int]): last password change time as unix timestamp in milliseconds
         filters (Union[Unset, UserFilters]):
         filesystem (Union[Unset, FilesystemConfig]): Storage filesystem details
         additional_info (Union[Unset, str]): Free form text field for external systems
@@ -76,6 +79,7 @@ class User:
         oidc_custom_fields (Union[Unset, UserOidcCustomFields]): This field is passed to the pre-login hook if custom
             OIDC token fields have been configured. Field values can be of any type (this is a free form object) and depend
             on the type of the configured OIDC token fields
+        role (Union[Unset, str]):
     """
 
     id: Union[Unset, int] = UNSET
@@ -107,11 +111,15 @@ class User:
     created_at: Union[Unset, int] = UNSET
     updated_at: Union[Unset, int] = UNSET
     last_login: Union[Unset, int] = UNSET
+    first_download: Union[Unset, int] = UNSET
+    first_upload: Union[Unset, int] = UNSET
+    last_password_change: Union[Unset, int] = UNSET
     filters: Union[Unset, "UserFilters"] = UNSET
     filesystem: Union[Unset, "FilesystemConfig"] = UNSET
     additional_info: Union[Unset, str] = UNSET
     groups: Union[Unset, List["GroupMapping"]] = UNSET
     oidc_custom_fields: Union[Unset, "UserOidcCustomFields"] = UNSET
+    role: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -160,6 +168,9 @@ class User:
         created_at = self.created_at
         updated_at = self.updated_at
         last_login = self.last_login
+        first_download = self.first_download
+        first_upload = self.first_upload
+        last_password_change = self.last_password_change
         filters: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.filters, Unset):
             filters = self.filters.to_dict()
@@ -180,6 +191,8 @@ class User:
         oidc_custom_fields: Union[Unset, Dict[str, Any]] = UNSET
         if not isinstance(self.oidc_custom_fields, Unset):
             oidc_custom_fields = self.oidc_custom_fields.to_dict()
+
+        role = self.role
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -242,6 +255,12 @@ class User:
             field_dict["updated_at"] = updated_at
         if last_login is not UNSET:
             field_dict["last_login"] = last_login
+        if first_download is not UNSET:
+            field_dict["first_download"] = first_download
+        if first_upload is not UNSET:
+            field_dict["first_upload"] = first_upload
+        if last_password_change is not UNSET:
+            field_dict["last_password_change"] = last_password_change
         if filters is not UNSET:
             field_dict["filters"] = filters
         if filesystem is not UNSET:
@@ -252,6 +271,8 @@ class User:
             field_dict["groups"] = groups
         if oidc_custom_fields is not UNSET:
             field_dict["oidc_custom_fields"] = oidc_custom_fields
+        if role is not UNSET:
+            field_dict["role"] = role
 
         return field_dict
 
@@ -338,6 +359,12 @@ class User:
 
         last_login = d.pop("last_login", UNSET)
 
+        first_download = d.pop("first_download", UNSET)
+
+        first_upload = d.pop("first_upload", UNSET)
+
+        last_password_change = d.pop("last_password_change", UNSET)
+
         _filters = d.pop("filters", UNSET)
         filters: Union[Unset, UserFilters]
         if isinstance(_filters, Unset):
@@ -367,6 +394,8 @@ class User:
             oidc_custom_fields = UNSET
         else:
             oidc_custom_fields = UserOidcCustomFields.from_dict(_oidc_custom_fields)
+
+        role = d.pop("role", UNSET)
 
         user = cls(
             id=id,
@@ -398,11 +427,15 @@ class User:
             created_at=created_at,
             updated_at=updated_at,
             last_login=last_login,
+            first_download=first_download,
+            first_upload=first_upload,
+            last_password_change=last_password_change,
             filters=filters,
             filesystem=filesystem,
             additional_info=additional_info,
             groups=groups,
             oidc_custom_fields=oidc_custom_fields,
+            role=role,
         )
 
         user.additional_properties = d

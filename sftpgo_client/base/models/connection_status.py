@@ -25,6 +25,7 @@ class ConnectionStatus:
         last_activity (Union[Unset, int]): last client activity as unix timestamp in milliseconds
         protocol (Union[Unset, ConnectionStatusProtocol]):
         active_transfers (Union[Unset, List['Transfer']]):
+        node (Union[Unset, str]): Node identifier, omitted for single node installations
     """
 
     username: Union[Unset, str] = UNSET
@@ -36,6 +37,7 @@ class ConnectionStatus:
     last_activity: Union[Unset, int] = UNSET
     protocol: Union[Unset, ConnectionStatusProtocol] = UNSET
     active_transfers: Union[Unset, List["Transfer"]] = UNSET
+    node: Union[Unset, str] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -58,6 +60,8 @@ class ConnectionStatus:
 
                 active_transfers.append(active_transfers_item)
 
+        node = self.node
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
@@ -79,6 +83,8 @@ class ConnectionStatus:
             field_dict["protocol"] = protocol
         if active_transfers is not UNSET:
             field_dict["active_transfers"] = active_transfers
+        if node is not UNSET:
+            field_dict["node"] = node
 
         return field_dict
 
@@ -115,6 +121,8 @@ class ConnectionStatus:
 
             active_transfers.append(active_transfers_item)
 
+        node = d.pop("node", UNSET)
+
         connection_status = cls(
             username=username,
             connection_id=connection_id,
@@ -125,6 +133,7 @@ class ConnectionStatus:
             last_activity=last_activity,
             protocol=protocol,
             active_transfers=active_transfers,
+            node=node,
         )
 
         connection_status.additional_properties = d

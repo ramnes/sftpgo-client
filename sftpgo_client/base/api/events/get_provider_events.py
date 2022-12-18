@@ -24,6 +24,9 @@ def _get_kwargs(
     object_types: Union[Unset, None, List[ProviderEventObjectType]] = UNSET,
     instance_ids: Union[Unset, None, List[str]] = UNSET,
     exclude_ids: Union[Unset, None, List[str]] = UNSET,
+    role: Union[Unset, None, str] = UNSET,
+    csv_export: Union[Unset, None, bool] = False,
+    omit_object_data: Union[Unset, None, bool] = False,
     limit: Union[Unset, None, int] = 100,
     order: Union[Unset, None, GetProviderEventsOrder] = UNSET,
 ) -> Dict[str, Any]:
@@ -86,6 +89,12 @@ def _get_kwargs(
             json_exclude_ids = exclude_ids
 
     params["exclude_ids"] = json_exclude_ids
+
+    params["role"] = role
+
+    params["csv_export"] = csv_export
+
+    params["omit_object_data"] = omit_object_data
 
     params["limit"] = limit
 
@@ -160,6 +169,9 @@ def sync_detailed(
     object_types: Union[Unset, None, List[ProviderEventObjectType]] = UNSET,
     instance_ids: Union[Unset, None, List[str]] = UNSET,
     exclude_ids: Union[Unset, None, List[str]] = UNSET,
+    role: Union[Unset, None, str] = UNSET,
+    csv_export: Union[Unset, None, bool] = False,
+    omit_object_data: Union[Unset, None, bool] = False,
     limit: Union[Unset, None, int] = 100,
     order: Union[Unset, None, GetProviderEventsOrder] = UNSET,
 ) -> Response[Union[Any, List["ProviderEvent"]]]:
@@ -178,6 +190,9 @@ def sync_detailed(
         object_types (Union[Unset, None, List[ProviderEventObjectType]]):
         instance_ids (Union[Unset, None, List[str]]):
         exclude_ids (Union[Unset, None, List[str]]):
+        role (Union[Unset, None, str]):
+        csv_export (Union[Unset, None, bool]):
+        omit_object_data (Union[Unset, None, bool]):
         limit (Union[Unset, None, int]):  Default: 100.
         order (Union[Unset, None, GetProviderEventsOrder]):  Example: DESC.
 
@@ -200,6 +215,9 @@ def sync_detailed(
         object_types=object_types,
         instance_ids=instance_ids,
         exclude_ids=exclude_ids,
+        role=role,
+        csv_export=csv_export,
+        omit_object_data=omit_object_data,
         limit=limit,
         order=order,
     )
@@ -224,6 +242,9 @@ def sync(
     object_types: Union[Unset, None, List[ProviderEventObjectType]] = UNSET,
     instance_ids: Union[Unset, None, List[str]] = UNSET,
     exclude_ids: Union[Unset, None, List[str]] = UNSET,
+    role: Union[Unset, None, str] = UNSET,
+    csv_export: Union[Unset, None, bool] = False,
+    omit_object_data: Union[Unset, None, bool] = False,
     limit: Union[Unset, None, int] = 100,
     order: Union[Unset, None, GetProviderEventsOrder] = UNSET,
 ) -> Optional[Union[Any, List["ProviderEvent"]]]:
@@ -242,6 +263,9 @@ def sync(
         object_types (Union[Unset, None, List[ProviderEventObjectType]]):
         instance_ids (Union[Unset, None, List[str]]):
         exclude_ids (Union[Unset, None, List[str]]):
+        role (Union[Unset, None, str]):
+        csv_export (Union[Unset, None, bool]):
+        omit_object_data (Union[Unset, None, bool]):
         limit (Union[Unset, None, int]):  Default: 100.
         order (Union[Unset, None, GetProviderEventsOrder]):  Example: DESC.
 
@@ -264,6 +288,9 @@ def sync(
         object_types=object_types,
         instance_ids=instance_ids,
         exclude_ids=exclude_ids,
+        role=role,
+        csv_export=csv_export,
+        omit_object_data=omit_object_data,
         limit=limit,
         order=order,
     ).parsed
@@ -281,6 +308,9 @@ async def asyncio_detailed(
     object_types: Union[Unset, None, List[ProviderEventObjectType]] = UNSET,
     instance_ids: Union[Unset, None, List[str]] = UNSET,
     exclude_ids: Union[Unset, None, List[str]] = UNSET,
+    role: Union[Unset, None, str] = UNSET,
+    csv_export: Union[Unset, None, bool] = False,
+    omit_object_data: Union[Unset, None, bool] = False,
     limit: Union[Unset, None, int] = 100,
     order: Union[Unset, None, GetProviderEventsOrder] = UNSET,
 ) -> Response[Union[Any, List["ProviderEvent"]]]:
@@ -299,6 +329,9 @@ async def asyncio_detailed(
         object_types (Union[Unset, None, List[ProviderEventObjectType]]):
         instance_ids (Union[Unset, None, List[str]]):
         exclude_ids (Union[Unset, None, List[str]]):
+        role (Union[Unset, None, str]):
+        csv_export (Union[Unset, None, bool]):
+        omit_object_data (Union[Unset, None, bool]):
         limit (Union[Unset, None, int]):  Default: 100.
         order (Union[Unset, None, GetProviderEventsOrder]):  Example: DESC.
 
@@ -321,6 +354,9 @@ async def asyncio_detailed(
         object_types=object_types,
         instance_ids=instance_ids,
         exclude_ids=exclude_ids,
+        role=role,
+        csv_export=csv_export,
+        omit_object_data=omit_object_data,
         limit=limit,
         order=order,
     )
@@ -343,6 +379,9 @@ async def asyncio(
     object_types: Union[Unset, None, List[ProviderEventObjectType]] = UNSET,
     instance_ids: Union[Unset, None, List[str]] = UNSET,
     exclude_ids: Union[Unset, None, List[str]] = UNSET,
+    role: Union[Unset, None, str] = UNSET,
+    csv_export: Union[Unset, None, bool] = False,
+    omit_object_data: Union[Unset, None, bool] = False,
     limit: Union[Unset, None, int] = 100,
     order: Union[Unset, None, GetProviderEventsOrder] = UNSET,
 ) -> Optional[Union[Any, List["ProviderEvent"]]]:
@@ -361,6 +400,9 @@ async def asyncio(
         object_types (Union[Unset, None, List[ProviderEventObjectType]]):
         instance_ids (Union[Unset, None, List[str]]):
         exclude_ids (Union[Unset, None, List[str]]):
+        role (Union[Unset, None, str]):
+        csv_export (Union[Unset, None, bool]):
+        omit_object_data (Union[Unset, None, bool]):
         limit (Union[Unset, None, int]):  Default: 100.
         order (Union[Unset, None, GetProviderEventsOrder]):  Example: DESC.
 
@@ -384,6 +426,9 @@ async def asyncio(
             object_types=object_types,
             instance_ids=instance_ids,
             exclude_ids=exclude_ids,
+            role=role,
+            csv_export=csv_export,
+            omit_object_data=omit_object_data,
             limit=limit,
             order=order,
         )

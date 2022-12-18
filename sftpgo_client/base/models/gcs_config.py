@@ -35,6 +35,10 @@ class GCSConfig:
                 the user will only see contents that starts with this prefix and so you can restrict access to a specific
                 virtual folder. The prefix, if not empty, must not start with "/" and must end with "/". If empty the whole
                 bucket contents will be available Example: folder/subfolder/.
+            upload_part_size (Union[Unset, int]): The buffer size (in MB) to use for multipart uploads. The default value is
+                16MB. 0 means use the default
+            upload_part_max_time (Union[Unset, int]): The maximum time allowed, in seconds, to upload a single chunk. The
+                default value is 32. 0 means use the default
     """
 
     bucket: Union[Unset, str] = UNSET
@@ -43,6 +47,8 @@ class GCSConfig:
     storage_class: Union[Unset, str] = UNSET
     acl: Union[Unset, str] = UNSET
     key_prefix: Union[Unset, str] = UNSET
+    upload_part_size: Union[Unset, int] = UNSET
+    upload_part_max_time: Union[Unset, int] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -58,6 +64,8 @@ class GCSConfig:
         storage_class = self.storage_class
         acl = self.acl
         key_prefix = self.key_prefix
+        upload_part_size = self.upload_part_size
+        upload_part_max_time = self.upload_part_max_time
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -74,6 +82,10 @@ class GCSConfig:
             field_dict["acl"] = acl
         if key_prefix is not UNSET:
             field_dict["key_prefix"] = key_prefix
+        if upload_part_size is not UNSET:
+            field_dict["upload_part_size"] = upload_part_size
+        if upload_part_max_time is not UNSET:
+            field_dict["upload_part_max_time"] = upload_part_max_time
 
         return field_dict
 
@@ -106,6 +118,10 @@ class GCSConfig:
 
         key_prefix = d.pop("key_prefix", UNSET)
 
+        upload_part_size = d.pop("upload_part_size", UNSET)
+
+        upload_part_max_time = d.pop("upload_part_max_time", UNSET)
+
         gcs_config = cls(
             bucket=bucket,
             credentials=credentials,
@@ -113,6 +129,8 @@ class GCSConfig:
             storage_class=storage_class,
             acl=acl,
             key_prefix=key_prefix,
+            upload_part_size=upload_part_size,
+            upload_part_max_time=upload_part_max_time,
         )
 
         gcs_config.additional_properties = d

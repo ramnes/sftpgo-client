@@ -10,6 +10,7 @@ class EventProtocols(str, Enum):
     HTTP = "HTTP"
     HTTPSHARE = "HTTPShare"
     DATARETENTION = "DataRetention"
+    EVENTACTION = "EventAction"
     OIDC = "OIDC"
 
     def __str__(self) -> str:

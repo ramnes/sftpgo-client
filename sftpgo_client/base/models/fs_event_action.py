@@ -3,8 +3,9 @@ from enum import Enum
 
 class FsEventAction(str, Enum):
     DOWNLOAD = "download"
-    PRE_UPLOAD = "pre-upload"
     UPLOAD = "upload"
+    FIRST_UPLOAD = "first-upload"
+    FIRST_DOWNLOAD = "first-download"
     DELETE = "delete"
     RENAME = "rename"
     MKDIR = "mkdir"

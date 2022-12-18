@@ -72,7 +72,7 @@ def sync_detailed(
     *,
     client: Client,
 ) -> Response[Union[Any, ApiResponse]]:
-    """Delete
+    """Delete group
 
      Deletes an existing group
 
@@ -105,7 +105,7 @@ def sync(
     *,
     client: Client,
 ) -> Optional[Union[Any, ApiResponse]]:
-    """Delete
+    """Delete group
 
      Deletes an existing group
 
@@ -131,7 +131,7 @@ async def asyncio_detailed(
     *,
     client: Client,
 ) -> Response[Union[Any, ApiResponse]]:
-    """Delete
+    """Delete group
 
      Deletes an existing group
 
@@ -162,7 +162,7 @@ async def asyncio(
     *,
     client: Client,
 ) -> Optional[Union[Any, ApiResponse]]:
-    """Delete
+    """Delete group
 
      Deletes an existing group
 

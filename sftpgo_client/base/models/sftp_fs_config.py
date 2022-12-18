@@ -2,6 +2,7 @@ from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
+from ..models.sftp_fs_config_equality_check_mode import SFTPFsConfigEqualityCheckMode
 from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
@@ -39,6 +40,11 @@ class SFTPFsConfig:
             to be transferred at a faster rate, over high latency networks, by overlapping round-trip times. With buffering
             enabled, resuming uploads is not supported and a file cannot be opened for both reading and writing at the same
             time. 0 means disabled. Example: 2.
+        equality_check_mode (Union[Unset, SFTPFsConfigEqualityCheckMode]): Defines how to check if this config points to
+            the same server as another config. If different configs point to the same server the renaming between the fs
+            configs is allowed:
+             * `0` username and endpoint must match. This is the default
+             * `1` only the endpoint must match
     """
 
     endpoint: Union[Unset, str] = UNSET
@@ -50,6 +56,7 @@ class SFTPFsConfig:
     prefix: Union[Unset, str] = UNSET
     disable_concurrent_reads: Union[Unset, bool] = UNSET
     buffer_size: Union[Unset, int] = UNSET
+    equality_check_mode: Union[Unset, SFTPFsConfigEqualityCheckMode] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -74,6 +81,9 @@ class SFTPFsConfig:
         prefix = self.prefix
         disable_concurrent_reads = self.disable_concurrent_reads
         buffer_size = self.buffer_size
+        equality_check_mode: Union[Unset, int] = UNSET
+        if not isinstance(self.equality_check_mode, Unset):
+            equality_check_mode = self.equality_check_mode.value
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
@@ -96,6 +106,8 @@ class SFTPFsConfig:
             field_dict["disable_concurrent_reads"] = disable_concurrent_reads
         if buffer_size is not UNSET:
             field_dict["buffer_size"] = buffer_size
+        if equality_check_mode is not UNSET:
+            field_dict["equality_check_mode"] = equality_check_mode
 
         return field_dict
 
@@ -137,6 +149,13 @@ class SFTPFsConfig:
 
         buffer_size = d.pop("buffer_size", UNSET)
 
+        _equality_check_mode = d.pop("equality_check_mode", UNSET)
+        equality_check_mode: Union[Unset, SFTPFsConfigEqualityCheckMode]
+        if isinstance(_equality_check_mode, Unset):
+            equality_check_mode = UNSET
+        else:
+            equality_check_mode = SFTPFsConfigEqualityCheckMode(_equality_check_mode)
+
         sftp_fs_config = cls(
             endpoint=endpoint,
             username=username,
@@ -147,6 +166,7 @@ class SFTPFsConfig:
             prefix=prefix,
             disable_concurrent_reads=disable_concurrent_reads,
             buffer_size=buffer_size,
+            equality_check_mode=equality_check_mode,
         )
 
         sftp_fs_config.additional_properties = d

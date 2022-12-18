@@ -30,6 +30,8 @@ def _get_kwargs(
     statuses: Union[Unset, None, List[FsEventStatus]] = UNSET,
     instance_ids: Union[Unset, None, List[str]] = UNSET,
     exclude_ids: Union[Unset, None, List[str]] = UNSET,
+    role: Union[Unset, None, str] = UNSET,
+    csv_export: Union[Unset, None, bool] = False,
     limit: Union[Unset, None, int] = 100,
     order: Union[Unset, None, GetFsEventsOrder] = UNSET,
 ) -> Dict[str, Any]:
@@ -116,6 +118,10 @@ def _get_kwargs(
 
     params["exclude_ids"] = json_exclude_ids
 
+    params["role"] = role
+
+    params["csv_export"] = csv_export
+
     params["limit"] = limit
 
     json_order: Union[Unset, None, str] = UNSET
@@ -193,6 +199,8 @@ def sync_detailed(
     statuses: Union[Unset, None, List[FsEventStatus]] = UNSET,
     instance_ids: Union[Unset, None, List[str]] = UNSET,
     exclude_ids: Union[Unset, None, List[str]] = UNSET,
+    role: Union[Unset, None, str] = UNSET,
+    csv_export: Union[Unset, None, bool] = False,
     limit: Union[Unset, None, int] = 100,
     order: Union[Unset, None, GetFsEventsOrder] = UNSET,
 ) -> Response[Union[Any, List["FsEvent"]]]:
@@ -222,6 +230,8 @@ def sync_detailed(
         statuses (Union[Unset, None, List[FsEventStatus]]):
         instance_ids (Union[Unset, None, List[str]]):
         exclude_ids (Union[Unset, None, List[str]]):
+        role (Union[Unset, None, str]):
+        csv_export (Union[Unset, None, bool]):
         limit (Union[Unset, None, int]):  Default: 100.
         order (Union[Unset, None, GetFsEventsOrder]):  Example: DESC.
 
@@ -248,6 +258,8 @@ def sync_detailed(
         statuses=statuses,
         instance_ids=instance_ids,
         exclude_ids=exclude_ids,
+        role=role,
+        csv_export=csv_export,
         limit=limit,
         order=order,
     )
@@ -276,6 +288,8 @@ def sync(
     statuses: Union[Unset, None, List[FsEventStatus]] = UNSET,
     instance_ids: Union[Unset, None, List[str]] = UNSET,
     exclude_ids: Union[Unset, None, List[str]] = UNSET,
+    role: Union[Unset, None, str] = UNSET,
+    csv_export: Union[Unset, None, bool] = False,
     limit: Union[Unset, None, int] = 100,
     order: Union[Unset, None, GetFsEventsOrder] = UNSET,
 ) -> Optional[Union[Any, List["FsEvent"]]]:
@@ -305,6 +319,8 @@ def sync(
         statuses (Union[Unset, None, List[FsEventStatus]]):
         instance_ids (Union[Unset, None, List[str]]):
         exclude_ids (Union[Unset, None, List[str]]):
+        role (Union[Unset, None, str]):
+        csv_export (Union[Unset, None, bool]):
         limit (Union[Unset, None, int]):  Default: 100.
         order (Union[Unset, None, GetFsEventsOrder]):  Example: DESC.
 
@@ -331,6 +347,8 @@ def sync(
         statuses=statuses,
         instance_ids=instance_ids,
         exclude_ids=exclude_ids,
+        role=role,
+        csv_export=csv_export,
         limit=limit,
         order=order,
     ).parsed
@@ -352,6 +370,8 @@ async def asyncio_detailed(
     statuses: Union[Unset, None, List[FsEventStatus]] = UNSET,
     instance_ids: Union[Unset, None, List[str]] = UNSET,
     exclude_ids: Union[Unset, None, List[str]] = UNSET,
+    role: Union[Unset, None, str] = UNSET,
+    csv_export: Union[Unset, None, bool] = False,
     limit: Union[Unset, None, int] = 100,
     order: Union[Unset, None, GetFsEventsOrder] = UNSET,
 ) -> Response[Union[Any, List["FsEvent"]]]:
@@ -381,6 +401,8 @@ async def asyncio_detailed(
         statuses (Union[Unset, None, List[FsEventStatus]]):
         instance_ids (Union[Unset, None, List[str]]):
         exclude_ids (Union[Unset, None, List[str]]):
+        role (Union[Unset, None, str]):
+        csv_export (Union[Unset, None, bool]):
         limit (Union[Unset, None, int]):  Default: 100.
         order (Union[Unset, None, GetFsEventsOrder]):  Example: DESC.
 
@@ -407,6 +429,8 @@ async def asyncio_detailed(
         statuses=statuses,
         instance_ids=instance_ids,
         exclude_ids=exclude_ids,
+        role=role,
+        csv_export=csv_export,
         limit=limit,
         order=order,
     )
@@ -433,6 +457,8 @@ async def asyncio(
     statuses: Union[Unset, None, List[FsEventStatus]] = UNSET,
     instance_ids: Union[Unset, None, List[str]] = UNSET,
     exclude_ids: Union[Unset, None, List[str]] = UNSET,
+    role: Union[Unset, None, str] = UNSET,
+    csv_export: Union[Unset, None, bool] = False,
     limit: Union[Unset, None, int] = 100,
     order: Union[Unset, None, GetFsEventsOrder] = UNSET,
 ) -> Optional[Union[Any, List["FsEvent"]]]:
@@ -462,6 +488,8 @@ async def asyncio(
         statuses (Union[Unset, None, List[FsEventStatus]]):
         instance_ids (Union[Unset, None, List[str]]):
         exclude_ids (Union[Unset, None, List[str]]):
+        role (Union[Unset, None, str]):
+        csv_export (Union[Unset, None, bool]):
         limit (Union[Unset, None, int]):  Default: 100.
         order (Union[Unset, None, GetFsEventsOrder]):  Example: DESC.
 
@@ -489,6 +517,8 @@ async def asyncio(
             statuses=statuses,
             instance_ids=instance_ids,
             exclude_ids=exclude_ids,
+            role=role,
+            csv_export=csv_export,
             limit=limit,
             order=order,
         )

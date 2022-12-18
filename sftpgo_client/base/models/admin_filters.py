@@ -5,6 +5,7 @@ import attr
 from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
+    from ..models.admin_preferences import AdminPreferences
     from ..models.base_totp_config import BaseTOTPConfig
     from ..models.recovery_code import RecoveryCode
 
@@ -22,12 +23,14 @@ class AdminFilters:
         allow_api_key_auth (Union[Unset, bool]): API key auth allows to impersonate this administrator with an API key
         totp_config (Union[Unset, BaseTOTPConfig]):
         recovery_codes (Union[Unset, List['RecoveryCode']]):
+        preferences (Union[Unset, AdminPreferences]):
     """
 
     allow_list: Union[Unset, List[str]] = UNSET
     allow_api_key_auth: Union[Unset, bool] = UNSET
     totp_config: Union[Unset, "BaseTOTPConfig"] = UNSET
     recovery_codes: Union[Unset, List["RecoveryCode"]] = UNSET
+    preferences: Union[Unset, "AdminPreferences"] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -48,6 +51,10 @@ class AdminFilters:
 
                 recovery_codes.append(recovery_codes_item)
 
+        preferences: Union[Unset, Dict[str, Any]] = UNSET
+        if not isinstance(self.preferences, Unset):
+            preferences = self.preferences.to_dict()
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
@@ -59,11 +66,14 @@ class AdminFilters:
             field_dict["totp_config"] = totp_config
         if recovery_codes is not UNSET:
             field_dict["recovery_codes"] = recovery_codes
+        if preferences is not UNSET:
+            field_dict["preferences"] = preferences
 
         return field_dict
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        from ..models.admin_preferences import AdminPreferences
         from ..models.base_totp_config import BaseTOTPConfig
         from ..models.recovery_code import RecoveryCode
 
@@ -86,11 +96,19 @@ class AdminFilters:
 
             recovery_codes.append(recovery_codes_item)
 
+        _preferences = d.pop("preferences", UNSET)
+        preferences: Union[Unset, AdminPreferences]
+        if isinstance(_preferences, Unset):
+            preferences = UNSET
+        else:
+            preferences = AdminPreferences.from_dict(_preferences)
+
         admin_filters = cls(
             allow_list=allow_list,
             allow_api_key_auth=allow_api_key_auth,
             totp_config=totp_config,
             recovery_codes=recovery_codes,
+            preferences=preferences,
         )
 
         admin_filters.additional_properties = d

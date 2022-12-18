@@ -2,6 +2,7 @@ from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
+from ..models.base_user_filters_ftp_security import BaseUserFiltersFtpSecurity
 from ..models.base_user_filters_tls_username import BaseUserFiltersTlsUsername
 from ..models.login_methods import LoginMethods
 from ..models.mfa_protocols import MFAProtocols
@@ -60,6 +61,17 @@ class BaseUserFilters:
             This option is supported for SFTP/SCP, FTP and HTTP (WebClient/REST API) protocols. Relative paths will use this
             directory as base.
         field_2fa_protocols (Union[Unset, List[MFAProtocols]]): Defines protocols that require two factor authentication
+        ftp_security (Union[Unset, BaseUserFiltersFtpSecurity]): Set to `1` to require TLS for both data and control
+            connection. his setting is useful if you want to allow both encrypted and plain text FTP sessions globally and
+            then you want to require encrypted sessions on a per-user basis. It has no effect if TLS is already required for
+            all users in the configuration file.
+        is_anonymous (Union[Unset, bool]): If enabled the user can login with any password or no password at all.
+            Anonymous users are supported for FTP and WebDAV protocols and permissions will be automatically set to "list"
+            and "download" (read only)
+        default_shares_expiration (Union[Unset, int]): Defines the default expiration for newly created shares as number
+            of days. 0 means no expiration
+        password_expiration (Union[Unset, int]): The password expires after the defined number of days. 0 means no
+            expiration
     """
 
     allowed_ip: Union[Unset, List[str]] = UNSET
@@ -79,6 +91,10 @@ class BaseUserFilters:
     external_auth_cache_time: Union[Unset, int] = UNSET
     start_directory: Union[Unset, str] = UNSET
     field_2fa_protocols: Union[Unset, List[MFAProtocols]] = UNSET
+    ftp_security: Union[Unset, BaseUserFiltersFtpSecurity] = UNSET
+    is_anonymous: Union[Unset, bool] = UNSET
+    default_shares_expiration: Union[Unset, int] = UNSET
+    password_expiration: Union[Unset, int] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -163,6 +179,14 @@ class BaseUserFilters:
 
                 field_2fa_protocols.append(field_2fa_protocols_item)
 
+        ftp_security: Union[Unset, int] = UNSET
+        if not isinstance(self.ftp_security, Unset):
+            ftp_security = self.ftp_security.value
+
+        is_anonymous = self.is_anonymous
+        default_shares_expiration = self.default_shares_expiration
+        password_expiration = self.password_expiration
+
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
@@ -200,6 +224,14 @@ class BaseUserFilters:
             field_dict["start_directory"] = start_directory
         if field_2fa_protocols is not UNSET:
             field_dict["2fa_protocols"] = field_2fa_protocols
+        if ftp_security is not UNSET:
+            field_dict["ftp_security"] = ftp_security
+        if is_anonymous is not UNSET:
+            field_dict["is_anonymous"] = is_anonymous
+        if default_shares_expiration is not UNSET:
+            field_dict["default_shares_expiration"] = default_shares_expiration
+        if password_expiration is not UNSET:
+            field_dict["password_expiration"] = password_expiration
 
         return field_dict
 
@@ -297,6 +329,19 @@ class BaseUserFilters:
 
             field_2fa_protocols.append(field_2fa_protocols_item)
 
+        _ftp_security = d.pop("ftp_security", UNSET)
+        ftp_security: Union[Unset, BaseUserFiltersFtpSecurity]
+        if isinstance(_ftp_security, Unset):
+            ftp_security = UNSET
+        else:
+            ftp_security = BaseUserFiltersFtpSecurity(_ftp_security)
+
+        is_anonymous = d.pop("is_anonymous", UNSET)
+
+        default_shares_expiration = d.pop("default_shares_expiration", UNSET)
+
+        password_expiration = d.pop("password_expiration", UNSET)
+
         base_user_filters = cls(
             allowed_ip=allowed_ip,
             denied_ip=denied_ip,
@@ -315,6 +360,10 @@ class BaseUserFilters:
             external_auth_cache_time=external_auth_cache_time,
             start_directory=start_directory,
             field_2fa_protocols=field_2fa_protocols,
+            ftp_security=ftp_security,
+            is_anonymous=is_anonymous,
+            default_shares_expiration=default_shares_expiration,
+            password_expiration=password_expiration,
         )
 
         base_user_filters.additional_properties = d

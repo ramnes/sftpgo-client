@@ -3,7 +3,13 @@
 from .add_api_key_response_201 import AddApiKeyResponse201
 from .admin import Admin
 from .admin_filters import AdminFilters
+from .admin_group_mapping import AdminGroupMapping
+from .admin_group_mapping_options import AdminGroupMappingOptions
+from .admin_group_mapping_options_add_to_users_as import (
+    AdminGroupMappingOptionsAddToUsersAs,
+)
 from .admin_permissions import AdminPermissions
+from .admin_preferences import AdminPreferences
 from .admin_profile import AdminProfile
 from .admin_reset_password_json_body import AdminResetPasswordJsonBody
 from .admin_status import AdminStatus
@@ -13,12 +19,19 @@ from .api_response import ApiResponse
 from .azure_blob_fs_config import AzureBlobFsConfig
 from .azure_blob_fs_config_access_tier import AzureBlobFsConfigAccessTier
 from .backup_data import BackupData
-from .ban_status import BanStatus
 from .bandwidth_limit import BandwidthLimit
+from .base_event_action import BaseEventAction
+from .base_event_action_options import BaseEventActionOptions
+from .base_event_rule import BaseEventRule
 from .base_totp_config import BaseTOTPConfig
 from .base_user_filters import BaseUserFilters
+from .base_user_filters_ftp_security import BaseUserFiltersFtpSecurity
 from .base_user_filters_tls_username import BaseUserFiltersTlsUsername
 from .base_virtual_folder import BaseVirtualFolder
+from .condition_options import ConditionOptions
+from .condition_options_protocols_item import ConditionOptionsProtocolsItem
+from .condition_options_provider_objects_item import ConditionOptionsProviderObjectsItem
+from .condition_pattern import ConditionPattern
 from .connection_status import ConnectionStatus
 from .connection_status_protocol import ConnectionStatusProtocol
 from .create_user_files_multipart_data import CreateUserFilesMultipartData
@@ -29,7 +42,26 @@ from .defender_entry import DefenderEntry
 from .dir_entry import DirEntry
 from .dumpdata_indent import DumpdataIndent
 from .dumpdata_output_data import DumpdataOutputData
+from .event_action import EventAction
+from .event_action_command_config import EventActionCommandConfig
+from .event_action_data_retention_config import EventActionDataRetentionConfig
+from .event_action_email_config import EventActionEmailConfig
+from .event_action_filesystem_config import EventActionFilesystemConfig
+from .event_action_fs_compress import EventActionFsCompress
+from .event_action_http_config import EventActionHTTPConfig
+from .event_action_http_config_method import EventActionHTTPConfigMethod
+from .event_action_minimal import EventActionMinimal
+from .event_action_options import EventActionOptions
+from .event_action_password_expiration import EventActionPasswordExpiration
+from .event_action_types import EventActionTypes
+from .event_conditions import EventConditions
+from .event_conditions_fs_events_item import EventConditionsFsEventsItem
+from .event_conditions_provider_events_item import EventConditionsProviderEventsItem
 from .event_protocols import EventProtocols
+from .event_rule import EventRule
+from .event_rule_minimal import EventRuleMinimal
+from .event_trigger_types import EventTriggerTypes
+from .filesystem_action_types import FilesystemActionTypes
 from .filesystem_config import FilesystemConfig
 from .folder_quota_scan import FolderQuotaScan
 from .folder_quota_update_usage_mode import FolderQuotaUpdateUsageMode
@@ -56,10 +88,13 @@ from .generate_user_totp_secret_json_body import GenerateUserTotpSecretJsonBody
 from .generate_user_totp_secret_response_200 import GenerateUserTotpSecretResponse200
 from .get_admins_order import GetAdminsOrder
 from .get_api_keys_order import GetApiKeysOrder
+from .get_event_actons_order import GetEventActonsOrder
+from .get_event_rules_order import GetEventRulesOrder
 from .get_folders_order import GetFoldersOrder
 from .get_fs_events_order import GetFsEventsOrder
 from .get_groups_order import GetGroupsOrder
 from .get_provider_events_order import GetProviderEventsOrder
+from .get_roles_order import GetRolesOrder
 from .get_user_shares_order import GetUserSharesOrder
 from .get_users_order import GetUsersOrder
 from .group import Group
@@ -69,6 +104,9 @@ from .group_user_settings import GroupUserSettings
 from .group_user_settings_permissions import GroupUserSettingsPermissions
 from .hooks_filter import HooksFilter
 from .http_fs_config import HTTPFsConfig
+from .http_fs_config_equality_check_mode import HTTPFsConfigEqualityCheckMode
+from .http_part import HTTPPart
+from .key_value import KeyValue
 from .loaddata_from_file_mode import LoaddataFromFileMode
 from .loaddata_from_file_scan_quota import LoaddataFromFileScanQuota
 from .loaddata_from_request_body_mode import LoaddataFromRequestBodyMode
@@ -90,14 +128,16 @@ from .quota_usage import QuotaUsage
 from .recovery_code import RecoveryCode
 from .retention_check import RetentionCheck
 from .retention_check_notification import RetentionCheckNotification
+from .role import Role
 from .s3_config import S3Config
-from .score_status import ScoreStatus
+from .schedule import Schedule
 from .secret import Secret
 from .secret_status import SecretStatus
 from .services_status import ServicesStatus
 from .services_status_defender import ServicesStatusDefender
 from .setprops_user_file_json_body import SetpropsUserFileJsonBody
 from .sftp_fs_config import SFTPFsConfig
+from .sftp_fs_config_equality_check_mode import SFTPFsConfigEqualityCheckMode
 from .share import Share
 from .share_scope import ShareScope
 from .ssh_authentications import SSHAuthentications
@@ -137,7 +177,11 @@ __all__ = (
     "AddApiKeyResponse201",
     "Admin",
     "AdminFilters",
+    "AdminGroupMapping",
+    "AdminGroupMappingOptions",
+    "AdminGroupMappingOptionsAddToUsersAs",
     "AdminPermissions",
+    "AdminPreferences",
     "AdminProfile",
     "AdminResetPasswordJsonBody",
     "AdminStatus",
@@ -148,11 +192,18 @@ __all__ = (
     "AzureBlobFsConfigAccessTier",
     "BackupData",
     "BandwidthLimit",
-    "BanStatus",
+    "BaseEventAction",
+    "BaseEventActionOptions",
+    "BaseEventRule",
     "BaseTOTPConfig",
     "BaseUserFilters",
+    "BaseUserFiltersFtpSecurity",
     "BaseUserFiltersTlsUsername",
     "BaseVirtualFolder",
+    "ConditionOptions",
+    "ConditionOptionsProtocolsItem",
+    "ConditionOptionsProviderObjectsItem",
+    "ConditionPattern",
     "ConnectionStatus",
     "ConnectionStatusProtocol",
     "CreateUserFilesMultipartData",
@@ -163,7 +214,26 @@ __all__ = (
     "DirEntry",
     "DumpdataIndent",
     "DumpdataOutputData",
+    "EventAction",
+    "EventActionCommandConfig",
+    "EventActionDataRetentionConfig",
+    "EventActionEmailConfig",
+    "EventActionFilesystemConfig",
+    "EventActionFsCompress",
+    "EventActionHTTPConfig",
+    "EventActionHTTPConfigMethod",
+    "EventActionMinimal",
+    "EventActionOptions",
+    "EventActionPasswordExpiration",
+    "EventActionTypes",
+    "EventConditions",
+    "EventConditionsFsEventsItem",
+    "EventConditionsProviderEventsItem",
     "EventProtocols",
+    "EventRule",
+    "EventRuleMinimal",
+    "EventTriggerTypes",
+    "FilesystemActionTypes",
     "FilesystemConfig",
     "FolderQuotaScan",
     "FolderQuotaUpdateUsageMode",
@@ -186,10 +256,13 @@ __all__ = (
     "GenerateUserTotpSecretResponse200",
     "GetAdminsOrder",
     "GetApiKeysOrder",
+    "GetEventActonsOrder",
+    "GetEventRulesOrder",
     "GetFoldersOrder",
     "GetFsEventsOrder",
     "GetGroupsOrder",
     "GetProviderEventsOrder",
+    "GetRolesOrder",
     "GetUserSharesOrder",
     "GetUsersOrder",
     "Group",
@@ -199,6 +272,9 @@ __all__ = (
     "GroupUserSettingsPermissions",
     "HooksFilter",
     "HTTPFsConfig",
+    "HTTPFsConfigEqualityCheckMode",
+    "HTTPPart",
+    "KeyValue",
     "LoaddataFromFileMode",
     "LoaddataFromFileScanQuota",
     "LoaddataFromRequestBodyMode",
@@ -220,14 +296,16 @@ __all__ = (
     "RecoveryCode",
     "RetentionCheck",
     "RetentionCheckNotification",
+    "Role",
     "S3Config",
-    "ScoreStatus",
+    "Schedule",
     "Secret",
     "SecretStatus",
     "ServicesStatus",
     "ServicesStatusDefender",
     "SetpropsUserFileJsonBody",
     "SFTPFsConfig",
+    "SFTPFsConfigEqualityCheckMode",
     "Share",
     "ShareScope",
     "SSHAuthentications",
