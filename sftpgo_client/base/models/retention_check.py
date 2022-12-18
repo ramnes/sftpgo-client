@@ -1,10 +1,13 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..models.folder_retention import FolderRetention
 from ..models.retention_check_notification import RetentionCheckNotification
 from ..types import UNSET, Unset
+
+if TYPE_CHECKING:
+    from ..models.folder_retention import FolderRetention
+
 
 T = TypeVar("T", bound="RetentionCheck")
 
@@ -14,7 +17,7 @@ class RetentionCheck:
     """
     Attributes:
         username (Union[Unset, str]): username to which the retention check refers
-        folders (Union[Unset, List[FolderRetention]]):
+        folders (Union[Unset, List['FolderRetention']]):
         start_time (Union[Unset, int]): check start time as unix timestamp in milliseconds
         notifications (Union[Unset, List[RetentionCheckNotification]]):
         email (Union[Unset, str]): if the notification method is set to "Email", this is the e-mail address that
@@ -23,7 +26,7 @@ class RetentionCheck:
     """
 
     username: Union[Unset, str] = UNSET
-    folders: Union[Unset, List[FolderRetention]] = UNSET
+    folders: Union[Unset, List["FolderRetention"]] = UNSET
     start_time: Union[Unset, int] = UNSET
     notifications: Union[Unset, List[RetentionCheckNotification]] = UNSET
     email: Union[Unset, str] = UNSET
@@ -68,6 +71,8 @@ class RetentionCheck:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        from ..models.folder_retention import FolderRetention
+
         d = src_dict.copy()
         username = d.pop("username", UNSET)
 

@@ -1,9 +1,12 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..models.secret import Secret
 from ..types import UNSET, Unset
+
+if TYPE_CHECKING:
+    from ..models.secret import Secret
+
 
 T = TypeVar("T", bound="S3Config")
 
@@ -51,7 +54,7 @@ class S3Config:
     bucket: Union[Unset, str] = UNSET
     region: Union[Unset, str] = UNSET
     access_key: Union[Unset, str] = UNSET
-    access_secret: Union[Unset, Secret] = UNSET
+    access_secret: Union[Unset, "Secret"] = UNSET
     role_arn: Union[Unset, str] = UNSET
     endpoint: Union[Unset, str] = UNSET
     storage_class: Union[Unset, str] = UNSET
@@ -127,6 +130,8 @@ class S3Config:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        from ..models.secret import Secret
+
         d = src_dict.copy()
         bucket = d.pop("bucket", UNSET)
 

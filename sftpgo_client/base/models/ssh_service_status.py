@@ -1,11 +1,14 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
 from ..models.ssh_authentications import SSHAuthentications
-from ..models.ssh_binding import SSHBinding
-from ..models.ssh_host_key import SSHHostKey
 from ..types import UNSET, Unset
+
+if TYPE_CHECKING:
+    from ..models.ssh_binding import SSHBinding
+    from ..models.ssh_host_key import SSHHostKey
+
 
 T = TypeVar("T", bound="SSHServiceStatus")
 
@@ -15,15 +18,15 @@ class SSHServiceStatus:
     """
     Attributes:
         is_active (Union[Unset, bool]):
-        bindings (Union[Unset, None, List[SSHBinding]]):
-        host_keys (Union[Unset, None, List[SSHHostKey]]):
+        bindings (Union[Unset, None, List['SSHBinding']]):
+        host_keys (Union[Unset, None, List['SSHHostKey']]):
         ssh_commands (Union[Unset, List[str]]):
         authentications (Union[Unset, List[SSHAuthentications]]):
     """
 
     is_active: Union[Unset, bool] = UNSET
-    bindings: Union[Unset, None, List[SSHBinding]] = UNSET
-    host_keys: Union[Unset, None, List[SSHHostKey]] = UNSET
+    bindings: Union[Unset, None, List["SSHBinding"]] = UNSET
+    host_keys: Union[Unset, None, List["SSHHostKey"]] = UNSET
     ssh_commands: Union[Unset, List[str]] = UNSET
     authentications: Union[Unset, List[SSHAuthentications]] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
@@ -82,6 +85,9 @@ class SSHServiceStatus:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        from ..models.ssh_binding import SSHBinding
+        from ..models.ssh_host_key import SSHHostKey
+
         d = src_dict.copy()
         is_active = d.pop("is_active", UNSET)
 

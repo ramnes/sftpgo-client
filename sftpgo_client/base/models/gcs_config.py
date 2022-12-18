@@ -1,10 +1,13 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
 from ..models.gcs_config_automatic_credentials import GCSConfigAutomaticCredentials
-from ..models.secret import Secret
 from ..types import UNSET, Unset
+
+if TYPE_CHECKING:
+    from ..models.secret import Secret
+
 
 T = TypeVar("T", bound="GCSConfig")
 
@@ -35,7 +38,7 @@ class GCSConfig:
     """
 
     bucket: Union[Unset, str] = UNSET
-    credentials: Union[Unset, Secret] = UNSET
+    credentials: Union[Unset, "Secret"] = UNSET
     automatic_credentials: Union[Unset, GCSConfigAutomaticCredentials] = UNSET
     storage_class: Union[Unset, str] = UNSET
     acl: Union[Unset, str] = UNSET
@@ -76,6 +79,8 @@ class GCSConfig:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        from ..models.secret import Secret
+
         d = src_dict.copy()
         bucket = d.pop("bucket", UNSET)
 

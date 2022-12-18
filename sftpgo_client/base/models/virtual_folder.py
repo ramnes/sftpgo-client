@@ -1,9 +1,12 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
-from ..models.filesystem_config import FilesystemConfig
 from ..types import UNSET, Unset
+
+if TYPE_CHECKING:
+    from ..models.filesystem_config import FilesystemConfig
+
 
 T = TypeVar("T", bound="VirtualFolder")
 
@@ -43,7 +46,7 @@ class VirtualFolder:
     used_quota_files: Union[Unset, int] = UNSET
     last_quota_update: Union[Unset, int] = UNSET
     users: Union[Unset, List[str]] = UNSET
-    filesystem: Union[Unset, FilesystemConfig] = UNSET
+    filesystem: Union[Unset, "FilesystemConfig"] = UNSET
     quota_size: Union[Unset, int] = UNSET
     quota_files: Union[Unset, int] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
@@ -102,6 +105,8 @@ class VirtualFolder:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        from ..models.filesystem_config import FilesystemConfig
+
         d = src_dict.copy()
         virtual_path = d.pop("virtual_path")
 

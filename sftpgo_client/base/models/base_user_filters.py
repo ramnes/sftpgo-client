@@ -1,18 +1,21 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
-from ..models.bandwidth_limit import BandwidthLimit
 from ..models.base_user_filters_tls_username import BaseUserFiltersTlsUsername
-from ..models.data_transfer_limit import DataTransferLimit
-from ..models.hooks_filter import HooksFilter
 from ..models.login_methods import LoginMethods
 from ..models.mfa_protocols import MFAProtocols
-from ..models.patterns_filter import PatternsFilter
 from ..models.supported_protocols import SupportedProtocols
 from ..models.user_type import UserType
 from ..models.web_client_options import WebClientOptions
 from ..types import UNSET, Unset
+
+if TYPE_CHECKING:
+    from ..models.bandwidth_limit import BandwidthLimit
+    from ..models.data_transfer_limit import DataTransferLimit
+    from ..models.hooks_filter import HooksFilter
+    from ..models.patterns_filter import PatternsFilter
+
 
 T = TypeVar("T", bound="BaseUserFilters")
 
@@ -29,7 +32,7 @@ class BaseUserFilters:
             evaluated before allowed ones Example: ['172.16.0.0/16'].
         denied_login_methods (Union[Unset, List[LoginMethods]]): if null or empty any available login method is allowed
         denied_protocols (Union[Unset, List[SupportedProtocols]]): if null or empty any available protocol is allowed
-        file_patterns (Union[Unset, List[PatternsFilter]]): filters based on shell like file patterns. These
+        file_patterns (Union[Unset, List['PatternsFilter']]): filters based on shell like file patterns. These
             restrictions do not apply to files listing for performance reasons, so a denied file cannot be
             downloaded/overwritten/renamed but it will still be in the list of files. Please note that these restrictions
             can be easily bypassed
@@ -49,8 +52,8 @@ class BaseUserFilters:
         allow_api_key_auth (Union[Unset, bool]): API key authentication allows to impersonate this user with an API key
         user_type (Union[Unset, UserType]): This is an hint for authentication plugins. It is ignored when using SFTPGo
             internal authentication
-        bandwidth_limits (Union[Unset, List[BandwidthLimit]]):
-        data_transfer_limits (Union[Unset, List[DataTransferLimit]]):
+        bandwidth_limits (Union[Unset, List['BandwidthLimit']]):
+        data_transfer_limits (Union[Unset, List['DataTransferLimit']]):
         external_auth_cache_time (Union[Unset, int]): Defines the cache time, in seconds, for users authenticated using
             an external auth hook. 0 means no cache
         start_directory (Union[Unset, str]): Specifies an alternate starting directory. If not set, the default is "/".
@@ -63,16 +66,16 @@ class BaseUserFilters:
     denied_ip: Union[Unset, List[str]] = UNSET
     denied_login_methods: Union[Unset, List[LoginMethods]] = UNSET
     denied_protocols: Union[Unset, List[SupportedProtocols]] = UNSET
-    file_patterns: Union[Unset, List[PatternsFilter]] = UNSET
+    file_patterns: Union[Unset, List["PatternsFilter"]] = UNSET
     max_upload_file_size: Union[Unset, int] = UNSET
     tls_username: Union[Unset, BaseUserFiltersTlsUsername] = UNSET
-    hooks: Union[Unset, HooksFilter] = UNSET
+    hooks: Union[Unset, "HooksFilter"] = UNSET
     disable_fs_checks: Union[Unset, bool] = UNSET
     web_client: Union[Unset, List[WebClientOptions]] = UNSET
     allow_api_key_auth: Union[Unset, bool] = UNSET
     user_type: Union[Unset, UserType] = UNSET
-    bandwidth_limits: Union[Unset, List[BandwidthLimit]] = UNSET
-    data_transfer_limits: Union[Unset, List[DataTransferLimit]] = UNSET
+    bandwidth_limits: Union[Unset, List["BandwidthLimit"]] = UNSET
+    data_transfer_limits: Union[Unset, List["DataTransferLimit"]] = UNSET
     external_auth_cache_time: Union[Unset, int] = UNSET
     start_directory: Union[Unset, str] = UNSET
     field_2fa_protocols: Union[Unset, List[MFAProtocols]] = UNSET
@@ -202,6 +205,11 @@ class BaseUserFilters:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        from ..models.bandwidth_limit import BandwidthLimit
+        from ..models.data_transfer_limit import DataTransferLimit
+        from ..models.hooks_filter import HooksFilter
+        from ..models.patterns_filter import PatternsFilter
+
         d = src_dict.copy()
         allowed_ip = cast(List[str], d.pop("allowed_ip", UNSET))
 

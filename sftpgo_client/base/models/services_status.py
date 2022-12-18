@@ -1,14 +1,17 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..models.data_provider_status import DataProviderStatus
-from ..models.ftp_service_status import FTPServiceStatus
-from ..models.mfa_status import MFAStatus
-from ..models.services_status_defender import ServicesStatusDefender
-from ..models.ssh_service_status import SSHServiceStatus
-from ..models.web_dav_service_status import WebDAVServiceStatus
 from ..types import UNSET, Unset
+
+if TYPE_CHECKING:
+    from ..models.data_provider_status import DataProviderStatus
+    from ..models.ftp_service_status import FTPServiceStatus
+    from ..models.mfa_status import MFAStatus
+    from ..models.services_status_defender import ServicesStatusDefender
+    from ..models.ssh_service_status import SSHServiceStatus
+    from ..models.web_dav_service_status import WebDAVServiceStatus
+
 
 T = TypeVar("T", bound="ServicesStatus")
 
@@ -25,12 +28,12 @@ class ServicesStatus:
         mfa (Union[Unset, MFAStatus]):
     """
 
-    ssh: Union[Unset, SSHServiceStatus] = UNSET
-    ftp: Union[Unset, FTPServiceStatus] = UNSET
-    webdav: Union[Unset, WebDAVServiceStatus] = UNSET
-    data_provider: Union[Unset, DataProviderStatus] = UNSET
-    defender: Union[Unset, ServicesStatusDefender] = UNSET
-    mfa: Union[Unset, MFAStatus] = UNSET
+    ssh: Union[Unset, "SSHServiceStatus"] = UNSET
+    ftp: Union[Unset, "FTPServiceStatus"] = UNSET
+    webdav: Union[Unset, "WebDAVServiceStatus"] = UNSET
+    data_provider: Union[Unset, "DataProviderStatus"] = UNSET
+    defender: Union[Unset, "ServicesStatusDefender"] = UNSET
+    mfa: Union[Unset, "MFAStatus"] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -78,6 +81,13 @@ class ServicesStatus:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        from ..models.data_provider_status import DataProviderStatus
+        from ..models.ftp_service_status import FTPServiceStatus
+        from ..models.mfa_status import MFAStatus
+        from ..models.services_status_defender import ServicesStatusDefender
+        from ..models.ssh_service_status import SSHServiceStatus
+        from ..models.web_dav_service_status import WebDAVServiceStatus
+
         d = src_dict.copy()
         _ssh = d.pop("ssh", UNSET)
         ssh: Union[Unset, SSHServiceStatus]

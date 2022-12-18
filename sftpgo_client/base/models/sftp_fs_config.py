@@ -1,9 +1,12 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
-from ..models.secret import Secret
 from ..types import UNSET, Unset
+
+if TYPE_CHECKING:
+    from ..models.secret import Secret
+
 
 T = TypeVar("T", bound="SFTPFsConfig")
 
@@ -40,9 +43,9 @@ class SFTPFsConfig:
 
     endpoint: Union[Unset, str] = UNSET
     username: Union[Unset, str] = UNSET
-    password: Union[Unset, Secret] = UNSET
-    private_key: Union[Unset, Secret] = UNSET
-    key_passphrase: Union[Unset, Secret] = UNSET
+    password: Union[Unset, "Secret"] = UNSET
+    private_key: Union[Unset, "Secret"] = UNSET
+    key_passphrase: Union[Unset, "Secret"] = UNSET
     fingerprints: Union[Unset, List[str]] = UNSET
     prefix: Union[Unset, str] = UNSET
     disable_concurrent_reads: Union[Unset, bool] = UNSET
@@ -98,6 +101,8 @@ class SFTPFsConfig:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        from ..models.secret import Secret
+
         d = src_dict.copy()
         endpoint = d.pop("endpoint", UNSET)
 

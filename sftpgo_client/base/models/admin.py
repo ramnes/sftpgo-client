@@ -1,11 +1,14 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..models.admin_filters import AdminFilters
 from ..models.admin_permissions import AdminPermissions
 from ..models.admin_status import AdminStatus
 from ..types import UNSET, Unset
+
+if TYPE_CHECKING:
+    from ..models.admin_filters import AdminFilters
+
 
 T = TypeVar("T", bound="Admin")
 
@@ -40,7 +43,7 @@ class Admin:
     password: Union[Unset, str] = UNSET
     email: Union[Unset, str] = UNSET
     permissions: Union[Unset, List[AdminPermissions]] = UNSET
-    filters: Union[Unset, AdminFilters] = UNSET
+    filters: Union[Unset, "AdminFilters"] = UNSET
     additional_info: Union[Unset, str] = UNSET
     created_at: Union[Unset, int] = UNSET
     updated_at: Union[Unset, int] = UNSET
@@ -106,6 +109,8 @@ class Admin:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        from ..models.admin_filters import AdminFilters
+
         d = src_dict.copy()
         id = d.pop("id", UNSET)
 

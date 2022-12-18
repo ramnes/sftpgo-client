@@ -1,10 +1,13 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..models.ftp_passive_port_range import FTPPassivePortRange
-from ..models.ftpd_binding import FTPDBinding
 from ..types import UNSET, Unset
+
+if TYPE_CHECKING:
+    from ..models.ftp_passive_port_range import FTPPassivePortRange
+    from ..models.ftpd_binding import FTPDBinding
+
 
 T = TypeVar("T", bound="FTPServiceStatus")
 
@@ -14,13 +17,13 @@ class FTPServiceStatus:
     """
     Attributes:
         is_active (Union[Unset, bool]):
-        bindings (Union[Unset, None, List[FTPDBinding]]):
+        bindings (Union[Unset, None, List['FTPDBinding']]):
         passive_port_range (Union[Unset, FTPPassivePortRange]):
     """
 
     is_active: Union[Unset, bool] = UNSET
-    bindings: Union[Unset, None, List[FTPDBinding]] = UNSET
-    passive_port_range: Union[Unset, FTPPassivePortRange] = UNSET
+    bindings: Union[Unset, None, List["FTPDBinding"]] = UNSET
+    passive_port_range: Union[Unset, "FTPPassivePortRange"] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -54,6 +57,9 @@ class FTPServiceStatus:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        from ..models.ftp_passive_port_range import FTPPassivePortRange
+        from ..models.ftpd_binding import FTPDBinding
+
         d = src_dict.copy()
         is_active = d.pop("is_active", UNSET)
 

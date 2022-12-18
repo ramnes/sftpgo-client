@@ -1,9 +1,12 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..models.secret import Secret
 from ..types import UNSET, Unset
+
+if TYPE_CHECKING:
+    from ..models.secret import Secret
+
 
 T = TypeVar("T", bound="RecoveryCode")
 
@@ -20,7 +23,7 @@ class RecoveryCode:
             used (Union[Unset, bool]):
     """
 
-    secret: Union[Unset, Secret] = UNSET
+    secret: Union[Unset, "Secret"] = UNSET
     used: Union[Unset, bool] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -43,6 +46,8 @@ class RecoveryCode:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        from ..models.secret import Secret
+
         d = src_dict.copy()
         _secret = d.pop("secret", UNSET)
         secret: Union[Unset, Secret]

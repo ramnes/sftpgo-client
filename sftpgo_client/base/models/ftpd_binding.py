@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
@@ -9,9 +9,12 @@ from ..models.ftpd_binding_passive_connections_security import (
     FTPDBindingPassiveConnectionsSecurity,
 )
 from ..models.ftpd_binding_tls_mode import FTPDBindingTlsMode
-from ..models.passive_ip_override import PassiveIPOverride
 from ..models.tls_versions import TLSVersions
 from ..types import UNSET, Unset
+
+if TYPE_CHECKING:
+    from ..models.passive_ip_override import PassiveIPOverride
+
 
 T = TypeVar("T", bound="FTPDBinding")
 
@@ -31,7 +34,7 @@ class FTPDBinding:
               * `12` - TLS 1.2
               * `13` - TLS 1.3
         force_passive_ip (Union[Unset, str]): External IP address to expose for passive connections
-        passive_ip_overrides (Union[Unset, List[PassiveIPOverride]]):
+        passive_ip_overrides (Union[Unset, List['PassiveIPOverride']]):
         client_auth_type (Union[Unset, int]): 1 means that client certificate authentication is required in addition to
             FTP authentication
         tls_cipher_suites (Union[Unset, List[str]]): List of supported cipher suites for TLS version 1.2. If empty  a
@@ -51,7 +54,7 @@ class FTPDBinding:
     tls_mode: Union[Unset, FTPDBindingTlsMode] = UNSET
     min_tls_version: Union[Unset, TLSVersions] = UNSET
     force_passive_ip: Union[Unset, str] = UNSET
-    passive_ip_overrides: Union[Unset, List[PassiveIPOverride]] = UNSET
+    passive_ip_overrides: Union[Unset, List["PassiveIPOverride"]] = UNSET
     client_auth_type: Union[Unset, int] = UNSET
     tls_cipher_suites: Union[Unset, List[str]] = UNSET
     passive_connections_security: Union[
@@ -131,6 +134,8 @@ class FTPDBinding:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        from ..models.passive_ip_override import PassiveIPOverride
+
         d = src_dict.copy()
         address = d.pop("address", UNSET)
 

@@ -1,9 +1,12 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..models.secret import Secret
 from ..types import UNSET, Unset
+
+if TYPE_CHECKING:
+    from ..models.secret import Secret
+
 
 T = TypeVar("T", bound="CryptFsConfig")
 
@@ -18,7 +21,7 @@ class CryptFsConfig:
             automatically. If you set the status to "Redacted" the existing secret will be preserved
     """
 
-    passphrase: Union[Unset, Secret] = UNSET
+    passphrase: Union[Unset, "Secret"] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -36,6 +39,8 @@ class CryptFsConfig:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        from ..models.secret import Secret
+
         d = src_dict.copy()
         _passphrase = d.pop("passphrase", UNSET)
         passphrase: Union[Unset, Secret]

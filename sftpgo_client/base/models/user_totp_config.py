@@ -1,10 +1,13 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
 from ..models.mfa_protocols import MFAProtocols
-from ..models.secret import Secret
 from ..types import UNSET, Unset
+
+if TYPE_CHECKING:
+    from ..models.secret import Secret
+
 
 T = TypeVar("T", bound="UserTOTPConfig")
 
@@ -29,7 +32,7 @@ class UserTOTPConfig:
 
     enabled: Union[Unset, bool] = UNSET
     config_name: Union[Unset, str] = UNSET
-    secret: Union[Unset, Secret] = UNSET
+    secret: Union[Unset, "Secret"] = UNSET
     protocols: Union[Unset, List[MFAProtocols]] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -64,6 +67,8 @@ class UserTOTPConfig:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        from ..models.secret import Secret
+
         d = src_dict.copy()
         enabled = d.pop("enabled", UNSET)
 

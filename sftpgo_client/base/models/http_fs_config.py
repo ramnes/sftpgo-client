@@ -1,9 +1,12 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..models.secret import Secret
 from ..types import UNSET, Unset
+
+if TYPE_CHECKING:
+    from ..models.secret import Secret
+
 
 T = TypeVar("T", bound="HTTPFsConfig")
 
@@ -26,8 +29,8 @@ class HTTPFsConfig:
 
     endpoint: Union[Unset, str] = UNSET
     username: Union[Unset, str] = UNSET
-    password: Union[Unset, Secret] = UNSET
-    api_key: Union[Unset, Secret] = UNSET
+    password: Union[Unset, "Secret"] = UNSET
+    api_key: Union[Unset, "Secret"] = UNSET
     skip_tls_verify: Union[Unset, bool] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -62,6 +65,8 @@ class HTTPFsConfig:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        from ..models.secret import Secret
+
         d = src_dict.copy()
         endpoint = d.pop("endpoint", UNSET)
 

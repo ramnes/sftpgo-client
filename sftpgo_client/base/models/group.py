@@ -1,10 +1,13 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
-from ..models.group_user_settings import GroupUserSettings
-from ..models.virtual_folder import VirtualFolder
 from ..types import UNSET, Unset
+
+if TYPE_CHECKING:
+    from ..models.group_user_settings import GroupUserSettings
+    from ..models.virtual_folder import VirtualFolder
+
 
 T = TypeVar("T", bound="Group")
 
@@ -19,7 +22,7 @@ class Group:
         created_at (Union[Unset, int]): creation time as unix timestamp in milliseconds
         updated_at (Union[Unset, int]): last update time as unix timestamp in milliseconds
         user_settings (Union[Unset, GroupUserSettings]):
-        virtual_folders (Union[Unset, List[VirtualFolder]]): mapping between virtual SFTPGo paths and folders
+        virtual_folders (Union[Unset, List['VirtualFolder']]): mapping between virtual SFTPGo paths and folders
         users (Union[Unset, List[str]]): list of usernames associated with this group
     """
 
@@ -28,8 +31,8 @@ class Group:
     description: Union[Unset, str] = UNSET
     created_at: Union[Unset, int] = UNSET
     updated_at: Union[Unset, int] = UNSET
-    user_settings: Union[Unset, GroupUserSettings] = UNSET
-    virtual_folders: Union[Unset, List[VirtualFolder]] = UNSET
+    user_settings: Union[Unset, "GroupUserSettings"] = UNSET
+    virtual_folders: Union[Unset, List["VirtualFolder"]] = UNSET
     users: Union[Unset, List[str]] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -79,6 +82,9 @@ class Group:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        from ..models.group_user_settings import GroupUserSettings
+        from ..models.virtual_folder import VirtualFolder
+
         d = src_dict.copy()
         id = d.pop("id", UNSET)
 

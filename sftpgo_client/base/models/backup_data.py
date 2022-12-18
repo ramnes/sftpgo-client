@@ -1,14 +1,17 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..models.admin import Admin
-from ..models.api_key import APIKey
-from ..models.base_virtual_folder import BaseVirtualFolder
-from ..models.group import Group
-from ..models.share import Share
-from ..models.user import User
 from ..types import UNSET, Unset
+
+if TYPE_CHECKING:
+    from ..models.admin import Admin
+    from ..models.api_key import APIKey
+    from ..models.base_virtual_folder import BaseVirtualFolder
+    from ..models.group import Group
+    from ..models.share import Share
+    from ..models.user import User
+
 
 T = TypeVar("T", bound="BackupData")
 
@@ -17,21 +20,21 @@ T = TypeVar("T", bound="BackupData")
 class BackupData:
     """
     Attributes:
-        users (Union[Unset, List[User]]):
-        folders (Union[Unset, List[BaseVirtualFolder]]):
-        groups (Union[Unset, List[Group]]):
-        admins (Union[Unset, List[Admin]]):
-        api_keys (Union[Unset, List[APIKey]]):
-        shares (Union[Unset, List[Share]]):
+        users (Union[Unset, List['User']]):
+        folders (Union[Unset, List['BaseVirtualFolder']]):
+        groups (Union[Unset, List['Group']]):
+        admins (Union[Unset, List['Admin']]):
+        api_keys (Union[Unset, List['APIKey']]):
+        shares (Union[Unset, List['Share']]):
         version (Union[Unset, int]):
     """
 
-    users: Union[Unset, List[User]] = UNSET
-    folders: Union[Unset, List[BaseVirtualFolder]] = UNSET
-    groups: Union[Unset, List[Group]] = UNSET
-    admins: Union[Unset, List[Admin]] = UNSET
-    api_keys: Union[Unset, List[APIKey]] = UNSET
-    shares: Union[Unset, List[Share]] = UNSET
+    users: Union[Unset, List["User"]] = UNSET
+    folders: Union[Unset, List["BaseVirtualFolder"]] = UNSET
+    groups: Union[Unset, List["Group"]] = UNSET
+    admins: Union[Unset, List["Admin"]] = UNSET
+    api_keys: Union[Unset, List["APIKey"]] = UNSET
+    shares: Union[Unset, List["Share"]] = UNSET
     version: Union[Unset, int] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
@@ -108,6 +111,13 @@ class BackupData:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        from ..models.admin import Admin
+        from ..models.api_key import APIKey
+        from ..models.base_virtual_folder import BaseVirtualFolder
+        from ..models.group import Group
+        from ..models.share import Share
+        from ..models.user import User
+
         d = src_dict.copy()
         users = []
         _users = d.pop("users", UNSET)

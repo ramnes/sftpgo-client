@@ -1,9 +1,12 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..models.web_dav_binding import WebDAVBinding
 from ..types import UNSET, Unset
+
+if TYPE_CHECKING:
+    from ..models.web_dav_binding import WebDAVBinding
+
 
 T = TypeVar("T", bound="WebDAVServiceStatus")
 
@@ -13,11 +16,11 @@ class WebDAVServiceStatus:
     """
     Attributes:
         is_active (Union[Unset, bool]):
-        bindings (Union[Unset, None, List[WebDAVBinding]]):
+        bindings (Union[Unset, None, List['WebDAVBinding']]):
     """
 
     is_active: Union[Unset, bool] = UNSET
-    bindings: Union[Unset, None, List[WebDAVBinding]] = UNSET
+    bindings: Union[Unset, None, List["WebDAVBinding"]] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -45,6 +48,8 @@ class WebDAVServiceStatus:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        from ..models.web_dav_binding import WebDAVBinding
+
         d = src_dict.copy()
         is_active = d.pop("is_active", UNSET)
 

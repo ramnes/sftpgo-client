@@ -1,10 +1,13 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..models.base_user_filters import BaseUserFilters
-from ..models.group_user_settings_permissions import GroupUserSettingsPermissions
 from ..types import UNSET, Unset
+
+if TYPE_CHECKING:
+    from ..models.base_user_filters import BaseUserFilters
+    from ..models.group_user_settings_permissions import GroupUserSettingsPermissions
+
 
 T = TypeVar("T", bound="GroupUserSettings")
 
@@ -32,13 +35,13 @@ class GroupUserSettings:
     max_sessions: Union[Unset, int] = UNSET
     quota_size: Union[Unset, int] = UNSET
     quota_files: Union[Unset, int] = UNSET
-    permissions: Union[Unset, GroupUserSettingsPermissions] = UNSET
+    permissions: Union[Unset, "GroupUserSettingsPermissions"] = UNSET
     upload_bandwidth: Union[Unset, int] = UNSET
     download_bandwidth: Union[Unset, int] = UNSET
     upload_data_transfer: Union[Unset, int] = UNSET
     download_data_transfer: Union[Unset, int] = UNSET
     total_data_transfer: Union[Unset, int] = UNSET
-    filters: Union[Unset, BaseUserFilters] = UNSET
+    filters: Union[Unset, "BaseUserFilters"] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -89,6 +92,11 @@ class GroupUserSettings:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        from ..models.base_user_filters import BaseUserFilters
+        from ..models.group_user_settings_permissions import (
+            GroupUserSettingsPermissions,
+        )
+
         d = src_dict.copy()
         home_dir = d.pop("home_dir", UNSET)
 

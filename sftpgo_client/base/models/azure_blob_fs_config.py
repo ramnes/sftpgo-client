@@ -1,10 +1,13 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
 from ..models.azure_blob_fs_config_access_tier import AzureBlobFsConfigAccessTier
-from ..models.secret import Secret
 from ..types import UNSET, Unset
+
+if TYPE_CHECKING:
+    from ..models.secret import Secret
+
 
 T = TypeVar("T", bound="AzureBlobFsConfig")
 
@@ -42,8 +45,8 @@ class AzureBlobFsConfig:
 
     container: Union[Unset, str] = UNSET
     account_name: Union[Unset, str] = UNSET
-    account_key: Union[Unset, Secret] = UNSET
-    sas_url: Union[Unset, Secret] = UNSET
+    account_key: Union[Unset, "Secret"] = UNSET
+    sas_url: Union[Unset, "Secret"] = UNSET
     endpoint: Union[Unset, str] = UNSET
     upload_part_size: Union[Unset, int] = UNSET
     upload_concurrency: Union[Unset, int] = UNSET
@@ -109,6 +112,8 @@ class AzureBlobFsConfig:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        from ..models.secret import Secret
+
         d = src_dict.copy()
         container = d.pop("container", UNSET)
 

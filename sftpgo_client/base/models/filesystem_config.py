@@ -1,15 +1,18 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..models.azure_blob_fs_config import AzureBlobFsConfig
-from ..models.crypt_fs_config import CryptFsConfig
 from ..models.fs_providers import FsProviders
-from ..models.gcs_config import GCSConfig
-from ..models.http_fs_config import HTTPFsConfig
-from ..models.s3_config import S3Config
-from ..models.sftp_fs_config import SFTPFsConfig
 from ..types import UNSET, Unset
+
+if TYPE_CHECKING:
+    from ..models.azure_blob_fs_config import AzureBlobFsConfig
+    from ..models.crypt_fs_config import CryptFsConfig
+    from ..models.gcs_config import GCSConfig
+    from ..models.http_fs_config import HTTPFsConfig
+    from ..models.s3_config import S3Config
+    from ..models.sftp_fs_config import SFTPFsConfig
+
 
 T = TypeVar("T", bound="FilesystemConfig")
 
@@ -38,12 +41,12 @@ class FilesystemConfig:
     """
 
     provider: Union[Unset, FsProviders] = UNSET
-    s3config: Union[Unset, S3Config] = UNSET
-    gcsconfig: Union[Unset, GCSConfig] = UNSET
-    azblobconfig: Union[Unset, AzureBlobFsConfig] = UNSET
-    cryptconfig: Union[Unset, CryptFsConfig] = UNSET
-    sftpconfig: Union[Unset, SFTPFsConfig] = UNSET
-    httpconfig: Union[Unset, HTTPFsConfig] = UNSET
+    s3config: Union[Unset, "S3Config"] = UNSET
+    gcsconfig: Union[Unset, "GCSConfig"] = UNSET
+    azblobconfig: Union[Unset, "AzureBlobFsConfig"] = UNSET
+    cryptconfig: Union[Unset, "CryptFsConfig"] = UNSET
+    sftpconfig: Union[Unset, "SFTPFsConfig"] = UNSET
+    httpconfig: Union[Unset, "HTTPFsConfig"] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -97,6 +100,13 @@ class FilesystemConfig:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        from ..models.azure_blob_fs_config import AzureBlobFsConfig
+        from ..models.crypt_fs_config import CryptFsConfig
+        from ..models.gcs_config import GCSConfig
+        from ..models.http_fs_config import HTTPFsConfig
+        from ..models.s3_config import S3Config
+        from ..models.sftp_fs_config import SFTPFsConfig
+
         d = src_dict.copy()
         _provider = d.pop("provider", UNSET)
         provider: Union[Unset, FsProviders]

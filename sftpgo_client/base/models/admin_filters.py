@@ -1,10 +1,13 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
-from ..models.base_totp_config import BaseTOTPConfig
-from ..models.recovery_code import RecoveryCode
 from ..types import UNSET, Unset
+
+if TYPE_CHECKING:
+    from ..models.base_totp_config import BaseTOTPConfig
+    from ..models.recovery_code import RecoveryCode
+
 
 T = TypeVar("T", bound="AdminFilters")
 
@@ -18,13 +21,13 @@ class AdminFilters:
             ['192.0.2.0/24', '2001:db8::/32'].
         allow_api_key_auth (Union[Unset, bool]): API key auth allows to impersonate this administrator with an API key
         totp_config (Union[Unset, BaseTOTPConfig]):
-        recovery_codes (Union[Unset, List[RecoveryCode]]):
+        recovery_codes (Union[Unset, List['RecoveryCode']]):
     """
 
     allow_list: Union[Unset, List[str]] = UNSET
     allow_api_key_auth: Union[Unset, bool] = UNSET
-    totp_config: Union[Unset, BaseTOTPConfig] = UNSET
-    recovery_codes: Union[Unset, List[RecoveryCode]] = UNSET
+    totp_config: Union[Unset, "BaseTOTPConfig"] = UNSET
+    recovery_codes: Union[Unset, List["RecoveryCode"]] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -61,6 +64,9 @@ class AdminFilters:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        from ..models.base_totp_config import BaseTOTPConfig
+        from ..models.recovery_code import RecoveryCode
+
         d = src_dict.copy()
         allow_list = cast(List[str], d.pop("allow_list", UNSET))
 

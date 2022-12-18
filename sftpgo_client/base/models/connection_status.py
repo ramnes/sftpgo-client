@@ -1,10 +1,13 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
 from ..models.connection_status_protocol import ConnectionStatusProtocol
-from ..models.transfer import Transfer
 from ..types import UNSET, Unset
+
+if TYPE_CHECKING:
+    from ..models.transfer import Transfer
+
 
 T = TypeVar("T", bound="ConnectionStatus")
 
@@ -21,7 +24,7 @@ class ConnectionStatus:
         command (Union[Unset, str]): Last SSH/FTP command or WebDAV method
         last_activity (Union[Unset, int]): last client activity as unix timestamp in milliseconds
         protocol (Union[Unset, ConnectionStatusProtocol]):
-        active_transfers (Union[Unset, List[Transfer]]):
+        active_transfers (Union[Unset, List['Transfer']]):
     """
 
     username: Union[Unset, str] = UNSET
@@ -32,7 +35,7 @@ class ConnectionStatus:
     command: Union[Unset, str] = UNSET
     last_activity: Union[Unset, int] = UNSET
     protocol: Union[Unset, ConnectionStatusProtocol] = UNSET
-    active_transfers: Union[Unset, List[Transfer]] = UNSET
+    active_transfers: Union[Unset, List["Transfer"]] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -81,6 +84,8 @@ class ConnectionStatus:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        from ..models.transfer import Transfer
+
         d = src_dict.copy()
         username = d.pop("username", UNSET)
 

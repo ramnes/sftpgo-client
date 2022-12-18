@@ -1,9 +1,12 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..models.totp_config import TOTPConfig
 from ..types import UNSET, Unset
+
+if TYPE_CHECKING:
+    from ..models.totp_config import TOTPConfig
+
 
 T = TypeVar("T", bound="MFAStatus")
 
@@ -13,11 +16,11 @@ class MFAStatus:
     """
     Attributes:
         is_active (Union[Unset, bool]):
-        totp_configs (Union[Unset, List[TOTPConfig]]):
+        totp_configs (Union[Unset, List['TOTPConfig']]):
     """
 
     is_active: Union[Unset, bool] = UNSET
-    totp_configs: Union[Unset, List[TOTPConfig]] = UNSET
+    totp_configs: Union[Unset, List["TOTPConfig"]] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -42,6 +45,8 @@ class MFAStatus:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        from ..models.totp_config import TOTPConfig
+
         d = src_dict.copy()
         is_active = d.pop("is_active", UNSET)
 

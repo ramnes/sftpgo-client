@@ -1,15 +1,18 @@
-from typing import Any, Dict, List, Type, TypeVar, Union, cast
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
-from ..models.filesystem_config import FilesystemConfig
-from ..models.group_mapping import GroupMapping
-from ..models.user_filters import UserFilters
-from ..models.user_oidc_custom_fields import UserOidcCustomFields
-from ..models.user_permissions import UserPermissions
 from ..models.user_status import UserStatus
-from ..models.virtual_folder import VirtualFolder
 from ..types import UNSET, Unset
+
+if TYPE_CHECKING:
+    from ..models.filesystem_config import FilesystemConfig
+    from ..models.group_mapping import GroupMapping
+    from ..models.user_filters import UserFilters
+    from ..models.user_oidc_custom_fields import UserOidcCustomFields
+    from ..models.user_permissions import UserPermissions
+    from ..models.virtual_folder import VirtualFolder
+
 
 T = TypeVar("T", bound="User")
 
@@ -35,7 +38,7 @@ class User:
             user certificate are mandatory.
         home_dir (Union[Unset, str]): path to the user home directory. The user cannot upload or download files outside
             this directory. SFTPGo tries to automatically create this folder if missing. Must be an absolute path
-        virtual_folders (Union[Unset, List[VirtualFolder]]): mapping between virtual SFTPGo paths and virtual folders.
+        virtual_folders (Union[Unset, List['VirtualFolder']]): mapping between virtual SFTPGo paths and virtual folders.
             If one or more of the specified folders are not inside the dataprovider they will be automatically created. You
             have to create the folder on the filesystem yourself
         uid (Union[Unset, int]): if you run SFTPGo as root user, the created files and directories will be assigned to
@@ -69,7 +72,7 @@ class User:
         filters (Union[Unset, UserFilters]):
         filesystem (Union[Unset, FilesystemConfig]): Storage filesystem details
         additional_info (Union[Unset, str]): Free form text field for external systems
-        groups (Union[Unset, List[GroupMapping]]):
+        groups (Union[Unset, List['GroupMapping']]):
         oidc_custom_fields (Union[Unset, UserOidcCustomFields]): This field is passed to the pre-login hook if custom
             OIDC token fields have been configured. Field values can be of any type (this is a free form object) and depend
             on the type of the configured OIDC token fields
@@ -84,13 +87,13 @@ class User:
     password: Union[Unset, str] = UNSET
     public_keys: Union[Unset, List[str]] = UNSET
     home_dir: Union[Unset, str] = UNSET
-    virtual_folders: Union[Unset, List[VirtualFolder]] = UNSET
+    virtual_folders: Union[Unset, List["VirtualFolder"]] = UNSET
     uid: Union[Unset, int] = UNSET
     gid: Union[Unset, int] = UNSET
     max_sessions: Union[Unset, int] = UNSET
     quota_size: Union[Unset, int] = UNSET
     quota_files: Union[Unset, int] = UNSET
-    permissions: Union[Unset, UserPermissions] = UNSET
+    permissions: Union[Unset, "UserPermissions"] = UNSET
     used_quota_size: Union[Unset, int] = UNSET
     used_quota_files: Union[Unset, int] = UNSET
     last_quota_update: Union[Unset, int] = UNSET
@@ -104,11 +107,11 @@ class User:
     created_at: Union[Unset, int] = UNSET
     updated_at: Union[Unset, int] = UNSET
     last_login: Union[Unset, int] = UNSET
-    filters: Union[Unset, UserFilters] = UNSET
-    filesystem: Union[Unset, FilesystemConfig] = UNSET
+    filters: Union[Unset, "UserFilters"] = UNSET
+    filesystem: Union[Unset, "FilesystemConfig"] = UNSET
     additional_info: Union[Unset, str] = UNSET
-    groups: Union[Unset, List[GroupMapping]] = UNSET
-    oidc_custom_fields: Union[Unset, UserOidcCustomFields] = UNSET
+    groups: Union[Unset, List["GroupMapping"]] = UNSET
+    oidc_custom_fields: Union[Unset, "UserOidcCustomFields"] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -254,6 +257,13 @@ class User:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        from ..models.filesystem_config import FilesystemConfig
+        from ..models.group_mapping import GroupMapping
+        from ..models.user_filters import UserFilters
+        from ..models.user_oidc_custom_fields import UserOidcCustomFields
+        from ..models.user_permissions import UserPermissions
+        from ..models.virtual_folder import VirtualFolder
+
         d = src_dict.copy()
         id = d.pop("id", UNSET)
 

@@ -32,7 +32,7 @@ class Client(AuthenticatedClient):
 
     def _get_token__parse_response(self, response):
         response.raise_for_status()
-        response = _build_response(response=response)
+        response = _build_response(client=self, response=response)
         return response.parsed
 
     def get_token(self):

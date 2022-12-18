@@ -1,9 +1,12 @@
-from typing import Any, Dict, List, Type, TypeVar, Union
+from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..models.secret import Secret
 from ..types import UNSET, Unset
+
+if TYPE_CHECKING:
+    from ..models.secret import Secret
+
 
 T = TypeVar("T", bound="BaseTOTPConfig")
 
@@ -22,7 +25,7 @@ class BaseTOTPConfig:
 
     enabled: Union[Unset, bool] = UNSET
     config_name: Union[Unset, str] = UNSET
-    secret: Union[Unset, Secret] = UNSET
+    secret: Union[Unset, "Secret"] = UNSET
     additional_properties: Dict[str, Any] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -46,6 +49,8 @@ class BaseTOTPConfig:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
+        from ..models.secret import Secret
+
         d = src_dict.copy()
         enabled = d.pop("enabled", UNSET)
 
